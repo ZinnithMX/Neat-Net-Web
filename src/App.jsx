@@ -21,12 +21,13 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
+        <p className={"font-sans"}>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
+          <span className={"material-symbols-rounded text-5xl text-p-700"}>search</span>
       </p>
     </>
   )
