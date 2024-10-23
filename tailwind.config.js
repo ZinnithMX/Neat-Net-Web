@@ -1,0 +1,58 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}"
+  ],
+  theme: {
+    fontFamily: {
+      'sans' : ['Plus Jakarta Sans', 'sans-serif'],
+      'display' : ['Chivo', 'display']
+    },
+    colors: {
+      'p-700' : '#BB0960',
+      'p-600' : '#DF1683',
+      'p-500' : '#EB3698',
+      'p-400' : '#F464B2',
+      'p-300' : '#FF96CF',
+      'p-200' : '#FFBADF',
+      'p-100' : '#FFD4EB',
+      'p-50' : '#FFEDF7',
+      's-700' : '#62A40E',
+      's-600' : '#78BC21',
+      's-500' : '#8ACB37',
+      's-400' : '#A2DA5B',
+      's-300' : '#B8E57E',
+      's-200' : '#CEF0A1',
+      's-100' : '#DEF8BC',
+      's-50' : '#F1FFDD',
+      'n-700' : '#110009',
+      'n-600' : '#200212',
+      'n-500' : '#340920',
+      'n-400' : '#4A1A34',
+      'n-300' : '#613B4F',
+      'n-200' : '#745063',
+      'n-100' : '#997688',
+      'n-50' : '#B493A4',
+      'g-700' : '#C5ABB8',
+      'g-600' : '#D1BCC7',
+      'g-500' : '#DACAD2',
+      'g-400' : '#E3D1DA',
+      'g-300' : '#EDDFE6',
+      'g-200' : '#FCF0F6',
+      'g-100' : '#FFF5FB',
+      'g-50' : '#FFF9FC',
+      'e-700' : '#BD0B14',
+      'e-600' : '#DB2831',
+      'e-500' : '#EF4E56',
+      'e-400' : '#F4656C',
+      'e-300' : '#FD858B',
+      'e-200' : '#FFA5A9',
+      'e-100' : '#FFC3C6',
+      'e-50' : '#FFE4E6',
+    },
+    extend: {},
+  },
+  plugins: [],
+}
+
