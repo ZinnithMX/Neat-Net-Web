@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import ButtonPrimary from './components/Button/ButtonPrimary'
-import Input from './components/Input/input'
-import LoginComprador from './pages/marketplace/login/LoginComprador'
+import Input from "./components/Input/Input.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
   return (
     <>
-      <LoginComprador/>
+      <div className={"m-5 w-1/2"}>
+        <Input label={"Labelsita"} required={false} error={false} deshabilitado={false}>
+          Hola
+        </Input>
+        <p>holaa</p>
+      </div>
     </>
       
   )
