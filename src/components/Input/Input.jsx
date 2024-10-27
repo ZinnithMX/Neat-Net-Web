@@ -30,6 +30,10 @@ export default function Input(props){
 
 
     useEffect(() => {
+
+    }, [showMsg]);
+
+    useEffect(() => {
         if(props.deshabilitado){
             setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-100 text-n-100 focus:outline-g-700 text-lg cursor-not-allowed");
         }else{
