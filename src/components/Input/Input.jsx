@@ -6,10 +6,31 @@ export default function Input(props){
     const [estiloInput, setEstiloInput] = useState("");
     const [estiloMsg, setEstiloMsg] = useState("");
     const [showMsg, setShowMsg] = useState(false);
-    const {msg, setMsg} = useState("");
+    const [msg, setMsg] = useState("");
+    const [estado, setEstado] = useState(props.estado);
+    const [inputValue, setInputValue] = useState("");
+
+    const handleInput = useCallback((e) => {
+        setInputValue(e.target.value);
+
+        if(props.required){
+            if(e.target.value.trim() === ""){
+                setShowMsg(true);
+                setMsg("Este campo es obligatorio");
+                setEstado("error");
+                console.log("Input vacio");
+            }else{
+                setShowMsg(false);
+                setMsg("");
+                setEstado("default");
+            }
+        }
+
+    }, [props.required]);
+
 
     useEffect(() => {
-        switch (props.estado) {
+        switch (estado) {
             default:
                 setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-p-600 text-lg");
                 break;
@@ -26,12 +47,7 @@ export default function Input(props){
                 setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-100 text-n-100 focus:outline-g-700 text-lg cursor-not-allowed");
                 break;
         }
-    }, [props.estado]);
-
-
-    useEffect(() => {
-
-    }, [showMsg]);
+    }, [estado]);
 
     useEffect(() => {
         if(props.deshabilitado){
@@ -50,9 +66,12 @@ export default function Input(props){
                 {props.required && <span className={"material-symbols-rounded text-er-600 "}>asterisk</span>}
             </div>
             <input
+                type={"text"}
                 placeholder={props.children}
                 maxLength={props.maxLength}
                 disabled={props.deshabilitado}
+                onChange={handleInput}
+                value={inputValue}
                 className={estiloInput}
             />
             {showMsg && <p className={estiloMsg}>{msg}</p>}
