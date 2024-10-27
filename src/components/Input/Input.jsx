@@ -62,8 +62,8 @@ export default function Input(props){
     return(
         <div className={"flex flex-col gap-2"}>
             <div className={"flex flex-row justify-between"}>
-                <label className={"text-2xl text-n-700"}>{props.label}</label>
-                {props.required && <span className={"material-symbols-rounded text-er-600 "}>asterisk</span>}
+                <label className={"text-xl text-n-700"}>{props.label}</label>
+                {props.required && <span className={"material-symbols-rounded text-er-600 text-xl"}>asterisk</span>}
             </div>
             <input
                 type={"text"}
