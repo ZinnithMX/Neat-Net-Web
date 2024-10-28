@@ -27,11 +27,9 @@
     h6{
         @apply text-sm font-display font-bold;
     }
-    p::selection, label::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection{
-        @apply bg-p-200;
-    }
-    span::selection{
-        @apply bg-p-200;
+    p::selection, input::selection, label::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, span::selection{
+        @apply bg-p-600;
+        @apply text-g-50;
     }
 }
 

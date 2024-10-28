@@ -8,43 +8,84 @@ export default function Input(props){
     const [showMsg, setShowMsg] = useState(false);
     const [msg, setMsg] = useState("");
     const [estado, setEstado] = useState(props.estado);
-    const [inputValue, setInputValue] = useState("");
 
     const handleInput = useCallback((e) => {
-        setInputValue(e.target.value);
+
+        const value = e.target.value;
 
         if(props.required){
-            if(e.target.value.trim() === ""){
+            if(value.trim() === ""){
                 setShowMsg(true);
                 setMsg("Este campo es obligatorio");
                 setEstado("error");
-                console.log("Input vacio");
+                props.response({
+                    error: true,
+                    value: value
+                });
             }else{
-                setShowMsg(false);
-                setMsg("");
-                setEstado("default");
+                if(props.validate){
+                    if(props.regex.test(value)){
+                        setShowMsg(false);
+                        setMsg("");
+                        setEstado("default");
+                        props.response({
+                            error: false,
+                            value: value
+                        });
+                    }else{
+                        setShowMsg(true);
+                        setMsg("El formato no es correcto");
+                        setEstado("error");
+                        props.response({
+                            error: true,
+                            value: value
+                        });
+                    }
+                }
+                else{
+                    setShowMsg(false);
+                    setMsg("");
+                    setEstado("default");
+                    props.response({
+                        error: false,
+                        value: value
+                    });
+                }
             }
+        }else{
+            setShowMsg(false);
+            setMsg("");
+            setEstado("default");
+            props.response({
+                error: false,
+                value: value
+            });
         }
 
-    }, [props.required]);
+    }, [props.required, props.validate, props.regex]);
 
 
     useEffect(() => {
         switch (estado) {
             default:
-                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-p-600 text-lg");
+                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-n-200 text-lg");
+                setEstiloMsg("text-sm font-light text-n-700")
                 break;
             case "default":
-                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-p-600 text-lg");
+                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-n-200 text-lg");
+                setEstiloMsg("text-sm font-light text-n-700")
                 break;
             case "error":
                 setEstiloInput("w-full p-3 rounded-lg bg-er-50 placeholder:text-er-700 text-er-700 focus:outline-er-600 text-lg");
+                setEstiloMsg("text-sm font-light text-er-700")
                 break;
             case "advertencia":
                 setEstiloInput("w-full p-3 rounded-lg bg-a-50 placeholder:text-a-700 text-a-700 focus:outline-a-700 text-lg");
+                setEstiloMsg("text-sm font-light text-a-700")
                 break;
             case "deshabilitado":
                 setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-100 text-n-100 focus:outline-g-700 text-lg cursor-not-allowed");
+                setEstiloMsg("text-sm font-light text-ex-700")
                 break;
         }
     }, [estado]);
@@ -53,7 +94,7 @@ export default function Input(props){
         if(props.deshabilitado){
             setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-100 text-n-100 focus:outline-g-700 text-lg cursor-not-allowed");
         }else{
-            setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-p-600 text-lg");
+            setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-n-200 text-lg");
         }
     }, [props.deshabilitado]);
 
@@ -71,7 +112,6 @@ export default function Input(props){
                 maxLength={props.maxLength}
                 disabled={props.deshabilitado}
                 onChange={handleInput}
-                value={inputValue}
                 className={estiloInput}
             />
             {showMsg && <p className={estiloMsg}>{msg}</p>}
@@ -86,5 +126,8 @@ Input.propTypes = {
     error: PropTypes.bool.isRequired,
     estado: PropTypes.string,
     maxLength: PropTypes.number,
-    deshabilitado: PropTypes.bool.isRequired
+    deshabilitado: PropTypes.bool.isRequired,
+    regex: PropTypes.shape(RegExp),
+    validate: PropTypes.bool.isRequired,
+    response: PropTypes.func.isRequired
 }
