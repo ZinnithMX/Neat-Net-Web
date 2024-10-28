@@ -123,7 +123,6 @@ Input.propTypes = {
     label: PropTypes.string.isRequired,
     children: PropTypes.string.isRequired,
     required: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
     estado: PropTypes.string,
     maxLength: PropTypes.number,
     deshabilitado: PropTypes.bool.isRequired,

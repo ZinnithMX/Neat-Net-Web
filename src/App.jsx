@@ -1,11 +1,17 @@
-import Input from "./components/Input/Input.jsx";
+/*import Input from "./components/Input/Input.jsx";
 import PrimaryButton from "./components/Button/PrimaryButton.jsx";
 import {useEffect, useState} from "react";
-import axios from "axios";
+import axios from "axios";*/
+
+import {
+  BrowserRouter as Router, Routes,
+  Route
+} from "react-router-dom";
+import SignupComprador from "./pages/account/signup/SignupComprador"
 
 function App() {
 
-    const [contenido1, setContenido1] = useState({
+    /*const [contenido1, setContenido1] = useState({
         error: true,
         value: ""
     });
@@ -35,10 +41,17 @@ function App() {
         }catch (e) {
             console.log(e);
         }
-    };
+      
+    };*/
 
     return (
         <>
+          <Router>
+            <Routes>
+              <Route path="/" element={<SignupComprador/>}/>
+            </Routes>
+          </Router>
+          {/*
             <div className={"m-5 w-1/2 gap-4 flex flex-col"}>
                 <Input label={"Labelsita"} required={true} error={false} deshabilitado={false}
                        validate={true} regex={new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)}
@@ -52,6 +65,7 @@ function App() {
                 </PrimaryButton>
                 <p>holaa</p>
             </div>
+          */}
         </>
 
     )
