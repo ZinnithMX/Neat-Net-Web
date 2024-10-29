@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
+// npm install @stomp/stompjs sockjs-client
+import {Stomp} from "@stomp/stompjs";
 
 export default function SignupComprador(){
 
@@ -12,7 +14,8 @@ export default function SignupComprador(){
     const [contra, setContra] = useState({error: true, value:""});
     const [telPer, setTelPer] = useState({error: true, value:""});
 
-    
+    const stompClient = Stomp.client("ws://localhost:8080/register");
+
     const [form, setForm] = useState({
         name: nombre.value,
         contrasenia: contra.value,
@@ -37,7 +40,7 @@ export default function SignupComprador(){
     },[contra.value, correo.value, mat.value, nombre.value, pat.value, telPer.value])
 
     async function mandar(form) {
-        const url = "http://192.168.20.73:8080/users/add";
+        const url = "http://192.168.1.70:8080/users/add";
         try {
             fetch(url, {
                 method: 'POST',
@@ -46,7 +49,7 @@ export default function SignupComprador(){
                 },
                 body: JSON.stringify(form)
             }).then(res => {
-                alert(res);
+                alert(res.data);
             })
         } catch(err) {
             alert(err);
@@ -91,8 +94,26 @@ export default function SignupComprador(){
                         <PrimaryButton size="[16rem]" onClick={() => {
                             alert("Enviado")
                             mandar(form)
+                            stompClient.publish({
+                                destination: "/app/register1",
+                                body: JSON.stringify({'body' : form.name})
+                            })
                         }}>
                             Enviar
+                        </PrimaryButton>
+
+                        <PrimaryButton onClick={() => {
+
+                            stompClient.connect({}, () => {
+
+                                alert("Conectado a Websocket usando STOMP");
+                                stompClient.subscribe("/topic/canal1", (message) => {
+                                    const newMessage = JSON.parse(message.body);
+                                    alert(newMessage);
+                                })
+                            })
+                        }} size={"123"}>
+                            Conectar
                         </PrimaryButton>
                     </form>
                     
