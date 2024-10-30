@@ -12,6 +12,7 @@ export default function SignupComprador(){
     const [correo, setCorreo] = useState({error: true, value:""});
     const [contra, setContra] = useState({error: true, value:""});
     const [telPer, setTelPer] = useState({error: true, value:""});
+    const [sendForm, setSendForm] = useState(false);
 
     
     const [form, setForm] = useState({
@@ -26,16 +27,22 @@ export default function SignupComprador(){
     });
 
     useEffect(() => {
-        setForm({
-            name: nombre.value,
-            contrasenia: contra.value,
-            nombre: nombre.value,
-            paterno: pat.value,
-            materno: mat.value,
-            correo: correo.value,
-            telefono: telPer.value
-        })
-    },[contra.value, correo.value, mat.value, nombre.value, pat.value, telPer.value])
+
+        if(!nombre.error && !contra.error && !correo.error && !mat.error && !pat.error && !telPer.error){
+            setForm({
+                name: nombre.value,
+                contrasenia: contra.value,
+                nombre: nombre.value,
+                paterno: pat.value,
+                materno: mat.value,
+                correo: correo.value,
+                telefono: telPer.value
+            })
+            setSendForm(true);
+        }else{
+            setSendForm(false);
+        }
+    },[contra, correo, mat, nombre, pat, telPer])
 
     async function mandar(form) {
         const url = "http://192.168.20.73:8080/users/add";
@@ -62,9 +69,9 @@ export default function SignupComprador(){
                 <div className="w-1/2 bg-g-300 h-full">
                     <img />
                 </div>
-                <div className="w-1/2 h-full flex flex-col gap-8 p-12 overflow-y-scroll scroll-my-12">
+                <div className="w-1/2 h-full flex flex-col gap-8 px-12 py-32 overflow-y-scroll scroll-my-12">
                     <h2 className="text-p-600">¿Listo para vender?</h2>
-                    <form className="h-full gap-5  px-2 flex flex-col">
+                    <form className="gap-5  px-2 flex flex-col">
                         <Input label="Nombre" required={true} response={setNombre} deshabilitado={false}>
                             ¿Cual es/son tu(s) nombre(s)?
                         </Input>
@@ -92,7 +99,7 @@ export default function SignupComprador(){
                         <Input label="Telelfono personal" required={true} response={setTelPer} deshabilitado={false}>
                             +52 1 XXX 0000 0000
                         </Input>
-                        <PrimaryButton size="[16rem]" onClick={() => {
+                        <PrimaryButton size="[16rem]" disabled={!sendForm} onClick={() => {
                             alert("Enviado")
                             mandar(form)
                         }}>

@@ -37,6 +37,22 @@ body{
     @apply bg-g-50;
 }
 
+::-webkit-scrollbar{
+    @apply w-3;
+}
+
+::-webkit-scrollbar-thumb{
+    @apply bg-p-600 rounded-s;
+}
+
+::-webkit-scrollbar-track{
+    @apply bg-g-200;
+}
+
+::-webkit-scrollbar-button{
+
+}
+
 
 #root{
     margin: 0;
