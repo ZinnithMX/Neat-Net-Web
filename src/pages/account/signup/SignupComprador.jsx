@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
+import Password from "../../../components/Input/Password.jsx";
 
 export default function SignupComprador(){
 
@@ -61,31 +62,34 @@ export default function SignupComprador(){
                 <div className="w-1/2 bg-g-300 h-full">
                     <img />
                 </div>
-                <div className="w-1/2 h-full flex flex-col gap-8 px-12 py-32">
+                <div className="w-1/2 h-full flex flex-col gap-8 p-12 overflow-y-scroll scroll-my-12">
                     <h2 className="text-p-600">¿Listo para vender?</h2>
-                    <form className="h-full gap-5 overflow-auto px-2">
-                        <Input label="Nombre" required={true} response={setNombre}>
+                    <form className="h-full gap-5  px-2 flex flex-col">
+                        <Input label="Nombre" required={true} response={setNombre} deshabilitado={false}>
                             ¿Cual es/son tu(s) nombre(s)?
                         </Input>
-                        <Input label="Apellido Paterno" required={true} response={setPat}>
+                        <Input label="Apellido Paterno" required={true} response={setPat}  deshabilitado={false}>
                             ¿Cuál es tu apellido paterno?
                         </Input>
-                        <Input label="Apellido Materno" required={true} response={setMat}>
+                        <Input label="Apellido Materno" required={true} response={setMat}  deshabilitado={false}>
                             ¿Cuál es tu apellido materno?
                         </Input>
-                        <Input label="Correo" required={true} response={setCorreo}>
+                        <Input label="Correo" required={true} response={setCorreo}  deshabilitado={false}>
                             ejemplo@dominio.com
                         </Input>
-                        <Input label="Contraseña" required={true} response={setContra}>
+                        <Password label="Contraseña" required={true} response={setContra} deshabilitado={false}>
+                            Ingresa tu contraseña
+                        </Password>
+                        <Input label="Contraseña" required={true} response={setContra} deshabilitado={false}>
                             Ingresa tu contraseña
                         </Input>
-                        <Input label="Confirmar contraseña" required={true} response={null}>
+                        <Input label="Confirmar contraseña" required={true} response={null} deshabilitado={false}>
                             Vuelve a ingresar tu contraseña
                         </Input>
-                        <Input label="Telefono empresarial" required={true} response={null}>
+                        <Input label="Telefono empresarial" required={true} response={null} deshabilitado={false}>
                             +52 1 XXX 0000 0000
                         </Input>
-                        <Input label="Telelfono personal" required={true} response={setTelPer}>
+                        <Input label="Telelfono personal" required={true} response={setTelPer} deshabilitado={false}>
                             +52 1 XXX 0000 0000
                         </Input>
                         <PrimaryButton size="[16rem]" onClick={() => {
