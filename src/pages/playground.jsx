@@ -1,6 +1,7 @@
 import CategorySelector from "../components/CategorySelector/CategorySelector.jsx";
 import {useEffect, useState} from "react";
 import NumerInput from "../components/Input/NumberInput/NumberInput.jsx";
+import Rating from "../components/Rating/Rating.jsx";
 
 
 export default function Playground(){
@@ -21,6 +22,7 @@ export default function Playground(){
                         <option>Opcion 2</option>
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
+                    <Rating rating={4.3} />
                 </div>
             </div>
     )
