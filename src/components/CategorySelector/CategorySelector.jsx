@@ -22,8 +22,6 @@ export default function CategorySelector(props) {
             error: false
         })
 
-        console.log(value);
-
     }
 
     return (
