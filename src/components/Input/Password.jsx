@@ -12,7 +12,7 @@ export default function Password(props){
     const [inputType, setInputType] = useState("password");
     const mayusExp = new RegExp(/(?=.*[a-z])+(?=.*[A-Z].*[A-Z])/);
     const simbolosExp = new RegExp(/(?=.*[!@#$%^&*].*[!@#$%^&*])/);
-    const numExp = new RegExp(/(?=.*[1-9].*[1-9].*[1-9])/)
+    const numExp = new RegExp(/(?=.*[1-9].*[1-9])/)
 
     const handleInput = useCallback((e) => {
 
@@ -28,27 +28,7 @@ export default function Password(props){
                     value: value
                 });
             }else{
-                if(props.tipo === "registro" || props.tipo === "confirmacion"){
-                    if(props.tipo === "confirmacion"){
-                        if(value === props.verificar) {
-                            setShowMsg(false);
-                            setMsg("");
-                            setEstado("default");
-                            props.response({
-                                error: false,
-                                value: value
-                            });
-                        }
-                        else{
-                            setShowMsg(true);
-                            setMsg("Las contraseñas no coinciden");
-                            setEstado("error");
-                            props.response({
-                                error: true,
-                                value: value
-                            });
-                        }
-                    }
+                if(props.tipo === "registro"){
                     if(value.length >= 8){
                         if(mayusExp.test(value)){
                             if(simbolosExp.test(value)){
@@ -63,7 +43,7 @@ export default function Password(props){
                                 }
                                 else{
                                     setShowMsg(true);
-                                    setMsg("Debe tener al menos tres números");
+                                    setMsg("Debe tener al menos dos números");
                                     setEstado("error");
                                     props.response({
                                         error: true,
@@ -99,7 +79,26 @@ export default function Password(props){
                             value: value
                         });
                     }
-
+                }
+                else if(props.tipo === "confirmacion"){
+                    if(value === props.verificar) {
+                        setShowMsg(false);
+                        setMsg("");
+                        setEstado("default");
+                        props.response({
+                            error: false,
+                            value: value
+                        });
+                    }
+                    else{
+                        setShowMsg(true);
+                        setMsg("Las contraseñas no coinciden");
+                        setEstado("error");
+                        props.response({
+                            error: false,
+                            value: value
+                        });
+                    }
                 }
                 else{
                     setShowMsg(false);
@@ -121,7 +120,7 @@ export default function Password(props){
             });
         }
 
-    }, [props.required, props.tipo]);
+    }, [props.required, props.tipo, props.verificar]);
 
 
     useEffect(() => {

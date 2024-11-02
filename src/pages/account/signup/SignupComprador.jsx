@@ -13,6 +13,7 @@ export default function SignupComprador(){
     const [contra, setContra] = useState({error: true, value:""});
     const [telPer, setTelPer] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(false);
+    const [confContra, setConfContra] = useState({error: true, value:""});
 
     
     const [form, setForm] = useState({
@@ -23,12 +24,11 @@ export default function SignupComprador(){
         materno: mat.value,
         correo: correo.value,
         telefono: telPer.value
-
     });
 
     useEffect(() => {
 
-        if(!nombre.error && !contra.error && !correo.error && !mat.error && !pat.error && !telPer.error){
+        if(!nombre.error && !contra.error && !correo.error && !mat.error && !pat.error && !telPer.error && !confContra.error){
             setForm({
                 name: nombre.value,
                 contrasenia: contra.value,
@@ -87,12 +87,10 @@ export default function SignupComprador(){
                         <Password label="Contraseña" required={true} response={setContra} deshabilitado={false} tipo={"registro"}>
                             Ingresa tu contraseña
                         </Password>
-                        <Input label="Contraseña" required={true} response={setContra} deshabilitado={false}>
-                            Ingresa tu contraseña
-                        </Input>
-                        <Input label="Confirmar contraseña" required={true} response={null} deshabilitado={false}>
-                            Vuelve a ingresar tu contraseña
-                        </Input>
+                        <Password label={"Confirmar contraseña"} required={true} deshabilitado={false} tipo={"confirmacion"}
+                                  response={setConfContra} verificar={contra.value}>
+                            Confirma tu contraseña
+                        </Password>
                         <Input label="Telefono empresarial" required={true} response={null} deshabilitado={false}>
                             +52 1 XXX 0000 0000
                         </Input>
