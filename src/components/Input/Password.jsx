@@ -7,7 +7,12 @@ export default function Password(props){
     const [estiloMsg, setEstiloMsg] = useState("");
     const [showMsg, setShowMsg] = useState(false);
     const [msg, setMsg] = useState("");
-    const [estado, setEstado] = useState(props.estado);
+    const [estado, setEstado] = useState("");
+    const [icono, setIcono] = useState("visibility")
+    const [inputType, setInputType] = useState("password");
+    const mayusExp = new RegExp(/(?=.*[a-z])+(?=.*[A-Z].*[A-Z])/);
+    const simbolosExp = new RegExp(/(?=.*[!@#$%^&*].*[!@#$%^&*])/);
+    const numExp = new RegExp(/(?=.*[1-9].*[1-9].*[1-9])/)
 
     const handleInput = useCallback((e) => {
 
@@ -23,24 +28,78 @@ export default function Password(props){
                     value: value
                 });
             }else{
-                if(props.validate){
-                    if(props.regex.test(value)){
-                        setShowMsg(false);
-                        setMsg("");
-                        setEstado("default");
-                        props.response({
-                            error: false,
-                            value: value
-                        });
+                if(props.tipo === "registro" || props.tipo === "confirmacion"){
+                    if(props.tipo === "confirmacion"){
+                        if(value === props.verificar) {
+                            setShowMsg(false);
+                            setMsg("");
+                            setEstado("default");
+                            props.response({
+                                error: false,
+                                value: value
+                            });
+                        }
+                        else{
+                            setShowMsg(true);
+                            setMsg("Las contraseñas no coinciden");
+                            setEstado("error");
+                            props.response({
+                                error: true,
+                                value: value
+                            });
+                        }
+                    }
+                    if(value.length >= 8){
+                        if(mayusExp.test(value)){
+                            if(simbolosExp.test(value)){
+                                if(numExp.test(value)){
+                                    setShowMsg(false);
+                                    setMsg("");
+                                    setEstado("default");
+                                    props.response({
+                                        error: false,
+                                        value: value
+                                    });
+                                }
+                                else{
+                                    setShowMsg(true);
+                                    setMsg("Debe tener al menos tres números");
+                                    setEstado("error");
+                                    props.response({
+                                        error: true,
+                                        value: value
+                                    });
+                                }
+                            }
+                            else{
+                                setShowMsg(true);
+                                setMsg("Debe tener al menos dos de los siguientes simbolos: !@#$%^&*");
+                                setEstado("error");
+                                props.response({
+                                    error: true,
+                                    value: value
+                                });
+                            }
+                        }
+                        else{
+                            setShowMsg(true);
+                            setMsg("Debe de haber al menos dos mayúsculas y una minúscula");
+                            setEstado("error");
+                            props.response({
+                                error: true,
+                                value: value
+                            });
+                        }
                     }else{
                         setShowMsg(true);
-                        setMsg("El formato no es correcto");
+                        setMsg("La contraseña debe tener al menos 8 caracteres");
                         setEstado("error");
                         props.response({
                             error: true,
                             value: value
                         });
                     }
+
                 }
                 else{
                     setShowMsg(false);
@@ -62,7 +121,7 @@ export default function Password(props){
             });
         }
 
-    }, [props.required, props.validate, props.regex]);
+    }, [props.required, props.tipo]);
 
 
     useEffect(() => {
@@ -79,10 +138,6 @@ export default function Password(props){
                 setEstiloInput("w-full p-3 rounded-lg bg-er-50 placeholder:text-er-700 text-er-700 focus:outline-er-600 text-lg");
                 setEstiloMsg("text-sm font-light text-er-700")
                 break;
-            case "advertencia":
-                setEstiloInput("w-full p-3 rounded-lg bg-a-50 placeholder:text-a-700 text-a-700 focus:outline-a-700 text-lg");
-                setEstiloMsg("text-sm font-light text-a-700")
-                break;
             case "deshabilitado":
                 setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-100 text-n-100 focus:outline-g-700 text-lg cursor-not-allowed");
                 setEstiloMsg("text-sm font-light text-ex-700")
@@ -98,7 +153,15 @@ export default function Password(props){
         }
     }, [props.deshabilitado]);
 
-
+    async function changeIcon() {
+        if (icono === "visibility") {
+            setIcono("visibility_off");
+            setInputType("text");
+        } else {
+            setIcono("visibility");
+            setInputType("password");
+        }
+    }
 
     return(
         <div className={"flex flex-col gap-2"}>
@@ -106,14 +169,18 @@ export default function Password(props){
                 <label className={"text-xl text-n-700"}>{props.label}</label>
                 {props.required && <span className={"material-symbols-rounded text-er-600 text-xl"}>asterisk</span>}
             </div>
-            <input
-                type={"text"}
-                placeholder={props.children}
-                maxLength={props.maxLength}
-                disabled={props.deshabilitado}
-                onChange={handleInput}
-                className={estiloInput}
-            />
+            <div className={"flex flex-col items-end h-[52px]"}>
+                <input
+                    type={inputType}
+                    placeholder={props.children}
+                    maxLength={20}
+                    disabled={props.deshabilitado}
+                    onChange={handleInput}
+                    className={estiloInput}
+                />
+                <span className={"text-n-200 material-symbols-rounded cursor-pointer relative overflow-visible right-3 text-lg bottom-10"}
+                      onClick={changeIcon}>{icono}</span>
+            </div>
             {showMsg && <p className={estiloMsg}>{msg}</p>}
         </div>
     )
@@ -123,10 +190,8 @@ Password.propTypes = {
     label: PropTypes.string.isRequired,
     children: PropTypes.string.isRequired,
     required: PropTypes.bool.isRequired,
-    estado: PropTypes.string,
-    maxLength: PropTypes.number,
     deshabilitado: PropTypes.bool.isRequired,
-    regex: PropTypes.shape(RegExp),
-    validate: PropTypes.bool.isRequired,
-    response: PropTypes.func.isRequired
+    tipo: PropTypes.string.isRequired,
+    response: PropTypes.func.isRequired,
+    verificar: PropTypes.string
 }

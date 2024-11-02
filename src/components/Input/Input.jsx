@@ -3,6 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 
 export default function Input(props){
 
+    const inputStyle = "w-full p-3 rounded-lg text-lg";
     const [estiloInput, setEstiloInput] = useState("");
     const [estiloMsg, setEstiloMsg] = useState("");
     const [showMsg, setShowMsg] = useState(false);
@@ -68,15 +69,15 @@ export default function Input(props){
     useEffect(() => {
         switch (estado) {
             default:
-                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-n-200 text-lg");
+                setEstiloInput(inputStyle + " bg-g-300 placeholder:text-n-200 focus:outline-n-200 text-n-600 ");
                 setEstiloMsg("text-sm font-light text-n-700")
                 break;
             case "default":
-                setEstiloInput("w-full p-3 rounded-lg bg-g-300 placeholder:text-n-200 text-n-600 focus:outline-n-200 text-lg");
+                setEstiloInput(inputStyle + " bg-g-300 placeholder:text-n-200 focus:outline-n-200 text-n-600 ");
                 setEstiloMsg("text-sm font-light text-n-700")
                 break;
             case "error":
-                setEstiloInput("w-full p-3 rounded-lg bg-er-50 placeholder:text-er-700 text-er-700 focus:outline-er-600 text-lg");
+                setEstiloInput( inputStyle + " bg-er-50 placeholder:text-er-700 text-er-700 focus:outline-er-600");
                 setEstiloMsg("text-sm font-light text-er-700")
                 break;
             case "advertencia":

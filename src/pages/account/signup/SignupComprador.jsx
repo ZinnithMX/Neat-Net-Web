@@ -84,7 +84,7 @@ export default function SignupComprador(){
                         <Input label="Correo" required={true} response={setCorreo}  deshabilitado={false}>
                             ejemplo@dominio.com
                         </Input>
-                        <Password label="Contraseña" required={true} response={setContra} deshabilitado={false}>
+                        <Password label="Contraseña" required={true} response={setContra} deshabilitado={false} tipo={"registro"}>
                             Ingresa tu contraseña
                         </Password>
                         <Input label="Contraseña" required={true} response={setContra} deshabilitado={false}>

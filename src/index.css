@@ -27,7 +27,7 @@
     h6{
         @apply text-sm font-display font-bold;
     }
-    p::selection, input::selection, label::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, span::selection{
+    p::selection, input::selection, label::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection{
         @apply bg-p-600;
         @apply text-g-50;
     }
@@ -37,22 +37,13 @@ body{
     @apply bg-g-50;
 }
 
-::-webkit-scrollbar{
-    @apply w-3;
+input::-ms-reveal, input::-ms-clear{
+    display: none;
 }
 
-::-webkit-scrollbar-thumb{
-    @apply bg-p-600 rounded-s;
+span{
+    user-select: none;
 }
-
-::-webkit-scrollbar-track{
-    @apply bg-g-200;
-}
-
-::-webkit-scrollbar-button{
-
-}
-
 
 #root{
     margin: 0;
