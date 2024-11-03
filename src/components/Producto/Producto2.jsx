@@ -12,7 +12,7 @@ export default function Producto2(props){
             <img className="img-fluid w-[380px] h-[214px]"
                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s"
                  alt="Producto imagen"/>
-            <div className="flex flex-col py-4 px-6 flex-1 gap-4 justify-between bg-g-50">
+            <div className="flex flex-col py-4 px-6 flex-1 gap-4 justify-between bg-g-100">
                 <div className="gap-2">
                     <div className="col-12 font-bold">{props.nombre}</div>
                     <div className="col-12 text-xs text-justify line-clamp-3 ">{props.detalles}</div>

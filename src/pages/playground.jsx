@@ -24,20 +24,13 @@ export default function Playground(){
 
     return (<>
             <div className="flex flex-row h-dvh">
-                <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
-                    <CategorySelector title={"Categoria 1"} response={setOpc}>
-                        <option>Opcion 1</option>
-                        <option>Opcion 2</option>
-                    </CategorySelector>
-                    <NumerInput response={setNumber}/>
-                    <Rating rating={4.3} />
+                <div className="w-full h-full p-10 gap-4 flex flex-row">
+                    <Producto></Producto>
+                    <Producto2></Producto2>
 
-                    <Rating rating={3.6} />
-                    <PrimaryButton onClick={funcion} disabled={false} tamano={"pequeno"} estilo={"neutro"}>
-                        Hola
-                    </PrimaryButton>
                 </div>
             </div>
+
         </>
     )
 }
