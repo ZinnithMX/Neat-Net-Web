@@ -39,14 +39,14 @@ export default function NumerInput(props){
     }
 
     return (
-        <div className="w-full bg-g-300 flex flex-row rounded-lg">
-            <span className={"material-symbols-rounded py-3 px-0.5 cursor-pointer text-xl"} onClick={less}>arrow_drop_down</span>
+        <div className="w-full bg-g-300 flex flex-row rounded-lg overflow-clip">
+            <span className={"material-symbols-rounded py-3 px-2 cursor-pointer text-n-200 icon hover:text-p-700 hover:bg-g-400"} onClick={less}>arrow_drop_down</span>
             <input type="number"
                    className="w-full apperance-none bg-g-300 text-sm text-center"
                    onChange={onChange}
                    onClick={handleClick}
                    value={value}/>
-            <span className={"material-symbols-rounded py-3 px-0.5 cursor-pointer text-xl"} onClick={add}>arrow_drop_up</span>
+            <span className={"material-symbols-rounded py-3 px-2 cursor-pointer text-n-200 icon hover:text-p-700 hover:bg-g-400"} onClick={add}>arrow_drop_up</span>
         </div>
     )
 }

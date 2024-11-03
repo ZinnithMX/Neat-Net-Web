@@ -97,11 +97,12 @@ export default function SignupComprador(){
                         <Input label="Telelfono personal" required={true} response={setTelPer} deshabilitado={false}>
                             +52 1 XXX 0000 0000
                         </Input>
-                        <PrimaryButton size="[16rem]" disabled={!sendForm} onClick={() => {
+                        <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm} onClick={() => {
                             alert("Enviado")
                             mandar(form)
                         }}>
                             Enviar
+                            <span className="material-symbols-rounded icon">send</span>
                         </PrimaryButton>
                     </form>
                     

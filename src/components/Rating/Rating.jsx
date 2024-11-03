@@ -14,22 +14,23 @@ export default function Rating(props){
         <div className={"flex flex-row gap-3 items-center"}>
             <p className={"m-0 p-0 text-lg"}>
                 {props.rating}
-                {props.rating%1}
             </p>
             <div className={"flex flex-row gap-2"}>
                 {
                     Array.from({ length: 5 }, (_, i) => {
-                        if (i < Math.floor(rate)) {
+                        if (rate - i >= 0.5 && rate - i < 1) {
                             return (
-                                <span key={i} className={"material-symbols-rounded text-s-700"}>star</span>
+                                <span key={i} className={"material-symbols-rounded icon text-s-700"}>star_half</span>
                             );
-                        } else if (i < rate) {
+                        }
+                        else if (i < rate) {
                             return (
-                                <span key={i} className={"material-symbols-rounded text-s-700"}>star_half</span>
+                                <span key={i} className={"material-symbols-rounded icon text-s-700"}>star</span>
                             );
-                        } else {
+                        }
+                        else {
                             return (
-                                <span key={i} className={"material-symbols-rounded-outline text-s-700"}>star</span>
+                                <span key={i} className={"material-symbols-rounded icon-outline text-s-700"}>star</span>
                             );
                         }
                     })

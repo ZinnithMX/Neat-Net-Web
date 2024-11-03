@@ -1,14 +1,77 @@
 import PropTypes from "prop-types";
+import {useEffect, useState} from "react";
 
 
 export default function PrimaryButton(props){
 
+    const [bgColor, setBgColor] = useState("p-600");
+    const [padding, setPadding] = useState("px-4 py-3.5");
+    const [textSize, setTextSize] = useState("text-lg");
+    const [tamano, setTamano] = useState("h-12");
+    const [bgActive, setBgActive] = useState("p-700");
+
+    useEffect(() => {
+        switch (props.tamano) {
+            case "normal": {
+                setPadding("px-4 py-3.5");
+                setTextSize("text-lg");
+                setTamano("h-12");
+                break;
+            }
+            default: {
+                setPadding("px-4 py-3.5");
+                setTextSize("text-lg");
+                setTamano("h-12");
+                break;
+            }
+            case "pequeno":{
+                setPadding("p-3");
+                setTextSize("text-xs");
+                setTamano("h-10");
+                break;
+            }
+            case "mini": {
+                setPadding("px-3 py-2");
+                setTextSize("text-xs");
+                setTamano("h-8");
+                break;
+            }
+
+        }
+    }, [props.tamano]);
+
+    useEffect(() => {
+        switch (props.estilo){
+            default:{
+                setBgColor("p-600");
+                setBgActive("p-700");
+                break;
+            }
+            case "primary":{
+                setBgColor("p-600");
+                setBgActive("p-700");
+                break;
+            }
+            case "secondary":{
+                setBgColor("s-600");
+                setBgActive("s-700");
+                break;
+            }
+            case "neutro":{
+                setBgColor("n-400");
+                setBgActive("n-600")
+                break;
+            }
+        }
+        console.log(props.estilo);
+    }, [props.estilo]);
+
+
     return(
       <>
-        <button className={"bg-p-600 flex p-3 gap-2 text-xs " +
-            "rounded-md font-semibold text-g-50 items-center justify-center flex-row w-" +
-            props.size + " " +
-            "active:bg-p-700 active:shadow-none hover:shadow-lg hover:shadow-p-600/40 " }
+        <button className={"bg-" + bgColor + " " + padding + " " + textSize + " " + tamano + " " + "flex gap-2 " +
+            "rounded-md font-semibold text-g-50 items-center justify-between flex-row cursor-pointer "+
+            "active:bg-" + bgActive + " active:shadow-none hover:shadow-lg hover:shadow-" + bgColor + "/40" }
             onClick={props.onClick}
             type={"button"}
             disabled={props.disabled}>
@@ -21,6 +84,7 @@ export default function PrimaryButton(props){
 PrimaryButton.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func.isRequired,
-    size: PropTypes.string.isRequired,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    tamano: PropTypes.string.isRequired,
+    estilo: PropTypes.string.isRequired,
 }

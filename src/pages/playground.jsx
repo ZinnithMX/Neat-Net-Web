@@ -5,6 +5,7 @@ import Rating from "../components/Rating/Rating.jsx";
 import Header from "../components/Header/Header.jsx";
 import Producto from "../components/Producto/Producto.jsx";
 import Producto2 from "../components/Producto/Producto2.jsx";
+import PrimaryButton from "../components/Button/PrimaryButton.jsx";
 
 
 export default function Playground(){
@@ -16,6 +17,10 @@ export default function Playground(){
         console.log(opc);
         console.log(number);
     }, [opc, number]);
+
+    function funcion(){
+        console.log("Click");
+    }
 
     return (<>
             <Header/>
@@ -29,6 +34,10 @@ export default function Playground(){
                     <Rating rating={4.3} />
 
                     <Producto2></Producto2>
+                    <Rating rating={3.6} />
+                    <PrimaryButton onClick={funcion} disabled={false} tamano={"pequeno"} estilo={"neutro"}>
+                        Hola
+                    </PrimaryButton>
                 </div>
             </div>
         </>
