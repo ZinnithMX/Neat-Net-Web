@@ -23,7 +23,6 @@ export default function Playground(){
     }
 
     return (<>
-            <Header/>
             <div className="flex flex-row h-dvh">
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
                     <CategorySelector title={"Categoria 1"} response={setOpc}>
@@ -33,7 +32,6 @@ export default function Playground(){
                     <NumerInput response={setNumber}/>
                     <Rating rating={4.3} />
 
-                    <Producto2></Producto2>
                     <Rating rating={3.6} />
                     <PrimaryButton onClick={funcion} disabled={false} tamano={"pequeno"} estilo={"neutro"}>
                         Hola
