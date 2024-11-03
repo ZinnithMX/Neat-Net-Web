@@ -22,7 +22,7 @@ export default function Playground(){
                         <option>Opcion 2</option>
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
-                    <Rating rating={4.3} />
+                    <Rating rating={3.6} />
                 </div>
             </div>
     )

@@ -40,13 +40,13 @@ export default function NumerInput(props){
 
     return (
         <div className="w-full bg-g-300 flex flex-row rounded-lg">
-            <span className={"material-symbols-rounded py-3 px-0.5 cursor-pointer text-xl"} onClick={less}>arrow_drop_down</span>
+            <span className={"material-symbols-rounded icon py-3 px-0.5 cursor-pointer text-xl"} onClick={less}>arrow_drop_down</span>
             <input type="number"
                    className="w-full apperance-none bg-g-300 text-sm text-center"
                    onChange={onChange}
                    onClick={handleClick}
                    value={value}/>
-            <span className={"material-symbols-rounded py-3 px-0.5 cursor-pointer text-xl"} onClick={add}>arrow_drop_up</span>
+            <span className={"material-symbols-rounded icon py-3 px-0.5 cursor-pointer text-xl"} onClick={add}>arrow_drop_up</span>
         </div>
     )
 }

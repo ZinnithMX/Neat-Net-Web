@@ -177,7 +177,7 @@ export default function Password(props){
                     onChange={handleInput}
                     className={estiloInput}
                 />
-                <span className={"text-n-200 material-symbols-rounded cursor-pointer relative overflow-visible right-3 text-lg bottom-10"}
+                <span className={"text-n-200 material-symbols-rounded icon cursor-pointer relative overflow-visible right-3 text-lg bottom-10"}
                       onClick={changeIcon}>{icono}</span>
             </div>
             {showMsg && <p className={estiloMsg}>{msg}</p>}
