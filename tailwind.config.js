@@ -1,9 +1,37 @@
 /** @type {import('tailwindcss').Config} */
+
+const colours = ["p", "s", "n", "g", "a", "er", "ex", "i"];
+
+const safeColours = colours.flatMap((color) => [
+  `bg-${color}-100`,
+  `bg-${color}-200`,
+  `bg-${color}-300`,
+  `bg-${color}-400`,
+  `bg-${color}-500`,
+  `bg-${color}-600`,
+  `bg-${color}-700`,
+  `active:bg-${color}-100`,
+  `active:bg-${color}-200`,
+  `active:bg-${color}-300`,
+  `active:bg-${color}-400`,
+  `active:bg-${color}-500`,
+  `active:bg-${color}-600`,
+  `active:bg-${color}-700`,
+  `hover:shadow-${color}-100`,
+  `hover:shadow-${color}-200`,
+  `hover:shadow-${color}-300`,
+  `hover:shadow-${color}-400`,
+  `hover:shadow-${color}-500`,
+  `hover:shadow-${color}-600`,
+  `hover:shadow-${color}-700`,
+]);
+
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
+  safelist: [...safeColours],
   theme: {
     fontFamily: {
       'sans' : ['Plus Jakarta Sans', 'sans-serif'],
