@@ -17,7 +17,7 @@ export default function Playground(){
     }, [opc, number]);
 
     return (<>
-        <Header/>
+            <Header/>
             <div className="flex flex-row h-dvh">
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
                     <CategorySelector title={"Categoria 1"} response={setOpc}>
