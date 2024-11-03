@@ -4,6 +4,7 @@ import NumerInput from "../components/Input/NumberInput/NumberInput.jsx";
 import Rating from "../components/Rating/Rating.jsx";
 import Header from "../components/Header/Header.jsx";
 import Producto from "../components/Producto/Producto.jsx";
+import Producto2 from "../components/Producto/Producto2.jsx";
 
 
 export default function Playground(){
@@ -26,7 +27,8 @@ export default function Playground(){
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
                     <Rating rating={4.3} />
-                    <Producto></Producto>
+
+                    <Producto2></Producto2>
                 </div>
             </div>
         </>
