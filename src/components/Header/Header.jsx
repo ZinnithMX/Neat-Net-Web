@@ -9,7 +9,7 @@ export default function Header() {
                 <div className="w-1/2">
                     <Input required={false} deshabilitado={false} validate={false} response={false}>Buscar producto</Input>
                 </div>
-                <div className="flex justify-end w-1/4">
+                <div className="flex justify-end w-1/4 gap-4">
                     <div>I1</div>
                     <div>I2</div>
                     <div>I3</div>
