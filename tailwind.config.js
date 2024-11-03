@@ -24,6 +24,13 @@ const safeColours = colours.flatMap((color) => [
   `hover:shadow-${color}-500`,
   `hover:shadow-${color}-600`,
   `hover:shadow-${color}-700`,
+  `shadow-${color}-100`,
+  `shadow-${color}-200`,
+  `shadow-${color}-300`,
+  `shadow-${color}-400`,
+  `shadow-${color}-500`,
+  `shadow-${color}-600`,
+  `shadow-${color}-700`,
 ]);
 
 export default {

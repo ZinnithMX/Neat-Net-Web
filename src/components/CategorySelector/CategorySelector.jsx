@@ -34,21 +34,21 @@ export default function CategorySelector(props) {
                 setPadding("p-3");
                 setTextSize("text-lg");
                 setTamano("h-12");
-                setMarginIcon("36px");
+                setMarginIcon("bottom-[36px]");
                 break;
             }
             default: {
                 setPadding("p-3");
                 setTextSize("text-lg");
                 setTamano("h-12");
-                setMarginIcon("36px");
+                setMarginIcon("bottom-[36px]");
                 break;
             }
             case "pequeno":{
-                setPadding("p-2");
+                setPadding("py-3 px-3");
                 setTextSize("text-xs");
                 setTamano("h-10");
-                setMarginIcon("28px");
+                setMarginIcon("bottom-[30px]");
                 break;
             }
 
@@ -58,7 +58,7 @@ export default function CategorySelector(props) {
     return (
         <div className={"flex flex-col items-end " + tamano}>
             <select
-                className={"w-full rounded-lg bg-g-300 appearance-none font-light " + padding + " " + textSize + " " + tamano}
+                className={"w-full rounded-lg bg-g-300 appearance-none font-light " + padding + " " + textSize + " "}
                 title={props.title}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -66,7 +66,7 @@ export default function CategorySelector(props) {
             >
                 {props.children}
             </select>
-            <span className={"material-symbols-rounded relative right-3 text-n-200 bottom-[" + marginIcon + "]" }>{icon}</span>
+            <span className={"material-symbols-rounded relative right-3 text-n-200 " +  marginIcon}>{icon}</span>
         </div>
     );
 }

@@ -29,7 +29,7 @@ export default function Playground(){
                         <option>Opcion 1</option>
                         <option>Opcion 2</option>
                     </CategorySelector>
-                    <NumerInput response={setNumber}/>
+                    <NumerInput response={setNumber} tamano={"pequeno"}/>
                     <Rating rating={4.3} />
 
                     <Rating rating={3.6} />
