@@ -2,6 +2,9 @@ import CategorySelector from "../components/CategorySelector/CategorySelector.js
 import {useEffect, useState} from "react";
 import NumerInput from "../components/Input/NumberInput/NumberInput.jsx";
 import Rating from "../components/Rating/Rating.jsx";
+import Header from "../components/Header/Header.jsx";
+import Producto from "../components/Producto/Producto.jsx";
+import Producto2 from "../components/Producto/Producto2.jsx";
 import PrimaryButton from "../components/Button/PrimaryButton.jsx";
 
 
@@ -19,7 +22,7 @@ export default function Playground(){
         console.log("Click");
     }
 
-    return (
+    return (<>
             <div className="flex flex-row h-dvh">
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
                     <CategorySelector title={"Categoria 1"} response={setOpc} tamano={"pequeno"}>
@@ -27,11 +30,14 @@ export default function Playground(){
                         <option>Opcion 2</option>
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
+                    <Rating rating={4.3} />
+
                     <Rating rating={3.6} />
                     <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"}>
                         Hola
                     </PrimaryButton>
                 </div>
             </div>
+        </>
     )
 }
