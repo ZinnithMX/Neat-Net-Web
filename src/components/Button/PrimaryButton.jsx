@@ -63,6 +63,7 @@ export default function PrimaryButton(props){
                 break;
             }
         }
+        console.log(props.estilo);
     }, [props.estilo]);
 
 
