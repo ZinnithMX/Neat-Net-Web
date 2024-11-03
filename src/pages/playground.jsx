@@ -22,7 +22,7 @@ export default function Playground(){
     return (
             <div className="flex flex-row h-dvh">
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
-                    <CategorySelector title={"Categoria 1"} response={setOpc}>
+                    <CategorySelector title={"Categoria 1"} response={setOpc} tamano={"pequeno"}>
                         <option>Opcion 1</option>
                         <option>Opcion 2</option>
                     </CategorySelector>

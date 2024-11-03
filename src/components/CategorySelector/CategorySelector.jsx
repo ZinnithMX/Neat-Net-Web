@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 export default function CategorySelector(props) {
     const [icon, setIcon] = useState("arrow_drop_down");
+    const [padding, setPadding] = useState("p-3");
+    const [textSize, setTextSize] = useState("text-lg");
+    const [tamano, setTamano] = useState("h-12");
+    const [marginIcon, setMarginIcon] = useState("36px");
 
     function handleFocus() {
         setIcon("arrow_drop_up");
@@ -24,10 +28,37 @@ export default function CategorySelector(props) {
 
     }
 
+    useEffect(() => {
+        switch (props.tamano) {
+            case "normal": {
+                setPadding("p-3");
+                setTextSize("text-lg");
+                setTamano("h-12");
+                setMarginIcon("36px");
+                break;
+            }
+            default: {
+                setPadding("p-3");
+                setTextSize("text-lg");
+                setTamano("h-12");
+                setMarginIcon("36px");
+                break;
+            }
+            case "pequeno":{
+                setPadding("p-2");
+                setTextSize("text-xs");
+                setTamano("h-10");
+                setMarginIcon("28px");
+                break;
+            }
+
+        }
+    }, [props.tamano]);
+
     return (
-        <div className={"flex flex-col items-end h-[48px]"}>
+        <div className={"flex flex-col items-end " + tamano}>
             <select
-                className={"w-full rounded-lg bg-g-300 appearance-none text-lg font-light p-3"}
+                className={"w-full rounded-lg bg-g-300 appearance-none font-light " + padding + " " + textSize + " " + tamano}
                 title={props.title}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -35,7 +66,7 @@ export default function CategorySelector(props) {
             >
                 {props.children}
             </select>
-            <span className={"material-symbols-rounded relative right-3 text-n-200 bottom-[36px]"}>{icon}</span>
+            <span className={"material-symbols-rounded relative right-3 text-n-200 bottom-[" + marginIcon + "]" }>{icon}</span>
         </div>
     );
 }
@@ -43,5 +74,6 @@ export default function CategorySelector(props) {
 CategorySelector.propTypes = {
     children: PropTypes.node.isRequired,
     title: PropTypes.string.isRequired,
-    response: PropTypes.func.isRequired
+    response: PropTypes.func.isRequired,
+    tamano: PropTypes.string.isRequired
 }

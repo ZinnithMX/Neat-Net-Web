@@ -95,7 +95,7 @@ export default function PrimaryButton(props){
             }
         }
     }, [estilo]);
-    
+
     useEffect(() => {
         setEstilo(props.estilo)
     }, [props.estilo]);
