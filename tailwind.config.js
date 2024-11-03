@@ -75,7 +75,11 @@ export default {
       'i-100' : '#A8EBFE',
       'i-50' : '#CBF4FF'
     },
-    extend: {},
+    extend: {
+      fontSize:{
+        'lg' : '1rem'
+      },
+    },
   },
   plugins: [],
 }

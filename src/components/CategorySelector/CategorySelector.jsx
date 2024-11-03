@@ -25,7 +25,7 @@ export default function CategorySelector(props) {
     }
 
     return (
-        <div className={"flex flex-col items-end h-[52px]"}>
+        <div className={"flex flex-col items-end h-[48px]"}>
             <select
                 className={"w-full rounded-lg bg-g-300 appearance-none text-lg font-light p-3"}
                 title={props.title}
@@ -35,7 +35,7 @@ export default function CategorySelector(props) {
             >
                 {props.children}
             </select>
-            <span className={"material-symbols-rounded relative right-3 bottom-[36px]"}>{icon}</span>
+            <span className={"material-symbols-rounded relative right-3 text-n-200 bottom-[36px]"}>{icon}</span>
         </div>
     );
 }
