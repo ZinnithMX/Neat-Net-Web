@@ -9,6 +9,8 @@ export default function PrimaryButton(props){
     const [textSize, setTextSize] = useState("text-lg");
     const [tamano, setTamano] = useState("h-12");
     const [bgActive, setBgActive] = useState("p-700");
+    const [estilo, setEstilo] = useState(props.estilo);
+    const [desabilitado, setDesabilitado] = useState(props.disabled);
 
     useEffect(() => {
         switch (props.tamano) {
@@ -41,7 +43,21 @@ export default function PrimaryButton(props){
     }, [props.tamano]);
 
     useEffect(() => {
-        switch (props.estilo){
+        if(desabilitado){
+            console.log("Deshabilitado1");
+            setEstilo("deshabilitado");
+        }
+        else{
+            setEstilo(props.estilo);
+        }
+    }, [desabilitado]);
+
+    useEffect(() => {
+        setDesabilitado(props.disabled);
+    }, [props.disabled]);
+
+    useEffect(() => {
+        switch (estilo){
             default:{
                 setBgColor("p-600");
                 setBgActive("p-700");
@@ -62,14 +78,31 @@ export default function PrimaryButton(props){
                 setBgActive("n-600")
                 break;
             }
+            case "error":{
+                setBgColor("er-600");
+                setBgActive("er-700");
+                break;
+            }
+            case "deshabilitado":{
+                setBgColor("n-100");
+                setBgActive("n-100");
+                break;
+            }
+            case "advertencia":{
+                setBgColor("a-600");
+                setBgActive("a-700");
+                break;
+            }
         }
-        console.log(props.estilo);
+    }, [estilo]);
+    
+    useEffect(() => {
+        setEstilo(props.estilo)
     }, [props.estilo]);
-
 
     return(
       <>
-        <button className={"bg-" + bgColor + " " + padding + " " + textSize + " " + tamano + " " + "flex gap-2 " +
+        <button className={"bg-" +  bgColor + " " + padding + " " + textSize + " " + tamano + " " + "flex gap-2 " +
             "rounded-md font-semibold text-g-50 items-center justify-between flex-row cursor-pointer "+
             "active:bg-" + bgActive + " active:shadow-none hover:shadow-lg hover:shadow-" + bgColor + "/40" }
             onClick={props.onClick}

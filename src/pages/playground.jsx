@@ -28,7 +28,7 @@ export default function Playground(){
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
                     <Rating rating={3.6} />
-                    <PrimaryButton onClick={funcion} disabled={false} tamano={"pequeno"} estilo={"neutro"}>
+                    <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"}>
                         Hola
                     </PrimaryButton>
                 </div>
