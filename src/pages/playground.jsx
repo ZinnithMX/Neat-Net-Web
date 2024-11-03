@@ -2,6 +2,8 @@ import CategorySelector from "../components/CategorySelector/CategorySelector.js
 import {useEffect, useState} from "react";
 import NumerInput from "../components/Input/NumberInput/NumberInput.jsx";
 import Rating from "../components/Rating/Rating.jsx";
+import Header from "../components/Header/Header.jsx";
+import Producto from "../components/Producto/Producto.jsx";
 
 
 export default function Playground(){
@@ -14,7 +16,8 @@ export default function Playground(){
         console.log(number);
     }, [opc, number]);
 
-    return (
+    return (<>
+        <Header/>
             <div className="flex flex-row h-dvh">
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
                     <CategorySelector title={"Categoria 1"} response={setOpc}>
@@ -23,7 +26,9 @@ export default function Playground(){
                     </CategorySelector>
                     <NumerInput response={setNumber}/>
                     <Rating rating={4.3} />
+                    <Producto></Producto>
                 </div>
             </div>
+        </>
     )
 }
