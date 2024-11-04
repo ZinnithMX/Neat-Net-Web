@@ -12,7 +12,7 @@ export default function Password(props){
     const [inputType, setInputType] = useState("password");
     const mayusExp = new RegExp(/(?=.*[a-z])+(?=.*[A-Z].*[A-Z])/);
     const simbolosExp = new RegExp(/(?=.*[!@#$%^&*].*[!@#$%^&*])/);
-    const numExp = new RegExp(/(?=.*[1-9].*[1-9])/)
+    const numExp = new RegExp(/(?=.*[0-9].*[0-9])/)
 
     const handleInput = useCallback((e) => {
 
