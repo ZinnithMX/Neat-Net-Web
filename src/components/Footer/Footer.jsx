@@ -1,10 +1,10 @@
 export default function Footer() {
     return (
-        <footer className="bg-n-700 h-[60px] flex flex-row justify-center items-center justify-between p-[24px] text-g-50 text-base">
-            <div className="text-center">Términos y Condiciones</div>
-            <div className="text-center">Política de privacidad</div>
-            <div className="text-center">Soporte Técnico</div>
-            <div className="text-center">&copy; Zinnith 2024</div>
+        <footer className="bg-n-700 flex flex-row items-center justify-between w-full p-3 m-0">
+            <p className="text-sm text-g-50">Términos y Condiciones</p>
+            <p className="text-sm text-g-50">Política de privacidad</p>
+            <p className="text-sm text-g-50">Soporte Técnico</p>
+            <p className="text-sm text-g-50">&copy; Zinnith 2024</p>
         </footer>
     )
 }

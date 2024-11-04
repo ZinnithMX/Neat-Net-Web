@@ -23,7 +23,7 @@ export default function Rating(props){
                                 <span key={i} className={"material-symbols-rounded icon text-s-700"}>star_half</span>
                             );
                         }
-                        else if (i < rate) {
+                        if (i < rate) {
                             return (
                                 <span key={i} className={"material-symbols-rounded icon text-s-700"}>star</span>
                             );
