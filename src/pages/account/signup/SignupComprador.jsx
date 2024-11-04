@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
-import ilustracion from "../../../assets/Illustrations/Coronavirus Delivery Preventions-pana.svg";
+import ilustracion from "../../../assets/Illustrations/In no time-pana 1.svg";
 import {Link} from "react-router-dom";
 
 export default function SignupComprador(){
@@ -84,7 +84,7 @@ export default function SignupComprador(){
                                   response={setConfContra} verificar={contra.value}>
                             Confirma tu contraseña
                         </Password>
-                        <Input label="Numero de telefono" required={true} response={null} deshabilitado={false}
+                        <Input label="Numero de telefono" required={true} response={setTelPer} deshabilitado={false}
                                validate={true} regex={new RegExp(/^[+]{1}(?:[0-9\-\\(\\)\\/.]\s?){6,15}[0-9]{1}$/)}>
                             +XX XXXX XXX 0000 0000
                         </Input>
