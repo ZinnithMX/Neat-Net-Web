@@ -13,7 +13,7 @@ export default function MetodosPago() {
             { nombre: "Metodo3", titular: "Yo" , nip:3},
 
         ]);
-    }, [metodos]);
+    }, []);
 
     const listaMet = metodos?.map((metodo) => (
         <MetodoP nombre={metodo.nombre} titular={metodo.titular} nip={999}></MetodoP>
