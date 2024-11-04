@@ -15,6 +15,9 @@ import Productos from "./pages/productos/Productos.jsx";
 import VerProducto from "./pages/productos/VerProducto.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
+import Perfil from "./pages/ajustes/Perfil.jsx";
+import Seguridad from "./pages/ajustes/Seguridad.jsx";
+import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 
 function App() {
 
@@ -24,6 +27,7 @@ function App() {
             <Routes>
                 <Route path={"*"} element={<NotFound/>}/>
                 <Route path="/" element={<Promo/>}/>
+              <Route path="/cuenta/pago" element={<MetodosPago/>}/>
                 <Route path={"/play"} element={<Playground/>}/>
                 <Route path={"/TOS"} element={<TOS/>}/>
                 <Route path={"/Privacy"} element={<Privacy/>}/>
