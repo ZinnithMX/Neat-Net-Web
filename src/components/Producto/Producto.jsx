@@ -27,19 +27,19 @@ export default function Producto(props) {
                     </div>
                     <Rating rating={4} />
                 </div>
-                <div className="flex gap-[10px] justify-between">
-                    <div className="w-[104px]">
-                        <NumerInput response={funcion} tamano="pequeno" />
-                    </div>
-                    <PrimaryButton tamano="pequeno" estilo="primary" onClick={() => alert("Comprado")}>
+                <div className="flex gap-2 w-full">
+                    <NumerInput response={funcion} tamano="pequeno" width={"w-28"} />
+                    <PrimaryButton width={"flex-1"} tamano="pequeno" estilo="primary" onClick={() => alert("Comprado")}>
                         Comprar
                     </PrimaryButton>
-                    <PrimaryButton tamano="pequeno" estilo="primary" onClick={() => alert("Carrito")}>
-                        <span className={"material-symbols-rounded icon"}>shopping_cart</span>
+                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="primary" onClick={() => alert("Carrito")}>
+                        <span className={"material-symbols-rounded icon text-lg"}>shopping_cart</span>
                     </PrimaryButton>
-                    <PrimaryButton tamano="pequeno" estilo="primary" onClick={() => alert("WishList")}>
-                        <span className={"material-symbols-rounded icon"}>playlist_add</span>
+                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="primary" onClick={() => alert("WishList")}>
+                        <span className={"material-symbols-rounded icon text-lg"}>playlist_add</span>
                     </PrimaryButton>
+
+
                 </div>
             </div>
         </div>
