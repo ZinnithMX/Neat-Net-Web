@@ -16,8 +16,10 @@ function App() {
         <>
           <Router>
             <Routes>
-              <Route path="/" element={<MetodosPago/>}/>
+              <Route path="/" element={<Seguridad/>}/>
                 <Route path={"/play"} element={<Playground/>}/>
+              <Route path="/" element={<Perfil/>}/>
+                <Route path={"/perfil"} element={<Perfil/>}/>
             </Routes>
           </Router>
         </>
