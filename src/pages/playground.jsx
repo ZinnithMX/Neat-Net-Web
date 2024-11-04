@@ -8,6 +8,7 @@ import Producto2 from "../components/Producto/Producto2.jsx";
 import PrimaryButton from "../components/Button/PrimaryButton.jsx";
 import Producto from "../components/Producto/Producto.jsx";
 import Footer from "../components/Footer/Footer.jsx";
+import MetodoP from "../components/metodoP/MetodoP.jsx";
 
 
 export default function Playground(){
@@ -26,6 +27,7 @@ export default function Playground(){
 
     return (<>
             <Header></Header>
+            <MetodoP></MetodoP>
             <div className="flex flex-row h-dvh">
                 <Producto layout={"Cuadricula"}></Producto>
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
