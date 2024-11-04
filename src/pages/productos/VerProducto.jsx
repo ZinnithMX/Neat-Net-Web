@@ -21,7 +21,8 @@ export default function VerProducto() {
         //     if(e.response.status === 400){
         //         setEncontrado(false);
         //     }
-        // }setEncontrado(true);
+        // }
+        setEncontrado(true);
         setProducto({
             titulo: "Productito",
             precio: 200.30,
@@ -94,6 +95,7 @@ export default function VerProducto() {
                             </PrimaryButton>
                         </div>
                     </div>
+                    <div className={"flex px-8 py-"}></div>
                 </div>
                 :
                 <div className={"flex flex-col items-center gap-8 h-full py-64 "}>
