@@ -11,10 +11,10 @@ export default function Header() {
                         producto</Input>
                 </div>
                 <div className="flex justify-end w-1/4 gap-4">
-                    <div>I1</div>
-                    <div>I2</div>
-                    <div>I3</div>
-                    <div>I4</div>
+                    <span className={"material-symbols-rounded icon text-n-200"}>shopping_cart</span>
+                    <span className={"material-symbols-rounded icon text-n-200"}>list</span>
+                    <span className={"material-symbols-rounded icon text-n-200"}>notifications</span>
+                    <span className={"material-symbols-rounded icon text-n-200"}>account_circle</span>
                 </div>
             </div>
         </header>
