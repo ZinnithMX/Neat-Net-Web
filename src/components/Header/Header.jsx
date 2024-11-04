@@ -14,7 +14,7 @@ export default function Header() {
                     <span className={"material-symbols-rounded icon text-n-200"}>shopping_cart</span>
                     <span className={"material-symbols-rounded icon text-n-200"}>list</span>
                     <span className={"material-symbols-rounded icon text-n-200"}>notifications</span>
-                    <span className={"material-symbols-rounded icon text-n-200 rounded-full bg-g-300 p-1"}>account_circle</span>
+                    <span className={"material-symbols-rounded icon text-n-200 rounded-full bg-g-300 p-1"}>person</span>
                 </div>
             </div>
         </header>
