@@ -15,25 +15,19 @@ export default function Productos(){
             <div className="w-full px-6 py-8 gap-8">
                 <h4>Vistos recientemenete</h4>
                 <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
-                    <Producto layout={"Cuadricula"}></Producto>
+                    
                 </div>
             </div>
 
-            <div className="w-full">
+            <div className="w-full px-6 py-8 gap-8">
                 <h4>Productos Populares</h4>
             </div>
-            <div className="w-full">
+            <div className="w-full px-6 py-8 gap-8">
                 <h4>Productos recién agregados</h4>
             </div>
-            <div className="w-full">
+            <div className="w-full px-6 py-8 gap-8">
                 <h4>Descuentos de la semana</h4></div>
-            <div className="w-full">
+            <div className="w-full px-6 py-8 gap-8">
                 <h4>Descubre algo nuevo</h4>
             </div>
             </div>
