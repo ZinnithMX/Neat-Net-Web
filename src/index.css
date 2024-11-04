@@ -38,6 +38,19 @@
     p{
         @apply text-n-700;
     }
+    .link{
+        @apply text-p-600 underline;
+    }
+
+    .link:hover{
+        @apply text-p-700;
+    }
+    .link-secondary{
+        @apply text-s-600 underline;
+    }
+    .link-secondary:hover{
+        @apply text-s-700;
+    }
 }
 
 body{
