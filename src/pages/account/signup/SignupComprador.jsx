@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
-import ilustracion from "../../../assets/Illustrations/Coronavirus Delivery Preventions-pana.svg";
+import ilustracion from "../../../assets/Illustrations/In no time-pana 1.svg";
 import {Link} from "react-router-dom";
 
 export default function SignupComprador(){
