@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
+import ilustracion from "../../../assets/Illustrations/Select-pana.svg";
 
 export default function SignupComprador(){
 
@@ -66,22 +67,22 @@ export default function SignupComprador(){
     return(
         <>
             <div className="flex flex-row h-dvh">
-                <div className="w-1/2 bg-g-300 h-full">
-                    <img />
+                <div className="w-1/2 flex bg-g-300 h-full p-8 items-center justify-center">
+                    <img src={ilustracion} className={"w-full aspect-auto"}/>
                 </div>
                 <div className="w-1/2 h-full flex flex-col gap-8 px-12 py-32 overflow-y-scroll scroll-my-12">
                     <h2 className="text-p-600">¿Listo para vender?</h2>
                     <form className="gap-5  px-2 flex flex-col">
-                        <Input label="Nombre" required={true} response={setNombre} deshabilitado={false}>
+                        <Input label="Nombre" required={true} response={setNombre} deshabilitado={false} validate={false}>
                             ¿Cual es/son tu(s) nombre(s)?
                         </Input>
-                        <Input label="Apellido Paterno" required={true} response={setPat}  deshabilitado={false}>
+                        <Input label="Apellido Paterno" required={true} response={setPat}  deshabilitado={false} validate={false}>
                             ¿Cuál es tu apellido paterno?
                         </Input>
-                        <Input label="Apellido Materno" required={true} response={setMat}  deshabilitado={false}>
+                        <Input label="Apellido Materno" required={true} response={setMat}  deshabilitado={false} validate={false}>
                             ¿Cuál es tu apellido materno?
                         </Input>
-                        <Input label="Correo" required={true} response={setCorreo}  deshabilitado={false}>
+                        <Input label="Correo" required={true} response={setCorreo}  deshabilitado={false} validate={true} regex={new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)}>
                             ejemplo@dominio.com
                         </Input>
                         <Password label="Contraseña" required={true} response={setContra} deshabilitado={false} tipo={"registro"}>
@@ -91,18 +92,17 @@ export default function SignupComprador(){
                                   response={setConfContra} verificar={contra.value}>
                             Confirma tu contraseña
                         </Password>
-                        <Input label="Telefono empresarial" required={true} response={null} deshabilitado={false}>
-                            +52 1 XXX 0000 0000
+                        <Input label="Telefono empresarial" required={true} response={null} deshabilitado={false} validate={true} regex={new RegExp(/^[+]{1}(?:[0-9\-\\(\\)\\/.]\s?){6,15}[0-9]{1}$/)}>
+                            +XX XXXX XXX 0000 0000
                         </Input>
                         <Input label="Telelfono personal" required={true} response={setTelPer} deshabilitado={false}>
-                            +52 1 XXX 0000 0000
+                            +XX XXXX XXX 0000 0000
                         </Input>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm} onClick={() => {
                             alert("Enviado")
                             mandar(form)
                         }}>
-                            Enviar
-                            <span className="material-symbols-rounded icon">send</span>
+                            Crear Cuenta
                         </PrimaryButton>
                     </form>
                     
