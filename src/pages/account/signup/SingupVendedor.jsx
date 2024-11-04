@@ -109,16 +109,19 @@ export default function SignupVendedor(){
                             +XX XXXX XXX 0000 0000
                         </Input>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={() => {
-                                           alert("Enviado")
-                                           mandar(form)
-                                       }}>
+                                       onClick={mandar}>
                             Crear Cuenta
                         </PrimaryButton>
                     </form>
                     <p className={"text-xs"}>Al crar una cuenta aceptas los <Link className={"link"} to={"/TOS"}>Terminos
                         y condiciones</Link> y las <Link className={"link"} to={"/Privacy"}> Politicas de privacidad</Link></p>
-                    <p className={"text-sm font-bold"}>¿Ya tienes cuenta? <Link to={""} className={"link"}>Inicia Sesión</Link></p>
+                    <div className={"flex flex-row gap-2"}>
+                        <p className={"text-sm font-bold"}>¿Ya tienes cuenta? <Link to={"/login/vendedor"} className={"link"}>Inicia
+                            Sesión</Link></p>
+                        <p>|</p>
+                        <p className={"text-sm font-bold"}>¿Eres <Link to={"/signup/comprador"}
+                                                                       className={"link"}>Compador</Link>?</p>
+                    </div>
                 </div>
             </div>
 

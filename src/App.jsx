@@ -8,6 +8,8 @@ import TOS from "./pages/TOS.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import SignupVendedor from "./pages/account/signup/SingupVendedor.jsx";
 import Promo from "./pages/Promo.jsx";
+import LoginComprador from "./pages/account/login/LoginComprador.jsx";
+import LoginVendedor from "./pages/account/login/LoginVendedor.jsx";
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
                 <Route path={"/Privacy"} element={<Privacy/>}/>
                 <Route path={"/signup/comprador"} element={<SignupComprador/>}/>
                 <Route path={"/signup/vendedor"} element={<SignupVendedor/>}/>
+                <Route path={"/login/comprador"} element={<LoginComprador/>}/>
+                <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
             </Routes>
           </Router>
         </>
