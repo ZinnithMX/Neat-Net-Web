@@ -38,6 +38,12 @@
     p{
         @apply text-n-700;
     }
+    .link{
+        @apply text-p-600 underline;
+    }
+    .link:hover{
+        @apply text-p-700;
+    }
 }
 
 body{
