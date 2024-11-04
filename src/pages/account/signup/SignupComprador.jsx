@@ -5,15 +5,15 @@ import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/In no time-pana 1.svg";
 import {Link} from "react-router-dom";
 
-export default function SignupComprador(){
+export default function SignupComprador() {
 
 
-    const [nombre, setNombre] = useState({error: true, value:""});
-    const [correo, setCorreo] = useState({error: true, value:""});
-    const [contra, setContra] = useState({error: true, value:""});
-    const [telPer, setTelPer] = useState({error: true, value:""});
+    const [nombre, setNombre] = useState({error: true, value: ""});
+    const [correo, setCorreo] = useState({error: true, value: ""});
+    const [contra, setContra] = useState({error: true, value: ""});
+    const [telPer, setTelPer] = useState({error: true, value: ""});
     const [sendForm, setSendForm] = useState(true);
-    const [confContra, setConfContra] = useState({error: true, value:""});
+    const [confContra, setConfContra] = useState({error: true, value: ""});
 
     
     const [form, setForm] = useState({

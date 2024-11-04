@@ -19,7 +19,7 @@ export default function SignupVendedor(){
     const [confContra, setConfContra] = useState({error: true, value:""});
 
 
-    const [form, setForm] = useState({
+    const [Form, setForm] = useState({
         contrasenia: contra.value,
         nombre: nombre.value,
         paterno: pat.value,
@@ -32,29 +32,39 @@ export default function SignupVendedor(){
 
         if(!nombre.error && !contra.error && !correo.error && !mat.error && !pat.error && !telPer.error && !telEmp.error && !confContra.error){
             setForm({
-                contrasenia: contra.value,
-                nombre: nombre.value,
-                paterno: pat.value,
-                materno: mat.value,
+                nombre: nombre.value + " " + pat.value + " " + mat.value,
                 correo: correo.value,
-                telefonoPer: telPer.value,
-                telefonoEmp: telEmp.value
+                contrasenia: contra.value,
+                contactos: [
+                    {
+                        tipoContacto: "TELPERSONAL",
+                        contacto: telPer.value
+                    },
+                    {
+                        tipoContacto: "TELEMPRESARIAL",
+                        contacto: telEmp.value
+                    }
+                ]
             })
             setSendForm(true);
         }else{
             setSendForm(false);
         }
-    },[contra, correo, mat, nombre, pat, telPer])
+    },[confContra.error, contra, correo, mat, nombre, pat, telEmp.error, telEmp.value, telPer])
 
-    async function mandar(form) {
-        const url = "http://192.168.20.73:8080/users/add";
+    async function mandar() {
+        const url = "http://localhost:8080/login/registrarVendedor";
         try {
+            const headers = new Headers();
+            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+
+            headers.append("Content-Type", `application/json`);
+            headers.append("Authorization", `Basic ${encodedCredentials}`);
+
             fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form)
+                headers: headers,
+                body: JSON.stringify(Form)
             }).then(res => {
                 alert(res);
             })
@@ -100,7 +110,7 @@ export default function SignupVendedor(){
                                   response={setConfContra} verificar={contra.value}>
                             Confirma tu contraseña
                         </Password>
-                        <Input label="Telefono empresarial" required={true} response={telEmp} deshabilitado={false}
+                        <Input label="Telefono empresarial" required={true} response={setTelEmp} deshabilitado={false}
                                validate={true} regex={new RegExp(/^[+]{1}(?:[0-9\-\\(\\)\\/.]\s?){6,15}[0-9]{1}$/)}>
                             +XX XXXX XXX 0000 0000
                         </Input>
@@ -109,7 +119,7 @@ export default function SignupVendedor(){
                             +XX XXXX XXX 0000 0000
                         </Input>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={mandar}>
+                                       onClick={mandar} width={""}>
                             Crear Cuenta
                         </PrimaryButton>
                     </form>
