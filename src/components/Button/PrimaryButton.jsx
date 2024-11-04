@@ -103,7 +103,7 @@ export default function PrimaryButton(props){
     return(
       <>
         <button className={"bg-" +  bgColor + " " + padding + " " + textSize + " " + tamano + " " + "flex gap-2 " +
-            "rounded-md font-semibold text-g-50 items-center justify-between flex-row cursor-pointer "+
+            "rounded-md font-semibold text-g-50 items-center justify-center flex-row cursor-pointer gap-2 "+
             "active:bg-" + bgActive + " active:shadow-none hover:shadow-lg hover:shadow-" + bgColor + "/40" }
             onClick={props.onClick}
             type={"button"}

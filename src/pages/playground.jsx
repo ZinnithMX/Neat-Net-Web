@@ -28,6 +28,19 @@ export default function Playground(){
             <Header></Header>
             <div className="flex flex-row h-dvh">
                 <Producto layout={"Cuadricula"}></Producto>
+                <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
+                    <CategorySelector title={"Categoria 1"} response={setOpc} tamano={"pequeno"}>
+                        <option>Opcion 1</option>
+                        <option>Opcion 2</option>
+                    </CategorySelector>
+                    <NumerInput response={setNumber} tamano={"pequeno"}/>
+                    <Rating rating={4.3} />
+
+                    <Rating rating={3.6} />
+                    <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"}>
+                        Hola
+                    </PrimaryButton>
+                </div>
             </div>
             <Footer></Footer>
         </>
