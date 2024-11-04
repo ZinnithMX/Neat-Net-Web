@@ -3,9 +3,11 @@ import {useEffect, useState} from "react";
 import NumerInput from "../components/Input/NumberInput/NumberInput.jsx";
 import Rating from "../components/Rating/Rating.jsx";
 import Header from "../components/Header/Header.jsx";
-import Producto from "../components/Producto/Producto.jsx";
+import Producto1 from "../components/Producto/Producto1.jsx";
 import Producto2 from "../components/Producto/Producto2.jsx";
 import PrimaryButton from "../components/Button/PrimaryButton.jsx";
+import Producto from "../components/Producto/Producto.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 
 
 export default function Playground(){
@@ -23,7 +25,9 @@ export default function Playground(){
     }
 
     return (<>
+            <Header></Header>
             <div className="flex flex-row h-dvh">
+                <Producto layout={"Cuadricula"}></Producto>
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
                     <CategorySelector title={"Categoria 1"} response={setOpc} tamano={"pequeno"}>
                         <option>Opcion 1</option>
@@ -38,6 +42,7 @@ export default function Playground(){
                     </PrimaryButton>
                 </div>
             </div>
+            <Footer></Footer>
         </>
     )
 }

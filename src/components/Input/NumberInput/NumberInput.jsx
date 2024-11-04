@@ -72,7 +72,7 @@ export default function NumerInput(props){
     }
 
     return (
-        <div className={"w-full bg-g-300 flex flex-row rounded-lg overflow-clip " + tamano}>
+        <div className={"w-full bg-g-300 flex flex-row rounded-lg overflow-clip " + tamano + " " + props.width}>
             <span className={"material-symbols-rounded  cursor-pointer text-n-200 icon " + padding + " " +
                 "hover:text-p-700 hover:bg-g-400"} onClick={less}>arrow_drop_down</span>
             <input type="number"
@@ -89,5 +89,6 @@ export default function NumerInput(props){
 
 NumerInput.propTypes = {
     response: PropTypes.func.isRequired,
-    tamano: PropTypes.string.isRequired
+    tamano: PropTypes.string.isRequired,
+    width: PropTypes.string.isRequired
 }
