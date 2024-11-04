@@ -5,7 +5,6 @@ import {useState} from "react";
 import Rating from "../Rating/Rating.jsx";
 
 export default function Producto(props) {
-
     const funcion = () => {};
     const isGrid = props.layout === "Cuadricula";
 
