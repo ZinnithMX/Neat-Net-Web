@@ -79,12 +79,12 @@ export default function VerProducto() {
                             </div>
                             <div className={"flex flex-col justify-center gap-1"}>
                                 <div className={"flex items-center gap-4"}>
-                                    <h4 className={"text-n-400"}>${producto.descuento > 0 ? (producto.precio * (1 - producto.descuento)) : producto.precio}</h4>
+                                    <h4 className={"text-n-400"}>${producto.descuento > 0 ? (producto.precio * (1 - producto.descuento)).toFixed(2) : producto.precio.toFixed(2)}</h4>
                                     {producto.descuento > 0 &&
                                         <p className={"text-lg text-p-600 font-bold"}>-{producto.descuento * 100} %</p>}
                                 </div>
                                 {producto.descuento > 0 &&
-                                    <p className={"text-sm text-n-200 font-light"}>Precio original: {producto.precio}</p>
+                                    <p className={"text-sm text-n-200 font-light"}>Precio original: {producto.precio.toFixed(2)}</p>
                                 }
                             </div>
                             <div className={"flex flex-col gap-2"}>
@@ -108,16 +108,33 @@ export default function VerProducto() {
                         <h4>
                             Más de este producto
                         </h4>
-                        <div className={"flex gap-8 "}>
+                        <div className={"flex gap-8 flex-col w-1/2"}>
                             <h4>
                                 Características
                             </h4>
-                            <div className={"flex gap-6"}>
-
+                            <div className={"grid grid-cols-2 gap-6"}>
+                                <div className={"flex bg-g-300 rounded-md flex-col gap-3"}>
+                                    <div className={"flex justify-around py-3"}>
+                                        <p>DJKAHJDK</p>
+                                        <p>sisisiis</p>
+                                    </div>
+                                    <div className={"flex justify-around py-3"}>
+                                        <p>DJKAHJDK</p>
+                                        <p>sisisiis</p>
+                                    </div>
+                                    <div className={"flex justify-around py-3"}>
+                                        <p>DJKAHJDK</p>
+                                        <p>sisisiis</p>
+                                    </div>
+                                    <div className={"flex justify-around py-3"}>
+                                        <p>DJKAHJDK</p>
+                                        <p>sisisiis</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className={"flex flex-col px-8 py-4 gap-4 w-full"}>
+                    {/*<div className={"flex flex-col px-8 py-4 gap-4 w-full"}>
                         <h4>
                             Preguntas
                         </h4>
@@ -138,7 +155,7 @@ export default function VerProducto() {
 
                             </div>
                         </div>
-                    </div>
+                    </div> */ }
 
                 </div>
                 :
