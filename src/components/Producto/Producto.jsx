@@ -9,7 +9,7 @@ export default function Producto(props) {
     const isGrid = props.layout === "Cuadricula";
 
     return (
-        <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden`}>
+        <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
                 className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s"
