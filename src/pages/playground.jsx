@@ -7,6 +7,7 @@ import Producto1 from "../components/Producto/Producto1.jsx";
 import Producto2 from "../components/Producto/Producto2.jsx";
 import PrimaryButton from "../components/Button/PrimaryButton.jsx";
 import Producto from "../components/Producto/Producto.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 
 
 export default function Playground(){
@@ -28,6 +29,7 @@ export default function Playground(){
             <div className="flex flex-row h-dvh">
                 <Producto layout={"Cuadricula"}></Producto>
             </div>
+            <Footer></Footer>
         </>
     )
 }
