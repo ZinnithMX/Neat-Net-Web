@@ -13,6 +13,8 @@ import LoginComprador from "./pages/account/login/LoginComprador.jsx";
 import LoginVendedor from "./pages/account/login/LoginVendedor.jsx";
 import Productos from "./pages/productos/Productos.jsx";
 import VerProducto from "./pages/productos/VerProducto.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
 
 function App() {
 
@@ -20,7 +22,8 @@ function App() {
         <>
           <Router>
             <Routes>
-              <Route path="/" element={<Promo/>}/>
+                <Route path={"*"} element={<NotFound/>}/>
+                <Route path="/" element={<Promo/>}/>
                 <Route path={"/play"} element={<Playground/>}/>
                 <Route path={"/TOS"} element={<TOS/>}/>
                 <Route path={"/Privacy"} element={<Privacy/>}/>
@@ -30,6 +33,7 @@ function App() {
                 <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
                 <Route path={"/productos"} element={<Productos/>}/>
                 <Route path={"/productos/:id"} element={<VerProducto/>}/>
+                <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
             </Routes>
           </Router>
         </>

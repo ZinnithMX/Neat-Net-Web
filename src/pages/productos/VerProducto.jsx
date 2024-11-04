@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Rating from "../../components/Rating/Rating.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
+import Input from "../../components/Input/Input.jsx";
 
 
 export default function VerProducto() {
@@ -12,6 +13,11 @@ export default function VerProducto() {
     const {id} = useParams();
     const [encontrado, setEncontrado] = useState(false);
     const [producto, setProducto] = useState({});
+    const [pregunta, setPregunta] = useState("");
+
+    async function enviarPregunta(){
+
+    }
 
     useEffect(() => {
         // try{
@@ -59,43 +65,81 @@ export default function VerProducto() {
         <>
             <Header/>
             {encontrado ?
-                <div className={"flex py-8 px-6 items-center gap-8"}>
-                    <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
+                <div className={"flex flex-col"}>
+                    <div className={"flex py-8 px-6 items-center gap-8"}>
+                        <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
 
-                    </div>
-                    <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
-                        <h3>{producto.titulo}</h3>
-                        <div className={"flex justify-between items-center w-full"}>
-                            <Rating rating={producto.puntuacion}/>
-                            <p>Vendido por: <Link className={"link-secondary"} to={""}>{producto.vendedor.NombreEmpresa}</Link></p>
                         </div>
-                        <div className={"flex flex-col justify-center gap-1"}>
-                            <div className={"flex items-center gap-4"}>
-                                <h4 className={"text-n-400"}>${producto.descuento > 0 ? (producto.precio*(1-producto.descuento)) : producto.precio}</h4>
-                                { producto.descuento > 0 &&
-                                    <p className={"text-lg text-p-600 font-bold"}>-{producto.descuento*100} %</p>}
+                        <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
+                            <h3>{producto.titulo}</h3>
+                            <div className={"flex justify-between items-center w-full"}>
+                                <Rating rating={producto.puntuacion}/>
+                                <p>Vendido por: <Link className={"link-secondary"}
+                                                      to={""}>{producto.vendedor.NombreEmpresa}</Link></p>
                             </div>
-                            {producto.descuento > 0 &&
-                                <p className={"text-sm text-n-200 font-light"}>Precio original: {producto.precio}</p>
-                            }
-                        </div>
-                        <div className={"flex flex-col gap-2"}>
-                            <h5>Descripción</h5>
-                            <p className={"line-clamp-6 text-sm text-justify"}>{producto.caracteristicas.descripcion}</p>
-                        </div>
-                        <div className={"flex gap-4 "}>
-                            <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
-                                Comprar
-                            </PrimaryButton>
-                            <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
-                                <span className={"material-symbols-rounded icon text-sm"}>shopping_cart</span>
-                            </PrimaryButton>
-                            <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
-                                <span className={"material-symbols-rounded icon text-sm"}>playlist_add</span>
-                            </PrimaryButton>
+                            <div className={"flex flex-col justify-center gap-1"}>
+                                <div className={"flex items-center gap-4"}>
+                                    <h4 className={"text-n-400"}>${producto.descuento > 0 ? (producto.precio * (1 - producto.descuento)) : producto.precio}</h4>
+                                    {producto.descuento > 0 &&
+                                        <p className={"text-lg text-p-600 font-bold"}>-{producto.descuento * 100} %</p>}
+                                </div>
+                                {producto.descuento > 0 &&
+                                    <p className={"text-sm text-n-200 font-light"}>Precio original: {producto.precio}</p>
+                                }
+                            </div>
+                            <div className={"flex flex-col gap-2"}>
+                                <h5>Descripción</h5>
+                                <p className={"line-clamp-6 text-sm text-justify"}>{producto.caracteristicas.descripcion}</p>
+                            </div>
+                            <div className={"flex gap-4 "}>
+                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
+                                    Comprar
+                                </PrimaryButton>
+                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
+                                    <span className={"material-symbols-rounded icon text-sm"}>shopping_cart</span>
+                                </PrimaryButton>
+                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
+                                    <span className={"material-symbols-rounded icon text-sm"}>playlist_add</span>
+                                </PrimaryButton>
+                            </div>
                         </div>
                     </div>
-                    <div className={"flex px-8 py-"}></div>
+                    <div className={"flex px-8 py-4 flex-col gap-8"}>
+                        <h4>
+                            Más de este producto
+                        </h4>
+                        <div className={"flex gap-8 "}>
+                            <h4>
+                                Características
+                            </h4>
+                            <div className={"flex gap-6"}>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={"flex flex-col px-8 py-4 gap-4 w-full"}>
+                        <h4>
+                            Preguntas
+                        </h4>
+                        <div className={"flex gap-4 w-full items-end"}>
+                            <Input width={"w-full"} label={"¿Tienes alguna duda?"} response={setPregunta}
+                                   required={false} validate={false} maxLength={"500"}>
+                                Realiza una pregunta al vendedor
+                            </Input>
+                            <PrimaryButton onClick={enviarPregunta} tamano={"normal"} estilo={"primary"} width={"w-min"}>
+                                Preguntar
+                            </PrimaryButton>
+                        </div>
+                        <div>
+                            <h5>
+                                Preguntas realizadas
+                            </h5>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 :
                 <div className={"flex flex-col items-center gap-8 h-full py-64 "}>
@@ -104,8 +148,8 @@ export default function VerProducto() {
                     <p className={"text-xl font-semibold"}>Parece que no encontramos tu producto...</p>
                     <p className={"text-xl"}>Intenta <Link to={""} className={"link"}>buscar otro producto</Link></p>
                 </div>
-            }
-            <Footer/>
+        }
+    <Footer/>
         </>
     );
 }

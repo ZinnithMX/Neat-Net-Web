@@ -41,6 +41,7 @@
     .link{
         @apply text-p-600 underline;
     }
+
     .link:hover{
         @apply text-p-700;
     }

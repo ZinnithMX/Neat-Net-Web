@@ -1,21 +1,36 @@
 import Input from "../Input/Input.jsx";
 import {useState} from "react";
+import {Link, NavLink} from "react-router-dom";
 
 export default function Header() {
     return (
-        <header className="w-full h-16 items-center">
+        <header className="w-full py-3 px-6 items-center">
             <div className="flex flex-row w-full items-center justify-between pl-6 pr-6">
-                <div className="text-p-600 w-1/4"><h4>Neat Net</h4></div>
-                <div className="w-1/2">
-                    <Input required={false} deshabilitado={false} validate={false} response={false}>Buscar
-                        producto</Input>
+                <div className="text-p-600">
+                    <h4><Link to={"/"}>Neat Net</Link></h4>
                 </div>
-                <div className="flex justify-end w-1/4 gap-4 items-center">
-                    <span className={"material-symbols-rounded icon text-n-200"}>shopping_cart</span>
-                    <span className={"material-symbols-rounded icon text-n-200"}>list</span>
-                    <span className={"material-symbols-rounded icon text-n-200"}>notifications</span>
-                    <span className={"material-symbols-rounded icon text-n-200 rounded-full bg-g-300 p-1"}>person</span>
-                </div>
+                <nav className="flex justify-end gap-4 items-center">
+                    <NavLink
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/buscar/producto"}>
+                        <span className={"material-symbols-rounded icon"}>search</span>
+                    </NavLink>
+                    <NavLink
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/carrito/"}>
+                        <span className={"material-symbols-rounded icon"}>shopping_cart</span>
+                    </NavLink>
+                    <NavLink
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/listas/"}>
+                        <span className={"material-symbols-rounded icon"}>list</span>
+                    </NavLink>
+                    <NavLink
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/notificaciones/"}>
+                        <span className={"material-symbols-rounded icon"}>notifications</span>
+                    </NavLink>
+                    <NavLink
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/cuenta/"}>
+                        <span className={"material-symbols-rounded icon"}>person</span>
+                    </NavLink>
+                </nav>
             </div>
         </header>
     )
