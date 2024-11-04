@@ -4,18 +4,32 @@ import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Shopping-pana.svg";
 import {Link} from "react-router-dom";
+import {useCookies} from "react-cookie";
+import axios from "axios";
 
 export default function LoginComprador(){
 
     const [correo, setCorreo] = useState({error: true, value:""});
     const [contra, setContra] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
+    const [ip, setIP] = useState("");
 
+    const getData = async () => {
+        const res = await axios.get("https://api.ipify.org/?format=json");
+        console.log(res.data);
+        setIP(res.data.ip);
+    };
 
-    const [form, setForm] = useState({
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const [Form, setForm] = useState({
         correo: correo.value,
         contrasenia: contra.value,
     });
+
+    const [sessionId, setSessionId, removeSessionId] = useCookies(['sesionId'], {doNotParse: true});
 
     useEffect(() => {
 
@@ -23,6 +37,7 @@ export default function LoginComprador(){
             setForm({
                 correo: correo.value,
                 contrasenia: contra.value,
+
             })
             setSendForm(true);
         }else{
@@ -30,19 +45,29 @@ export default function LoginComprador(){
         }
     },[contra, correo])
 
-    async function mandar(form) {
-        const url = "http://192.168.20.73:8080/users/add";
+    async function mandar() {
+        const url = "http://localhost:8080/login/iniciarSesion?" + new URLSearchParams({
+            correo: Form.correo,
+            password: Form.contrasenia,
+            ip: ip
+        });
         try {
+            const session = crypto.randomUUID()
+            setSessionId('sesionId', session)
+
+            const headers = new Headers();
+            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+            headers.append("Authorization", `Basic ${encodedCredentials}`);
+            headers.append("Content-Type", `application/json`);
             fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form)
+                method: 'GET',
+                headers: headers
             }).then(res => {
-                alert(res);
+                localStorage.setItem("sesionId", res.sessionId);
+
             })
         } catch(err) {
+            alert("Fallo")
             alert(err);
         }
     }
@@ -67,10 +92,7 @@ export default function LoginComprador(){
                             Ingresa tu contraseña
                         </Password>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={() => {
-                                           alert("Enviado")
-                                           mandar(form)
-                                       }}>
+                                       onClick={mandar} width={""}>
                             Iniciar Sesión
                         </PrimaryButton>
                     </form>
