@@ -12,6 +12,7 @@ import Promo from "./pages/Promo.jsx";
 import LoginComprador from "./pages/account/login/LoginComprador.jsx";
 import LoginVendedor from "./pages/account/login/LoginVendedor.jsx";
 import Productos from "./pages/productos/Productos.jsx";
+import VerProducto from "./pages/productos/VerProducto.jsx";
 
 function App() {
 
@@ -27,7 +28,8 @@ function App() {
                 <Route path={"/signup/vendedor"} element={<SignupVendedor/>}/>
                 <Route path={"/login/comprador"} element={<LoginComprador/>}/>
                 <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
-                <Route path={"/comprador/inicio"} element={<Productos/>}/>
+                <Route path={"/productos"} element={<Productos/>}/>
+                <Route path={"/productos/:id"} element={<VerProducto/>}/>
             </Routes>
           </Router>
         </>
