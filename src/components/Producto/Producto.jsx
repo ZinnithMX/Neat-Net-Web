@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Rating from "../Rating/Rating.jsx";
 
 export default function Producto(props) {
@@ -22,10 +22,12 @@ export default function Producto(props) {
                 </div>
                 <div className="flex align-middle justify-between">
                     <div className="flex justify-items-start gap-2">
-                        <div className="text-p-600 font-bold">-{props.descuento}%</div>
+                        {props.descuento !== 0 ? (
+                            <div className="text-p-600 font-bold">-{props.descuento}%</div>
+                        ) : null}
                         <div className="font-bold">${props.precio}</div>
                     </div>
-                    <Rating rating={4} />
+                    <Rating rating={props.rating} />
                 </div>
                 <div className="flex gap-2 w-full">
                     <NumerInput response={funcion} tamano="pequeno" width={"w-28"} />
@@ -51,7 +53,8 @@ Producto.defaultProps = {
     detalles: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis ex lorem. Nunc molestie, urna sed euismod dapibus, magna sapien fringilla nisi, ornare egestas justo mi non quam. Aenean vehicula purus vitae varius facilisis.",
     precio: 999.99,
     descuento: 20,
-    layout: "Lista"
+    layout: "Lista",
+    rating: 3,
 };
 
 Producto.propTypes = {
@@ -59,5 +62,6 @@ Producto.propTypes = {
     detalles: PropTypes.string.isRequired,
     precio: PropTypes.number.isRequired,
     descuento: PropTypes.number.isRequired,
-    layout: PropTypes.oneOf(["Lista", "Cuadricula"])
+    layout: PropTypes.oneOf(["Lista", "Cuadricula"]),
+    rating: PropTypes.number
 };
