@@ -20,7 +20,12 @@ export default function SignupComprador(){
         nombre: nombre.value,
         correo: correo.value,
         contrasenia: contra.value,
-        telefono: telPer.value
+        contactos: [
+            {
+                tipoContacto: "TELPERSONAL",
+                contacto: telPer
+            }
+        ]
     });
 
     useEffect(() => {
@@ -30,7 +35,12 @@ export default function SignupComprador(){
                 nombre: nombre.value,
                 correo: correo.value,
                 contrasenia: contra.value,
-                telefono: telPer.value
+                contactos: [
+                    {
+                        tipoContacto: "TELPERSONAL",
+                        contacto: telPer.value
+                    }
+                ]
             })
             setSendForm(true);
         }else{
@@ -39,13 +49,16 @@ export default function SignupComprador(){
     },[contra, correo, nombre, telPer])
 
     async function mandar(form) {
-        const url = "http://192.168.20.73:8080/users/add";
+        const url = "http://localhost:8080/login/registrarComprador";
         try {
+            const myHeaders = new Headers();
+            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Basic ${encodedCredentials}`);
             fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: myHeaders,
                 body: JSON.stringify(form)
             }).then(res => {
                 alert(res);
@@ -84,7 +97,7 @@ export default function SignupComprador(){
                                   response={setConfContra} verificar={contra.value}>
                             Confirma tu contraseña
                         </Password>
-                        <Input label="Numero de telefono" required={true} response={null} deshabilitado={false}
+                        <Input label="Numero de telefono" required={true} response={setTelPer} deshabilitado={false}
                                validate={true} regex={new RegExp(/^[+]{1}(?:[0-9\-\\(\\)\\/.]\s?){6,15}[0-9]{1}$/)}>
                             +XX XXXX XXX 0000 0000
                         </Input>
