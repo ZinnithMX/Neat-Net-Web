@@ -103,10 +103,12 @@ export default function Input(props){
 
     return(
         <div className={"flex flex-col gap-2"}>
-            <div className={"flex flex-row justify-between"}>
-                <label className={"text-xl text-n-700"}>{props.label}</label>
-                {props.required && <span className={"material-symbols-rounded text-er-600 text-xl"}>asterisk</span>}
-            </div>
+            {props.showLabel &&
+                <div className={"flex flex-row justify-between"}>
+                    <label className={"text-xl text-n-700"}>{props.label}</label>
+                    {props.required && <span className={"material-symbols-rounded text-er-600 text-xl"}>asterisk</span>}
+                </div>
+            }
             <input
                 type={"text"}
                 placeholder={props.children}
@@ -120,6 +122,15 @@ export default function Input(props){
     )
 }
 
+Input.defaultProps = {
+    required: false,
+    estado: "default",
+    maxLength: 100,
+    deshabilitado: false,
+    validate: false,
+    showLabel: true
+}
+
 Input.propTypes = {
     label: PropTypes.string.isRequired,
     children: PropTypes.string.isRequired,
@@ -129,5 +140,6 @@ Input.propTypes = {
     deshabilitado: PropTypes.bool.isRequired,
     regex: PropTypes.shape(RegExp),
     validate: PropTypes.bool.isRequired,
-    response: PropTypes.func.isRequired
+    response: PropTypes.func.isRequired,
+    showLabel: PropTypes.bool
 }
