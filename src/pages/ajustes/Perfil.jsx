@@ -7,6 +7,13 @@ import { useEffect, useState } from "react";
 export default function Perfil(props) {
     const [metodos, setMetodos] = useState(null);
     const [activeSection, setActiveSection] = useState("Perfil");
+    const [correo, setCorreo] = useState({ error: false, value: "" });
+    const [calle, setCalle] = useState({ error: false, value: "" });
+    const [nExt, setNExt] = useState({ error: false, value: "" });
+    const [nInt, setNInt] = useState({ error: false, value: "" });
+    const [codigoPostal, setCodigoPostal] = useState({ error: false, value: "" });
+    const [colonia, setColonia] = useState({ error: false, value: "" });
+    const [estado, setEstado] = useState({ error: false, value: "" });
 
     useEffect(() => {
         setMetodos([
@@ -19,6 +26,33 @@ export default function Perfil(props) {
     const listaMet = metodos?.map((metodo) => (
         <MetodoP nombre={metodo.nombre} titular={metodo.titular} nip={999} key={metodo.nombre}></MetodoP>
     ));
+
+    const handleActualizar = () => {
+        const direccion = {
+            nombre: correo.value,
+            estado: estado.value,
+            colonia: colonia.value,
+            calle: calle.value,
+            interior: nInt.value,
+            exterior: nExt.value,
+            codigoPostal: codigoPostal.value
+        };
+
+        fetch(`http://localhost:8080/user/actualizarDir?correo=${correo.value}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
+            },
+            body: JSON.stringify(direccion)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+    };
 
     return (
         <>
@@ -39,22 +73,20 @@ export default function Perfil(props) {
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Perfil" ? "block" : "none" }}>
                         <h4 className={"text-p-600"}>Información Básica</h4>
                         <div>
-                            <Input required={false} deshabilitado={true} label={"Nombre"}>Nombre completo</Input>
+                            <Input required={false} deshabilitado={false} response={setCorreo} label={"Nombre"}>Nombre completo</Input>
                             <div>
                                 <h5>Dirección</h5>
-                                <Input required={false} deshabilitado={true} label={"Calle"}>Calle</Input>
+                                <Input required={false} deshabilitado={false} response={setCalle} label={"Calle"}>Calle</Input>
                                 <div className={"flex-row"}>
-                                    <Input required={false} deshabilitado={true} label={"N Ext"}>N ext</Input>
-                                    <Input required={false} deshabilitado={true} label={"N Int"}>N int</Input>
-                                    <Input required={false} deshabilitado={true} label={"Código Postal"}>Codigo Postal</Input>
+                                    <Input required={false} deshabilitado={false} response={setNExt} label={"N Ext"}>N ext</Input>
+                                    <Input required={false} deshabilitado={false} response={setNInt} label={"N Int"}>N int</Input>
+                                    <Input required={false} deshabilitado={false} response={setCodigoPostal} label={"Código Postal"}>Codigo Postal</Input>
                                 </div>
-                                <Input required={false} deshabilitado={true} label={"Colonia"}>Colonia</Input>
-                                <Input required={false} deshabilitado={true} label={"Estado"}>Estado</Input>
+                                <Input required={false} deshabilitado={false} response={setColonia} label={"Colonia"}>Colonia</Input>
+                                <Input required={false} deshabilitado={false} response={setEstado} label={"Estado"}>Estado</Input>
                             </div>
                         </div>
-                        <PrimaryButton onClick={() => {
-                            alert("Actualizar");
-                        }} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
+                        <PrimaryButton onClick={handleActualizar} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Seguridad" ? "block" : "none" }}>
