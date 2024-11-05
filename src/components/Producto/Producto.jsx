@@ -22,10 +22,15 @@ export default function Producto(props) {
                 </div>
                 <div className="flex align-middle justify-between">
                     <div className="flex justify-items-start gap-2">
-                        <div className="text-p-600 font-bold">-{props.descuento}%</div>
+                        {props.descuento !== 0 && (
+                            <>
+                                <div className="text-p-600 font-bold">-{props.descuento}%</div>
+                            </>
+                        )}
                         <div className="font-bold">${props.precio}</div>
+
                     </div>
-                    <Rating rating={4} />
+                    <Rating rating={4}/>
                 </div>
                 <div className="flex gap-2 w-full">
                     <NumerInput response={funcion} tamano="pequeno" width={"w-28"} />
