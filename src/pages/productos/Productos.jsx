@@ -27,7 +27,7 @@ export default function Productos(){
             .catch((error) => console.error(error));
     }, []);
     const handleDetalle = (array) => {
-        let retorno = "No existe descripcion para este producto"
+        let retorno = "No existe una descripcion para este producto"
         array.forEach((item) => {
             if(item.tipoCaracteristica === 'DESCRIPCION') {
                 retorno = item.valor;
