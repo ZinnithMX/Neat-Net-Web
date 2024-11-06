@@ -3,6 +3,7 @@ import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
 import {useEffect, useState} from "react";
 import Rating from "../Rating/Rating.jsx";
+import {Navigate, NavLink} from "react-router-dom";
 
 export default function Producto(props) {
     const funcion = () => {};
@@ -38,24 +39,25 @@ export default function Producto(props) {
                 } else {
                     setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
                 }
-
-
-
-
-
-
             }
         }
         fetchImage(inPath)
     },[inPath])
 
     return (
-        <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
-            <img
-                className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
-                src={image}
-                alt="Producto imagen"
-            />
+        <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none `}>
+            <NavLink to={`/productos/${props.id}/`}>
+                <img
+
+                    className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid hover:cursor-pointer`}
+                    src={image}
+                    alt="Producto imagen"
+                    onClick={() => {
+                        console.log("Navegar");
+                    }}
+                />
+            </NavLink>
+
             <div className="flex flex-col py-4 px-6 flex-1 gap-4 justify-center bg-g-100">
                 <div className="gap-2">
                     <div className="col-12 font-bold">{props.nombre}</div>
@@ -98,6 +100,7 @@ export default function Producto(props) {
 
 
 Producto.propTypes = {
+    id: PropTypes.number.isRequired,
     nombre: PropTypes.string.isRequired,
     detalles: PropTypes.string.isRequired,
     precio: PropTypes.number.isRequired,

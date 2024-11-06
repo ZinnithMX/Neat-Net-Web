@@ -36,9 +36,9 @@ function App() {
                 <Route path={"/signup/vendedor"} element={<SignupVendedor/>}/>
                 <Route path={"/login/comprador"} element={<LoginComprador/>}/>
                 <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
+                <Route path='/productos' element={<Productos/>}/>
+                <Route path={"/productos/:id"} element={<VerProducto/>}/>
                 <Route element={<ProtectedRouteComprador redirectTo={"/login/comprador"} />}>
-                    <Route path='/productos' element={<Productos/>}/>
-                    <Route path={"/productos/:id"} element={<VerProducto/>}/>
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                 </Route>
