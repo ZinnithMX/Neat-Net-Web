@@ -27,10 +27,10 @@ export default function Playground(){
 
     return (<>
             <Header></Header>
-            <MetodoP></MetodoP>
             <div className="flex flex-row h-dvh">
                 <Producto layout={"Cuadricula"}></Producto>
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
+                    <MetodoP titular={"Juanito"} numTarjeta={"1234567890"}></MetodoP>
                     <CategorySelector title={"Categoria 1"} response={setOpc} tamano={"pequeno"}>
                         <option>Opcion 1</option>
                         <option>Opcion 2</option>
