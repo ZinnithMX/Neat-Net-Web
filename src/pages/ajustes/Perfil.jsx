@@ -15,19 +15,67 @@ export default function Perfil(props) {
     const [colonia, setColonia] = useState({ error: false, value: "" });
     const [estado, setEstado] = useState({ error: false, value: "" });
 
-    useEffect(() => {
-        setMetodos([
-            { nombre: "Metodo1", titular: "Yo", nip: 3 },
-            { nombre: "Metodo2", titular: "Yo", nip: 3 },
-            { nombre: "Metodo3", titular: "Yo", nip: 3 },
-        ]);
-    }, []);
+    const handleActualizarMetodo = (metodoPago) => {
+        fetch(`http://localhost:8080/metodo-pago/actualizar?usuario=${usuario.value}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
+            },
+            body: JSON.stringify(metodoPago)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Método de pago actualizado exitosamente");
+                setMetodos(prevMetodos => prevMetodos.map(m => m.nombre === metodoPago.nombre ? metodoPago : m));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error al actualizar el método de pago: " + error.message);
+            });
+    };
+
+    const handleEliminarMetodo = (nombre) => {
+        fetch(`http://localhost:8080/metodo-pago/eliminar`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
+            },
+            body : FormData("nombre", nombre)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Método de pago eliminado exitosamente");
+                setMetodos(prevMetodos => prevMetodos.filter(m => m.nombre !== nombre));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error al eliminar el método de pago: " + error.message);
+            });
+    };
 
     const listaMet = metodos?.map((metodo) => (
-        <MetodoP nombre={metodo.nombre} titular={metodo.titular} nip={999} key={metodo.nombre}></MetodoP>
+        <MetodoP
+            nombre={metodo.nombre}
+            titular={metodo.titular}
+            nip={metodo.nip}
+            key={metodo.nombre}
+            onActualizar={() => handleActualizarMetodo(metodo)}
+            onEliminar={() => handleEliminarMetodo(metodo.nombre)}
+        />
     ));
 
-    const handleActualizar = () => {
+    const handleActualizarDireccion = () => {
         const direccion = {
             nombre: correo.value,
             estado: estado.value,
@@ -86,7 +134,7 @@ export default function Perfil(props) {
                                 <Input required={false} deshabilitado={false} response={setEstado} label={"Estado"}>Estado</Input>
                             </div>
                         </div>
-                        <PrimaryButton onClick={handleActualizar} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
+                        <PrimaryButton onClick={handleActualizarDireccion} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Seguridad" ? "block" : "none" }}>
@@ -105,9 +153,6 @@ export default function Perfil(props) {
                         <PrimaryButton onClick={() => {
                             alert("Agregar");
                         }} tamano={"mini"} estilo={"primary"} width={"w-full"}>Agregar</PrimaryButton>
-                        <PrimaryButton onClick={() => {
-                            alert("Actualizar");
-                        }} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
                     </div>
                 </div>
             </div>
