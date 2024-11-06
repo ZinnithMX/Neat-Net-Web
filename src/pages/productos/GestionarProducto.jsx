@@ -60,7 +60,7 @@ export default function GestionarProducto(){
                             <span className={"underline text-p-600"}>Ver más</span>
                         </div>
 
-                        <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
+                        <div className="flex flex-row w-[100%-3rem] gap-6 overflow-scroll">
                             {listaProd}
                         </div>
                     </div>
@@ -71,7 +71,7 @@ export default function GestionarProducto(){
                             <span className={"underline text-p-600"}>Ver más</span>
                         </div>
 
-                        <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
+                        <div className="flex flex-row w-[100%-3rem] gap-6 overflow-scroll">
                             {listaProd}
                         </div>
                     </div>
@@ -91,7 +91,7 @@ export default function GestionarProducto(){
                                 className={"material-symbols-rounded icon"}>add_circle</span></PrimaryButton>
                         </div>
 
-                        <div className={"flex flex-row flex-wrap gap-6"}>
+                        <div className={"flex flex-row flex-wrap gap-12"}>
                             {listaProd2}
                         </div>
                     </div>
