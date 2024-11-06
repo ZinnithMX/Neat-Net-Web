@@ -49,6 +49,12 @@ export default function Perfil(props) {
         />
     ));
 
+    const handleCerrarSesion = () => {
+        ('idUsuario');
+    }
+    sessionStorage.clear();
+    history.push('/login/comprador');
+
     const handleActualizarDireccion = () => {
         const direccion = {
             nombre: correo.value,
@@ -85,11 +91,11 @@ export default function Perfil(props) {
                 <h2 className="text-p-600">Tu cuenta</h2>
                 <div className={"flex flex-row gap-8 w-full"}>
                     <div className={"flex flex-col bg-g-200 rounded-lg w-1/3 h-fit p-4"}>
-                        <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Perfil" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Perfil")}>Perfil</div>
+                        <div className={a`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Perfil" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Perfil")}>Perfil</div>
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Seguridad" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Seguridad")}>Seguridad</div>
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "MetodosPago" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("MetodosPago")}>Métodos de Pago</div>
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Administar" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Administar")}>Administar</div>
-                        <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "CerrarSesion" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("CerrarSesion")}>Cerrar Sesión</div>
+                        <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "CerrarSesion" ? "bg-g-400" : ""}`} onClick={handleCerrarSesion}>Cerrar Sesión</div>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Perfil" ? "block" : "none" }}>
