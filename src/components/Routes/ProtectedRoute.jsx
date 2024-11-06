@@ -1,2 +1,6 @@
-import {Cookies} from "react-cookie";
 
+export default function ProtectedRoute({children, redirectTo}){
+
+
+
+}
