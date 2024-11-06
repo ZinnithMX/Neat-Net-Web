@@ -4,6 +4,7 @@ import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
 import ProductoVen from "../../components/Producto/ProductoVen.jsx";
 import {useEffect, useState} from "react";
+import HeaderVendedor from "../../components/Header/HeaderVendedor.jsx";
 
 export default function GestionarProducto(){
     const [productos, setProductos] = useState(null);
@@ -40,18 +41,26 @@ export default function GestionarProducto(){
 
     return(
         <>
-            <Header></Header>
+            <HeaderVendedor/>
             <div className={"flex flex-col px-8 py-12 gap-8 w-full"}>
                 <h3 className={"font-bold"}>Tus productos</h3>
                 <div className={"flex flex-row items-center gap-4 w-full"}>
                     <Input label={null} response={null} width={"flex-1"}>Buscar producto</Input>
                     <PrimaryButton onClick={() => {
                         alert("Filtar");
-                    }} tamano={""} estilo={"primary"} width={"w-min"}><span
-                        className={"material-symbols-rounded icon"}>filter_alt</span></PrimaryButton>
+                    }} tamano={""} estilo={"primary"} width={"w-min"}>
+                        <span className={"material-symbols-rounded icon"}>search</span>
+                    </PrimaryButton>
+
                     <PrimaryButton onClick={() => {
-                        alert("Guardado");}} tamano={""} estilo={"primary"} width={"w-min"}><span
-                        className={"material-symbols-rounded icon"}>add_circle</span></PrimaryButton>
+                        alert("Filtar");
+                    }} tamano={""} estilo={"primary"} width={"w-min"}>
+                        <span className={"material-symbols-rounded icon"}>filter_alt</span>
+                    </PrimaryButton>
+                    <PrimaryButton onClick={() => {
+                        alert("Guardado");}} tamano={""} estilo={"primary"} width={"w-min"}>
+                        <span className={"material-symbols-rounded icon"}>add_circle</span>
+                    </PrimaryButton>
                 </div>
 
                     <div className={"flex flex-col"}>
@@ -81,6 +90,11 @@ export default function GestionarProducto(){
                         <h4>Todos los productos</h4>
                         <div className={"flex flex-row items-center gap-4 w-full"}>
                             <Input label={null} response={null} width={"flex-1"}>Buscar producto</Input>
+                            <PrimaryButton onClick={() => {
+                                alert("Filtar");
+                            }} tamano={""} estilo={"primary"} width={"w-min"}>
+                                <span className={"material-symbols-rounded icon"}>search</span>
+                            </PrimaryButton>
                             <PrimaryButton onClick={() => {
                                 alert("Filtar");
                             }} tamano={""} estilo={"primary"} width={"w-min"}><span

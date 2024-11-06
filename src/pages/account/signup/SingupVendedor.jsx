@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Select-pana.svg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {DomainContext} from "../../../App.jsx";
+import {Cookies} from "react-cookie";
 
 export default function SignupVendedor(){
 
@@ -17,7 +19,10 @@ export default function SignupVendedor(){
     const [telEmp, setTelEmp] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
     const [confContra, setConfContra] = useState({error: true, value:""});
-
+    const domain = useContext(DomainContext);
+    const navigate = useNavigate();
+    const [showMsgError, setShowMsgError] = useState(false)
+    const [msgError, setMsgError] = useState("")
 
     const [Form, setForm] = useState({
         contrasenia: contra.value,
@@ -53,7 +58,7 @@ export default function SignupVendedor(){
     },[confContra.error, contra, correo, mat, nombre, pat, telEmp.error, telEmp.value, telPer])
 
     async function mandar() {
-        const url = "http://localhost:8080/login/registrarVendedor";
+        const url = domain + ":8080/login/registrarVendedor";
         try {
             const headers = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
@@ -66,10 +71,17 @@ export default function SignupVendedor(){
                 headers: headers,
                 body: JSON.stringify(Form)
             }).then(res => {
-                alert(res);
+                if(res.ok){
+                    navigate("/login/vendedor/")
+                }
+                else{
+                    setMsgError("Ha ocurrido un error inesperado")
+                    setShowMsgError(true)
+                }
             })
         } catch(err) {
-            alert(err);
+            setMsgError("No se ha podido conectar con el servidor")
+            setShowMsgError(true)
         }
     }
 
@@ -122,6 +134,13 @@ export default function SignupVendedor(){
                                        onClick={mandar} width={""}>
                             Crear Cuenta
                         </PrimaryButton>
+                        {
+                            showMsgError &&
+                            (
+                                <p className={"text-sm text-er-700"}>{msgError}</p>
+                            )
+
+                        }
                     </form>
                     <p className={"text-xs"}>Al crar una cuenta aceptas los <Link className={"link"} to={"/TOS"}>Terminos
                         y condiciones</Link> y las <Link className={"link"} to={"/Privacy"}> Politicas de privacidad</Link></p>

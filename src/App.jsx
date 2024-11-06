@@ -47,8 +47,8 @@ function App() {
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                 </Route>
-                <Route path={"/gestionProd"} element={<GestionarProducto/>}/>
-                <Route path={"/producto/publicar/"} element={<PublicarProducto/>}/>
+                <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
+                <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
             </Routes>
           </Router>
 
