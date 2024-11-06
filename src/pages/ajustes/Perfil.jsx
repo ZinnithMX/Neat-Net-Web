@@ -1,14 +1,13 @@
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Input from "../../components/Input/Input.jsx";
+import PropTypes from "prop-types";
 import MetodoP from "../../components/metodoP/MetodoP.jsx";
-import FormMetodoPago from "../../components/FormMetodoPago/FormMetodoPago.jsx";
+import { useEffect, useState } from "react";
+import {useCookies} from "react-cookie";
 
 export default function Perfil(props) {
     const [metodos, setMetodos] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(['idUsuario']);
+    const [cookies] = useCookies(['idUsuario']);
     const usuario = cookies.idUsuario;
     const [activeSection, setActiveSection] = useState("Perfil");
     const [correo, setCorreo] = useState({error: false, value: ""});
@@ -18,8 +17,7 @@ export default function Perfil(props) {
     const [codigoPostal, setCodigoPostal] = useState({error: false, value: ""});
     const [colonia, setColonia] = useState({error: false, value: ""});
     const [estado, setEstado] = useState({error: false, value: ""});
-    const [editingMetodo, setEditingMetodo] = useState(null); // State to manage editing
-    const navigate = useNavigate();
+
 
     useEffect(() => {
             fetch(`http://localhost:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
@@ -48,23 +46,8 @@ export default function Perfil(props) {
             titular={metodo.titular}
             nip={metodo.nip}
             key={metodo.nombre}
-            onEdit={() => setEditingMetodo(metodo)} // Open form with existing data for editing
         />
     ));
-
-    const handleAgregarOModificarMetodo = (nuevoMetodo) => {
-        setMetodos((prevMetodos) => {
-            const metodosActualizados = prevMetodos.map(metodo =>
-                metodo.nombre === nuevoMetodo.nombre ? nuevoMetodo : metodo
-            );
-            return metodosActualizados;
-        });
-        setEditingMetodo(null); // Reset the form
-    };
-
-    const handleEliminarMetodoPago = (nombreMetodo) => {
-        setMetodos((prevMetodos) => prevMetodos.filter(metodo => metodo.nombre !== nombreMetodo));
-    };
 
     const handleActualizarDireccion = () => {
         const direccion = {
@@ -90,13 +73,7 @@ export default function Perfil(props) {
                     return response.text().then(text => { throw new Error(text) });
                 }
                 return response.json();
-            });
-    };
-
-    const handleCerrarSesion = () => {
-        removeCookie('idUsuario');
-        sessionStorage.clear();
-        navigate('/login/comprador');
+            })
     };
 
     return (
@@ -112,7 +89,7 @@ export default function Perfil(props) {
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Seguridad" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Seguridad")}>Seguridad</div>
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "MetodosPago" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("MetodosPago")}>Métodos de Pago</div>
                         <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "Administar" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("Administar")}>Administar</div>
-                        <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "CerrarSesion" ? "bg-g-400" : ""}`} onClick={handleCerrarSesion}>Cerrar Sesión</div>
+                        <div className={`p-4 cursor-pointer hover:bg-g-400 rounded-lg ${activeSection === "CerrarSesion" ? "bg-g-400" : ""}`} onClick={() => setActiveSection("CerrarSesion")}>Cerrar Sesión</div>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Perfil" ? "block" : "none" }}>
@@ -147,18 +124,11 @@ export default function Perfil(props) {
                         <div className={"flex flex-col gap-4"}>
                             {listaMet}
                         </div>
-                        <PrimaryButton onClick={() => setEditingMetodo({ nombre: "", titular: "", nip: "" })} tamano={"mini"} estilo={"primary"} width={"w-full"}>Agregar</PrimaryButton>
+                        <PrimaryButton onClick={() => {
+                            alert("Agregar");
+                        }} tamano={"mini"} estilo={"primary"} width={"w-full"}>Agregar</PrimaryButton>
                     </div>
                 </div>
-
-                {editingMetodo && (
-                    <FormMetodoPago
-                        metodo={editingMetodo}
-                        onSave={handleAgregarOModificarMetodo}
-                        onCancel={() => setEditingMetodo(null)}
-                        onDelete={handleEliminarMetodoPago}
-                    />
-                )}
             </div>
         </>
     );
