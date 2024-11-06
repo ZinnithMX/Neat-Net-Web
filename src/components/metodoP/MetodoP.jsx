@@ -36,5 +36,5 @@ MetodoP.propTypes={
     nombre: PropTypes.string.isRequired,
     size: PropTypes.string.isRequired,
     titular: PropTypes.string.isRequired,
-    nip: PropTypes.number.isRequired
+    digitos: PropTypes.number.isRequired
 }
