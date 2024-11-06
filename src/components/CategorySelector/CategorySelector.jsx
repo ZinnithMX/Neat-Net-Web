@@ -56,7 +56,7 @@ export default function CategorySelector(props) {
     }, [props.tamano]);
 
     return (
-        <div className={"flex flex-col items-end " + tamano}>
+        <div className={"flex flex-col items-end " + tamano + " " + props.width}>
             <select
                 className={"w-full rounded-lg bg-g-300 appearance-none font-light " + padding + " " + textSize + " "}
                 title={props.title}
@@ -75,5 +75,6 @@ CategorySelector.propTypes = {
     children: PropTypes.node.isRequired,
     title: PropTypes.string.isRequired,
     response: PropTypes.func.isRequired,
-    tamano: PropTypes.string.isRequired
+    tamano: PropTypes.string.isRequired,
+    width: PropTypes.string
 }

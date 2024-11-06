@@ -9,6 +9,7 @@ import PrimaryButton from "../components/Button/PrimaryButton.jsx";
 import Producto from "../components/Producto/Producto.jsx";
 import Footer from "../components/Footer/Footer.jsx";
 import MetodoP from "../components/metodoP/MetodoP.jsx";
+import ProductoCarrito from "../components/Producto/ProductoCarrito.jsx";
 
 
 export default function Playground(){
@@ -27,6 +28,7 @@ export default function Playground(){
 
     return (<>
             <Header></Header>
+            <ProductoCarrito />
             <div className="flex flex-row h-dvh">
                 <Producto layout={"Cuadricula"}></Producto>
                 <div className="w-1/2 h-full p-10 gap-4 flex flex-col">
@@ -35,11 +37,9 @@ export default function Playground(){
                         <option>Opcion 1</option>
                         <option>Opcion 2</option>
                     </CategorySelector>
-                    <NumerInput response={setNumber} tamano={"pequeno"}/>
-                    <Rating rating={4.3} />
-
+                    <NumerInput response={setNumber} tamano={"pequeno"} width={""}/>
                     <Rating rating={3.6} />
-                    <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"}>
+                    <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"} width={""}>
                         Hola
                     </PrimaryButton>
                 </div>
