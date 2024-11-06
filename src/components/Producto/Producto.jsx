@@ -67,17 +67,13 @@ export default function Producto(props) {
                 </div>
                 <div className="flex align-middle justify-between">
                     <div className="flex justify-items-start gap-2">
-
                         {props.descuento !== 0 && (
                             <>
                                 <div className="text-p-600 font-bold">-{props.descuento}%</div>
                             </>
                         )}
-
                         <div className="font-bold">${props.precio}</div>
-
                     </div>
-
                     <Rating rating={props.rating} />
                 </div>
                 <div className="flex gap-2 w-full">
@@ -99,7 +95,14 @@ export default function Producto(props) {
     );
 }
 
-
+/*
+Producto.defaultProps = {
+    nombre: "Producto",
+    detalles: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis ex lorem. Nunc molestie, urna sed euismod dapibus, magna sapien fringilla nisi, ornare egestas justo mi non quam. Aenean vehicula purus vitae varius facilisis.",
+    precio: 999.99,
+    descuento: 20,
+    layout: "Lista"
+};*/
 
 Producto.propTypes = {
     id: PropTypes.number.isRequired,

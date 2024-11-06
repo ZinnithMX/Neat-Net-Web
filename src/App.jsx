@@ -20,8 +20,7 @@ import Seguridad from "./pages/ajustes/Seguridad.jsx";
 import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
 import {createContext} from "react";
-
-
+import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 
 
 function App() {
@@ -47,6 +46,7 @@ function App() {
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                 </Route>
+                <Route path={"/gestionProd"} element={<GestionarProducto/>}/>
             </Routes>
           </Router>
 
