@@ -4,27 +4,44 @@ import Producto from "../../components/Producto/Producto.jsx";
 import {useEffect, useState} from "react";
 
 export default function Productos(){
-    const [productos, setProductos] = useState(null);
 
+    const[productos, setProducto] = useState([]);
     useEffect(() => {
-        setProductos([
-            { nombre: "Tennis", descripcion: "Son de muy buena calidad (créeme)", descuento: 20, precio: 200 , rating:3},
-            { nombre: "Botas", descripcion: "Son de muy buena calidad (créeme)", descuento: 0, precio: 350, rating: 4 },
-            { nombre: "Zapatos", descripcion: "Son de muy buena calidad (créeme)", descuento: 20, precio: 500, rating:5 },
-        ]);
+        const headers = new Headers();
+        headers.append("Accept", "application/json");
+        headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU");
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers,
+            redirect: "follow"
+        }
+        fetch("http://localhost:8080/producto/vistosReciente?userId=1", requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                const resultado = JSON.parse(result);
+                console.log(resultado);
+                setProducto(resultado.producto)
+            })
+            .catch((error) => console.error(error));
     }, []);
+    const handleDetalle = (array) => {
+        let retorno = "No existe una q descripcion para este producto"
+        array.forEach((item) => {
+            if(item.tipoCaracteristica === 'DESCRIPCION') {
+                retorno = item.valor;
+            }
+        })
+        return retorno;
+    }
 
-    const listaProd = productos?.map((producto) => (
-        <Producto
-            layout="Cuadricula"
-            nombre={producto.nombre}
-            detalles={producto.descripcion}
-            descuento={producto.descuento}
-            precio={producto.precio}
-            rating={producto.rating}
-        />
-    ));
-
+    const handleImagen =  (array) => {
+        for (const item of array) {
+            if(item.tipoCaracteristica === 'IMAGEN') {
+                return item.valor;
+            }
+        }
+    }
     return(
         <>
             <Header />
@@ -35,9 +52,19 @@ export default function Productos(){
 
             <div>
             <div className="w-full px-6 py-8 gap-8">
-                <h4>Vistos recientemenete</h4>
+                <h4 className={"mb-8"}>Vistos recientemenete</h4>
                 <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
-                    {listaProd}
+                    {
+                        productos.map(producto => (
+                            <Producto
+                                layout={"Cuadricula"}
+                                nombre={producto.titulo}
+                                imagen={handleImagen(producto.caracteristicas)}
+                                descuento={producto.descuento}
+                                precio={producto.precio}
+                                detalles={handleDetalle(producto.caracteristicas)}/>
+                        ))
+                    }
                 </div>
             </div>
 
