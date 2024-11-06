@@ -2,6 +2,7 @@ import Input from "../../components/Input/Input.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 
 export default function Seguridad() {
+
     return(
         <>
             <header className="flex justify-center text-p-600 h-14 items-center p-8">

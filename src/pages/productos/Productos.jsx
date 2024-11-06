@@ -13,7 +13,7 @@ export default function Productos(){
             { nombre: "Botas", descripcion: "Son de muy buena calidad (créeme)", descuento: 0, precio: 350, rating: 4 },
             { nombre: "Zapatos", descripcion: "Son de muy buena calidad (créeme)", descuento: 20, precio: 500, rating:5 },
         ]);
-    }, [productos]);
+    }, []);
 
     const listaProd = productos?.map((producto) => (
         <Producto
