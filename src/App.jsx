@@ -18,6 +18,7 @@ import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
 import Perfil from "./pages/ajustes/Perfil.jsx";
 import Seguridad from "./pages/ajustes/Seguridad.jsx";
 import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
+import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 
 function App() {
 
@@ -38,6 +39,8 @@ function App() {
                 <Route path={"/productos/:id"} element={<VerProducto/>}/>
                 <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                 <Route path={"/cuenta"} element={<Perfil/>}/>
+                <Route path={"/gestionProd"} element={<GestionarProducto/>}/>
+
             </Routes>
           </Router>
         </>
