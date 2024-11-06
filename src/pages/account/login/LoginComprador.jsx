@@ -3,9 +3,9 @@ import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Shopping-pana.svg";
-import {Link} from "react-router-dom";
-import {useCookies} from "react-cookie";
+import {Link, Navigate} from "react-router-dom";
 import axios from "axios";
+import {Cookies} from "react-cookie";
 
 export default function LoginComprador(){
 
@@ -13,6 +13,7 @@ export default function LoginComprador(){
     const [contra, setContra] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
     const [ip, setIP] = useState("");
+
 
     const getData = async () => {
         const res = await axios.get("https://api.ipify.org/?format=json");
@@ -63,8 +64,11 @@ export default function LoginComprador(){
                 method: 'GET',
                 headers: headers
             }).then(res => {
-                localStorage.setItem("sesionId", res.sessionId);
-
+                if(res.ok){
+                    const userCookie = new Cookies();
+                    userCookie.set("sesionId", res.sessionId, {path: "/"});
+                    return <Navigate to={"/productos/"}/>
+                }
             })
         } catch(err) {
             alert("Fallo")
