@@ -13,21 +13,63 @@ export default function VerProducto() {
     const {id} = useParams();
     const [encontrado, setEncontrado] = useState(false);
     const [producto, setProducto] = useState({});
+    const [descripcion, setDescripcion] = useState("");
+    const [image, setImage] = useState(null);
     const [pregunta, setPregunta] = useState("");
 
     async function enviarPregunta(){
 
     }
 
+
     useEffect(() => {
-        // try{
-        //     axios.get()
-        // }
-        // catch (e) {
-        //     if(e.response.status === 400){
-        //         setEncontrado(false);
-        //     }
-        // }
+        console.log("Ingreso al useEffectt")
+        const fetchImage = async (pathIn) => {
+            if(pathIn === undefined){
+                console.log("Imagen indefinida")
+                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+            } else {
+                const headers = new Headers();
+                headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                headers.append("Content-Type", "application/json");
+
+                const newFormData = {
+                    path: pathIn
+                }
+                const requestOptions = {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(newFormData),
+                    redirect: "follow"
+                }
+
+                const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+                if(response.ok) {
+                    const blob = await response.blob();
+                    alert("Imagen exitosaaa")
+                    setImage(URL.createObjectURL(blob));
+                } else {
+                    setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
+                }
+            }
+        }
+
+         try{
+             let url = `http://localhost:8080/producto/obtenerPorId?idProducto=${id}`
+             fetch(url, {
+                 method: "GET",
+                 headers: {}
+             }).then(res => res.json()).then(data => {
+                 setProducto(data.producto);
+                 setDescripcion(data.producto.caracteristicas[0].valor)
+                 fetchImage(producto.caracteristicas[1].valor)
+             })
+         }
+         catch (e) {
+             if(e.response.status === 400){
+                 setEncontrado(false);
+             }
+         }
         setEncontrado(true);
         setProducto({
             titulo: "Productito",
@@ -68,28 +110,30 @@ export default function VerProducto() {
                 <div className={"flex flex-col"}>
                     <div className={"flex py-8 px-6 items-center gap-8"}>
                         <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
-
+                            <img src={image} className={"rounded-2xl"} />
                         </div>
                         <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
                             <h3>{producto.titulo}</h3>
                             <div className={"flex justify-between items-center w-full"}>
                                 <Rating rating={producto.puntuacion}/>
-                                <p>Vendido por: <Link className={"link-secondary"}
-                                                      to={""}>{producto.vendedor.NombreEmpresa}</Link></p>
+                                {
+                                //    <p>Vendido por: <Link className={"link-secondary"}
+                                //                       to={""}>{producto.vendedor.NombreEmpresa}</Link></p>
+                                }
                             </div>
                             <div className={"flex flex-col justify-center gap-1"}>
-                                <div className={"flex items-center gap-4"}>
+                                {<div className={"flex items-center gap-4"}>
                                     <h4 className={"text-n-400"}>${producto.descuento > 0 ? (producto.precio * (1 - producto.descuento)).toFixed(2) : producto.precio.toFixed(2)}</h4>
                                     {producto.descuento > 0 &&
                                         <p className={"text-lg text-p-600 font-bold"}>-{producto.descuento * 100} %</p>}
-                                </div>
+                                </div>}
                                 {producto.descuento > 0 &&
                                     <p className={"text-sm text-n-200 font-light"}>Precio original: {producto.precio.toFixed(2)}</p>
                                 }
                             </div>
                             <div className={"flex flex-col gap-2"}>
-                                <h5>Descripción</h5>
-                                <p className={"line-clamp-6 text-sm text-justify"}>{producto.caracteristicas.descripcion}</p>
+                                <h5>{descripcion}   </h5>
+                                <p className={"line-clamp-6 text-sm text-justify"}>{}</p>
                             </div>
                             <div className={"flex gap-4 "}>
                                 <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>

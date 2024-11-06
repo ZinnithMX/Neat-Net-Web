@@ -2,11 +2,11 @@ import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
 import {useEffect, useState} from "react";
-import {Cookies} from "react-cookie";
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
-    const userCookie = new Cookies();
+    const [agregados, setAgregados] = useState(null);
+
 
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        fetch("http://localhost:8080/producto/vistosReciente?userId=" + userCookie.get("idUsuario"), requestOptions)
+        fetch("http://localhost:8080/producto/vistosReciente?userId=1", requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
@@ -28,6 +28,30 @@ export default function Productos(){
             })
             .catch((error) => console.error(error));
     }, []);
+
+    useEffect(() => {
+        const headers = new Headers();
+        headers.append("Accept", "application/json");
+        headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU");
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers,
+            redirect: "follow"
+        }
+
+        fetch("http://localhost:8080/producto/obtenerProductos", requestOptions)
+        .then((response) => response.text())
+            .then((result) => {
+                const resultado = JSON.parse(result);
+                console.log(resultado);
+                setAgregados(resultado.productos);
+                console.log(agregados)
+            })
+    }, []);
+
+
+
     const handleDetalle = (array) => {
         let retorno = "No existe una q descripcion para este producto"
         array.forEach((item) => {
@@ -48,7 +72,6 @@ export default function Productos(){
     return(
         <>
         <Header />
-            <>
             <div className="w-full h-[480px]">
                 <img src="https://cdn.pixabay.com/photo/2017/08/30/17/26/please-2697951_1280.jpg" alt="Descripción de la imagen" className="object-cover w-full h-full"
                 />
@@ -60,8 +83,9 @@ export default function Productos(){
                 <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
 
                     {
-                        productos.map(producto => (
+                        productos !== null && productos.map(producto => (
                             <Producto
+                                id={producto.idProducto}
                                 layout={"Cuadricula"}
                                 nombre={producto.titulo}
                                 imagen={handleImagen(producto.caracteristicas)}
@@ -76,10 +100,25 @@ export default function Productos(){
 
             <div className="w-full px-6 py-8 gap-8">
                 <h4>Productos agregados recientemente</h4>
+                <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll mt-8">
+                    {
+                        agregados !== null && agregados.map(producto => (
+                            // eslint-disable-next-line react/jsx-key
+                            <Producto
+                                id={producto.idProducto}
+                                layout={"Cuadricula"}
+                                nombre={producto.titulo}
+                                imagen={handleImagen(producto.caracteristicas)}
+                                descuento={producto.descuento}
+                                precio={producto.precio}
+                                detalles={handleDetalle(producto.caracteristicas)}/>
+                        ))
+                    }
+                </div>
             </div>
 
             </div>
-            </>
+
             <Footer/>
         </>
     )
