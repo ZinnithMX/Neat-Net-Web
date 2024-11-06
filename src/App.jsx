@@ -25,8 +25,8 @@ function App() {
         <>
           <Router>
             <Routes>
+                <Route index element={<Promo/>}/>
                 <Route path={"*"} element={<NotFound/>}/>
-                <Route path="/" element={<Promo/>}/>
                 <Route path={"/play"} element={<Playground/>}/>
                 <Route path={"/TOS"} element={<TOS/>}/>
                 <Route path={"/Privacy"} element={<Privacy/>}/>
