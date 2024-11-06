@@ -18,6 +18,7 @@ import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
 import Perfil from "./pages/ajustes/Perfil.jsx";
 import Seguridad from "./pages/ajustes/Seguridad.jsx";
 import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
+import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
 
 
 function App() {
@@ -35,10 +36,13 @@ function App() {
                 <Route path={"/signup/vendedor"} element={<SignupVendedor/>}/>
                 <Route path={"/login/comprador"} element={<LoginComprador/>}/>
                 <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
-                <Route path={"/productos"} element={<Productos/>}/>
-                <Route path={"/productos/:id"} element={<VerProducto/>}/>
-                <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
-                <Route path={"/cuenta"} element={<Perfil/>}/>
+                <Route element={<ProtectedRouteComprador redirectTo={"/login/comprador"} />}>
+                    <Route path='/productos' element={<Productos/>}/>
+                    <Route path={"/productos/:id"} element={<VerProducto/>}/>
+                    <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
+                    <Route path={"/cuenta"} element={<Perfil/>}/>
+                </Route>
+
             </Routes>
           </Router>
 
