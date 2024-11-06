@@ -19,6 +19,7 @@ import Perfil from "./pages/ajustes/Perfil.jsx";
 import Seguridad from "./pages/ajustes/Seguridad.jsx";
 import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 
+
 function App() {
 
     return (
@@ -40,6 +41,7 @@ function App() {
                 <Route path={"/cuenta"} element={<Perfil/>}/>
             </Routes>
           </Router>
+
         </>
 
     )
