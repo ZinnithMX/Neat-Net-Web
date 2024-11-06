@@ -1,18 +1,59 @@
 import PropTypes from "prop-types";
 import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Rating from "../Rating/Rating.jsx";
 
 export default function Producto(props) {
     const funcion = () => {};
     const isGrid = props.layout === "Cuadricula";
+    const [image, setImage] = useState(null);
+    const [inPath, setInPath] = useState(props.imagen);
+    useEffect(() => {
+        const fetchImage = async (pathIn) => {
+            if(pathIn === undefined){
+                console.log("Imagen indefinida")
+                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+            } else {
+                console.log(`Camino de : ${props.nombre}` + pathIn)
+                const headers = new Headers();
+                headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                headers.append("Content-Type", "application/json");
+
+                const newFormData = {
+                    path: pathIn
+                }
+                const requestOptions = {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(newFormData),
+                    redirect: "follow"
+                }
+
+                    const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+                if(response.ok) {
+                    const blob = await response.blob();
+                    await new Promise((resolve, reject) => setTimeout(resolve, 150));
+                    setImage(URL.createObjectURL(blob));
+                } else {
+                    setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
+                }
+
+
+
+
+
+
+            }
+        }
+        fetchImage(inPath)
+    },[inPath])
 
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
                 className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s"
+                src={image}
                 alt="Producto imagen"
             />
             <div className="flex flex-col py-4 px-6 flex-1 gap-4 justify-center bg-g-100">
@@ -64,5 +105,6 @@ Producto.propTypes = {
     detalles: PropTypes.string.isRequired,
     precio: PropTypes.number.isRequired,
     descuento: PropTypes.number.isRequired,
+    imagen: PropTypes.string.isRequired,
     layout: PropTypes.oneOf(["Lista", "Cuadricula"])
 };

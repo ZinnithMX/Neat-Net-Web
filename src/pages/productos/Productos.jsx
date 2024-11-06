@@ -6,7 +6,6 @@ import {useEffect, useState} from "react";
 export default function Productos(){
 
     const[productos, setProducto] = useState([]);
-
     useEffect(() => {
         const headers = new Headers();
         headers.append("Accept", "application/json");
@@ -27,13 +26,21 @@ export default function Productos(){
             .catch((error) => console.error(error));
     }, []);
     const handleDetalle = (array) => {
-        let retorno = "No existe una descripcion para este producto"
+        let retorno = "No existe una q descripcion para este producto"
         array.forEach((item) => {
             if(item.tipoCaracteristica === 'DESCRIPCION') {
                 retorno = item.valor;
             }
         })
         return retorno;
+    }
+
+    const handleImagen =  (array) => {
+        for (const item of array) {
+            if(item.tipoCaracteristica === 'IMAGEN') {
+                return item.valor;
+            }
+        }
     }
     return(
         <>
@@ -45,14 +52,17 @@ export default function Productos(){
 
             <div>
             <div className="w-full px-6 py-8 gap-8">
-                <h4>Vistos recientemenete</h4>
+                <h4 className={"mb-8"}>Vistos recientemenete</h4>
                 <div className="flex flex-row w-[100%-3rem] gap-2 overflow-scroll">
                     {
                         productos.map(producto => (
-                            <Producto nombre={producto.titulo}
-                                      descuento={producto.descuento}
-                                      precio={producto.precio}
-                                      detalles={handleDetalle(producto.caracteristicas)}/>
+                            <Producto
+                                layout={"Cuadricula"}
+                                nombre={producto.titulo}
+                                imagen={handleImagen(producto.caracteristicas)}
+                                descuento={producto.descuento}
+                                precio={producto.precio}
+                                detalles={handleDetalle(producto.caracteristicas)}/>
                         ))
                     }
                 </div>
