@@ -21,6 +21,7 @@ import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
 import {createContext} from "react";
 import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
+import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                 </Route>
                 <Route path={"/gestionProd"} element={<GestionarProducto/>}/>
+                <Route path={"/producto/publicar/"} element={<PublicarProducto/>}/>
             </Routes>
           </Router>
 

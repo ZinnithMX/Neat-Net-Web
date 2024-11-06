@@ -2,7 +2,7 @@ import Input from "../Input/Input.jsx";
 import {useState} from "react";
 import {Link, NavLink} from "react-router-dom";
 
-export default function Header() {
+export default function HeaderVendedor() {
     return (
         <header className="w-full py-3 px-6 items-center">
             <div className="flex flex-row w-full items-center justify-between pl-6 pr-6">
