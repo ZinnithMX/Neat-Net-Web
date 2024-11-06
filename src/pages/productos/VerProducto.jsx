@@ -1,11 +1,12 @@
 import {Link, useParams} from "react-router-dom";
 import Header from "../../components/Header/Header.jsx";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Rating from "../../components/Rating/Rating.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Input from "../../components/Input/Input.jsx";
+import {DomainContext} from "../../App.jsx";
 
 
 export default function VerProducto() {
@@ -16,7 +17,7 @@ export default function VerProducto() {
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
     const [pregunta, setPregunta] = useState("");
-
+    const domainContext = useContext(DomainContext)
     async function enviarPregunta(){
 
     }
@@ -43,7 +44,7 @@ export default function VerProducto() {
                     redirect: "follow"
                 }
 
-                const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+                const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     alert("Imagen exitosaaa")
@@ -55,7 +56,7 @@ export default function VerProducto() {
         }
 
          try{
-             let url = `http://localhost:8080/producto/obtenerPorId?idProducto=${id}`
+             let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
              fetch(url, {
                  method: "GET",
                  headers: {}

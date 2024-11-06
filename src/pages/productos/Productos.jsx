@@ -1,13 +1,14 @@
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {DomainContext} from "../../App.jsx";
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
     const [agregados, setAgregados] = useState(null);
 
-
+    const Domain = useContext(DomainContext);
 
     useEffect(() => {
         const headers = new Headers();
@@ -19,7 +20,7 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        fetch("http://localhost:8080/producto/vistosReciente?userId=1", requestOptions)
+        fetch(`${Domain}:8080/producto/vistosReciente?userId=1`, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
@@ -40,7 +41,7 @@ export default function Productos(){
             redirect: "follow"
         }
 
-        fetch("http://localhost:8080/producto/obtenerProductos", requestOptions)
+        fetch(Domain + ":8080/producto/obtenerProductos", requestOptions)
         .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);

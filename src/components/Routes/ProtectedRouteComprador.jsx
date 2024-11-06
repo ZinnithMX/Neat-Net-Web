@@ -1,18 +1,20 @@
 import {Cookies} from "react-cookie";
 import {Navigate, Outlet} from "react-router-dom";
 import axios from "axios";
+import {useContext} from "react";
+import {DomainContext} from "../../App.jsx";
 
 export default function ProtectedRouteComprador({children, redirectTo}){
 
     const userCookie = new Cookies();
-
+    const domain = useContext(DomainContext);
 
 
     if(!userCookie.get("sesionId")){
         return <Navigate to={redirectTo}/>
     }
     else{
-        const url = "http://localhost:8080/login/sessionId?" + new URLSearchParams({
+        const url = domain + ":8080/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
         const headers = new Headers();

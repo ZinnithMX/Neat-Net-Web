@@ -1,15 +1,17 @@
 import PropTypes from "prop-types";
 import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Rating from "../Rating/Rating.jsx";
 import {Navigate, NavLink} from "react-router-dom";
+import {DomainContext} from "../../App.jsx";
 
 export default function Producto(props) {
     const funcion = () => {};
     const isGrid = props.layout === "Cuadricula";
     const [image, setImage] = useState(null);
     const [inPath, setInPath] = useState(props.imagen);
+    const domain = useContext(DomainContext);
     useEffect(() => {
         const fetchImage = async (pathIn) => {
             if(pathIn === undefined){
@@ -31,7 +33,7 @@ export default function Producto(props) {
                     redirect: "follow"
                 }
 
-                    const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+                    const response = await fetch(`${domain}/producto/getByPath, requestOptions)`);
                 if(response.ok) {
                     const blob = await response.blob();
                     await new Promise((resolve, reject) => setTimeout(resolve, 150));
