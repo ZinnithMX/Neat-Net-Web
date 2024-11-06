@@ -30,8 +30,6 @@ export default function LoginComprador(){
         contrasenia: contra.value,
     });
 
-    const [sessionId, setSessionId, removeSessionId] = useCookies(['sesionId'], {doNotParse: true});
-
     useEffect(() => {
 
         if(!contra.error && !correo.error){
@@ -54,7 +52,7 @@ export default function LoginComprador(){
         });
         try {
             const session = crypto.randomUUID()
-            setSessionId('sesionId', session)
+            session.set('sesionId', session)
 
             const headers = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
