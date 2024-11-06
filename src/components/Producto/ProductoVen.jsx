@@ -9,6 +9,7 @@ export default function ProductoVen(props){
     const funcion = () => {};
     const isGrid = props.layout === "Cuadricula";
 
+    
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
