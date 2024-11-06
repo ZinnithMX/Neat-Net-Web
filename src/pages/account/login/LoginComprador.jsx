@@ -51,9 +51,6 @@ export default function LoginComprador(){
             ip: ip
         });
         try {
-            const session = crypto.randomUUID()
-            session.set('sesionId', session)
-
             const headers = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
             headers.append("Authorization", `Basic ${encodedCredentials}`);
