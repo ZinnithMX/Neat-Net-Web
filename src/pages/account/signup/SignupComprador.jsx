@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/In no time-pana 1.svg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {DomainContext} from "../../../App.jsx";
 
 export default function SignupComprador() {
 
@@ -14,7 +15,10 @@ export default function SignupComprador() {
     const [telPer, setTelPer] = useState({error: true, value: ""});
     const [sendForm, setSendForm] = useState(true);
     const [confContra, setConfContra] = useState({error: true, value: ""});
-
+    const [showMsgError, setShowMsgError] = useState(false)
+    const [msgError, setMsgError] = useState("")
+    const navigate = useNavigate();
+    const domain = useContext(DomainContext)
     
     const [form, setForm] = useState({
         nombre: nombre.value,
@@ -48,8 +52,8 @@ export default function SignupComprador() {
         }
     },[contra, correo, nombre, telPer])
 
-    async function mandar(form) {
-        const url = "http://localhost:8080/login/registrarComprador";
+    async function mandar() {
+        const url = domain + ":8080/login/registrarComprador";
         try {
             const myHeaders = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
@@ -61,10 +65,17 @@ export default function SignupComprador() {
                 headers: myHeaders,
                 body: JSON.stringify(form)
             }).then(res => {
-                alert(res);
+                if(res.ok){
+                    navigate("/login/comprador");
+                }
+                else{
+                    setMsgError("Ha ocurrido un error inesperado")
+                    setShowMsgError(true)
+                }
             })
         } catch(err) {
-            alert(err);
+            setMsgError("No se ha podido conectar con el servidor")
+            setShowMsgError(true)
         }
     }
 
@@ -101,13 +112,17 @@ export default function SignupComprador() {
                                validate={true} regex={new RegExp(/^[+]{1}(?:[0-9\-\\(\\)\\/.]\s?){6,15}[0-9]{1}$/)}>
                             +XX XXXX XXX 0000 0000
                         </Input>
-                        <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={() => {
-                                           alert("Enviado")
-                                           mandar(form)
-                                       }}>
+                        <PrimaryButton width={""} size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
+                                       onClick={mandar}>
                             Crear Cuenta
                         </PrimaryButton>
+                        {
+                            showMsgError &&
+                            (
+                                <p className={"text-sm text-er-700"}>{msgError}</p>
+                            )
+
+                        }
                     </form>
                     <p className={"text-xs"}>Al crear una cuenta aceptas los <Link className={"link"} to={"/TOS"}>Terminos
                         y condiciones</Link> y las <Link className={"link"} to={"/Privacy"}> Politicas de privacidad</Link> de Neat-Net</p>
