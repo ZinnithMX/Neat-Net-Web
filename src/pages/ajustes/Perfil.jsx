@@ -3,66 +3,43 @@ import Input from "../../components/Input/Input.jsx";
 import PropTypes from "prop-types";
 import MetodoP from "../../components/metodoP/MetodoP.jsx";
 import { useEffect, useState } from "react";
+import {useCookies} from "react-cookie";
 
 export default function Perfil(props) {
     const [metodos, setMetodos] = useState(null);
+    const [cookies] = useCookies(['idUsuario']);
+    let usuario = cookies.idUsuario;
+    usuario = 1;
     const [activeSection, setActiveSection] = useState("Perfil");
-    const [correo, setCorreo] = useState({ error: false, value: "" });
-    const [calle, setCalle] = useState({ error: false, value: "" });
-    const [nExt, setNExt] = useState({ error: false, value: "" });
-    const [nInt, setNInt] = useState({ error: false, value: "" });
-    const [codigoPostal, setCodigoPostal] = useState({ error: false, value: "" });
-    const [colonia, setColonia] = useState({ error: false, value: "" });
-    const [estado, setEstado] = useState({ error: false, value: "" });
+    const [correo, setCorreo] = useState({error: false, value: ""});
+    const [calle, setCalle] = useState({error: false, value: ""});
+    const [nExt, setNExt] = useState({error: false, value: ""});
+    const [nInt, setNInt] = useState({error: false, value: ""});
+    const [codigoPostal, setCodigoPostal] = useState({error: false, value: ""});
+    const [colonia, setColonia] = useState({error: false, value: ""});
+    const [estado, setEstado] = useState({error: false, value: ""});
 
-    const handleActualizarMetodo = (metodoPago) => {
-        fetch(`http://localhost:8080/metodo-pago/actualizar?usuario=${usuario.value}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
-            },
-            body: JSON.stringify(metodoPago)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text) });
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert("Método de pago actualizado exitosamente");
-                setMetodos(prevMetodos => prevMetodos.map(m => m.nombre === metodoPago.nombre ? metodoPago : m));
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Error al actualizar el método de pago: " + error.message);
-            });
-    };
 
-    const handleEliminarMetodo = (nombre) => {
-        fetch(`http://localhost:8080/metodo-pago/eliminar`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
-            },
-            body : FormData("nombre", nombre)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text) });
+    useEffect(() => {
+            fetch(`http://localhost:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('Ingreso:visitante')
                 }
-                return response.json();
             })
-            .then(data => {
-                alert("Método de pago eliminado exitosamente");
-                setMetodos(prevMetodos => prevMetodos.filter(m => m.nombre !== nombre));
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Error al eliminar el método de pago: " + error.message);
-            });
-    };
+                .then(response => response.json())
+                .then(data => {
+                    const metodosFormateados = data.map(metodo => ({
+                        nombre: metodo.nombre,
+                        titular: metodo.titular,
+                        nip: metodo.nip
+                    }));
+                    setMetodos(metodosFormateados);
+                })
+                .catch(error => console.error('Error:', error));
+        },
+        [usuario]);
 
     const listaMet = metodos?.map((metodo) => (
         <MetodoP
@@ -70,8 +47,6 @@ export default function Perfil(props) {
             titular={metodo.titular}
             nip={metodo.nip}
             key={metodo.nombre}
-            onActualizar={() => handleActualizarMetodo(metodo)}
-            onEliminar={() => handleEliminarMetodo(metodo.nombre)}
         />
     ));
 
