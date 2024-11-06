@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import MetodoP from "../../components/metodoP/MetodoP.jsx";
 import { useEffect, useState } from "react";
 
-export default function Perfil(props) {
+export default function Perfil() {
     const [metodos, setMetodos] = useState(null);
     const [activeSection, setActiveSection] = useState("Perfil");
     const [correo, setCorreo] = useState({ error: false, value: "" });
@@ -158,16 +158,4 @@ export default function Perfil(props) {
             </div>
         </>
     );
-}
-
-Perfil.defaultTypes = {
-    nombre: "Nombre",
-    apellidoP: "ApellidoP",
-    apellidoM: "ApellidoM"
-}
-
-Perfil.propTypes = {
-    nombre: PropTypes.string.isRequired,
-    apellidoP: PropTypes.string.isRequired,
-    apellidoM: PropTypes.string.isRequired,
 }

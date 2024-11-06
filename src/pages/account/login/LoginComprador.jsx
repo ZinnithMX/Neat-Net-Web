@@ -50,25 +50,22 @@ export default function LoginComprador(){
             password: Form.contrasenia,
             ip: ip
         });
-        try {
-            const headers = new Headers();
-            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-            headers.append("Authorization", `Basic ${encodedCredentials}`);
-            headers.append("Content-Type", `application/json`);
-            fetch(url, {
-                method: 'GET',
-                headers: headers
-            }).then(res => {
-                if(res.ok){
-                    const userCookie = new Cookies();
-                    userCookie.set("sesionId", res.sessionId, {path: "/"});
-                    return <Navigate to={"/productos/"}/>
-                }
-            })
-        } catch(err) {
-            alert("Fallo")
-            alert(err);
-        }
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${Form.correo}:${Form.contrasenia}`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+        headers.append("Content-Type", `application/json`);
+
+        axios.get(url, {headers: headers}).then(res => {
+            if(res.status === 200){
+                const userCookie = new Cookies();
+                //console.log(res.data.sessionId);
+                userCookie.set("sesionId", res.data.sessionId, {path: "/"});
+                console.log(userCookie.get("sesionId"));
+                return <Navigate to={"/productos/"}/>
+            }
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
 

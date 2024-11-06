@@ -2,48 +2,11 @@ import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
 import {useEffect, useState} from "react";
+import {Cookies} from "react-cookie";
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
-    const [logueado, setLogueado] = useState(false);
-
-    useEffect(() => {
-        setLogueado(Login());
-    }, []);
-
-    async function Login(){
-        if(localStorage.getItem("sesionId") === null){
-            return false;
-        }
-        else{
-
-            const url = "http://localhost:8080/login/sessionId?" + new URLSearchParams({
-                sessionId: localStorage.getItem("sesionId")
-            });
-
-            const headers = new Headers();
-            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-            headers.append("Authorization", `Basic ${encodedCredentials}`);
-            headers.append("Content-Type", `application/json`);
-
-            fetch(url, {
-                method: 'GET',
-                headers: headers
-            }).then(res =>{
-                if(res.ok) {
-                    const resultado = JSON.parse(res);
-                    localStorage.setItem("idUsuario", resultado.idUsuario);
-                    return true;
-                }else{
-                    return false;
-                }
-            }).catch(err =>{
-                console.log(err);
-                return false;
-            })
-
-        }
-    }
+    const userCookie = new Cookies();
 
 
     useEffect(() => {
@@ -56,7 +19,7 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        fetch("http://localhost:8080/producto/vistosReciente?userId=1", requestOptions)
+        fetch("http://localhost:8080/producto/vistosReciente?userId=" + userCookie.get("idUsuario"), requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
@@ -85,7 +48,6 @@ export default function Productos(){
     return(
         <>
         <Header />
-        {logueado && (
             <>
             <div className="w-full h-[480px]">
                 <img src="https://cdn.pixabay.com/photo/2017/08/30/17/26/please-2697951_1280.jpg" alt="Descripción de la imagen" className="object-cover w-full h-full"
@@ -118,7 +80,6 @@ export default function Productos(){
 
             </div>
             </>
-            )}
             <Footer/>
         </>
     )

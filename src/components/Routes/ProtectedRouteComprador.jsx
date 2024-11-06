@@ -1,5 +1,6 @@
 import {Cookies} from "react-cookie";
 import {Navigate, Outlet} from "react-router-dom";
+import axios from "axios";
 
 export default function ProtectedRouteComprador({children, redirectTo}){
 
@@ -14,31 +15,25 @@ export default function ProtectedRouteComprador({children, redirectTo}){
         const url = "http://localhost:8080/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
-
-
         const headers = new Headers();
         const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-
         headers.append("Authorization", `Basic ${encodedCredentials}`);
         headers.append("Content-Type", `application/json`);
-        fetch(url, {
-            method: 'GET',
-            headers: headers
-        }).then(res => {
-            if(res.ok){
-                userCookie.set("idUsuario", res.idUsuario, {path: "/"});
-                return children ? children : <Outlet/>
+
+        axios.get(url, {headers: headers}).then(res => {
+            if(res.status === 200){
+                userCookie.set("idUsuario", res.data.idUsuario, {path: "/"});
             }
             else{
                 userCookie.remove("sesionId", {path: "/"});
                 return <Navigate to={redirectTo}/>
             }
         }).catch(err => {
-            console.log(err);
             return <Navigate to={redirectTo}/>
         })
     }
 
+    return <Outlet/>
 
 
 }
