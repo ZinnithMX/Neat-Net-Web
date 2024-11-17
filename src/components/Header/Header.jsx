@@ -5,7 +5,7 @@ import {Link, NavLink} from "react-router-dom";
 export default function Header() {
     return (
         <header className="w-full py-3 px-6 items-center">
-            <div className="flex flex-row w-full items-center justify-between pl-6 pr-6">
+            <div className="flex flex-row w-full items-center justify-between">
                 <div className="text-p-600">
                     <h4><Link to={"/productos/"}>Neat Net</Link></h4>
                 </div>

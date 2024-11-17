@@ -1,25 +1,42 @@
-import { useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Retail markdown-pana.svg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import {DomainContext} from "../../../App.jsx";
+import {Cookies} from "react-cookie";
 
 export default function LoginVendedor(){
 
     const [correo, setCorreo] = useState({error: true, value:""});
     const [contra, setContra] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
+    const Domain = useContext(DomainContext);
+    const userCookie = new Cookies();
+    const navigate = useNavigate();
+    const [ip, setIp] = useState("");
 
-
-    const [form, setForm] = useState({
+    const [Form, setForm] = useState({
         correo: correo.value,
         contrasenia: contra.value,
     });
 
+    const getData = async () => {
+        const res = await axios.get("https://api.ipify.org/?format=json");
+        console.log(res.data);
+        setIP(res.data.ip);
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+
     useEffect(() => {
 
-        if(!contra.error && !correo.error && !confContra.error){
+        if(!contra.error && !correo.error){
             setForm({
                 correo: correo.value,
                 contrasenia: contra.value,
@@ -30,21 +47,57 @@ export default function LoginVendedor(){
         }
     },[contra, correo])
 
-    async function mandar(form) {
-        const url = "http://192.168.20.73:8080/users/add";
-        try {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form)
-            }).then(res => {
-                alert(res);
-            })
-        } catch(err) {
-            alert(err);
-        }
+    async function mandar() {
+        const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
+            correo: Form.correo,
+            password: Form.contrasenia,
+            ip: ip
+        });
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${Form.correo}:${Form.contrasenia}`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+        headers.append("Content-Type", `application/json`);
+
+        axios.get(url, {headers: headers}).then(res => {
+            if(res.status === 200){
+                //console.log(res.data.sessionId);
+                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
+                console.log(userCookie.get("sesionId"));
+                navigate("/productos/")*/
+                verificarVendedor(res.data);
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    async function verificarVendedor(data){
+
+        const url2 = Domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
+                "idUsuario": data.usuario.idUsuario,
+                "nombre": data.usuario.nombre,
+                "fechaNac": data.usuario.fechaNac,
+                "correo": data.usuario.correo,
+                "contrasenia": data.usuario.contrasenia,
+                "habilitado": data.usuario.habilitado,
+                "bloqueado": data.usuario.bloqueado
+        })
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+        headers.append("Content-Type", `application/json`);
+
+        axios.get(url2, {headers: headers}).then(res => {
+            if(res.status === 200){
+                //console.log(res.data.sessionId);
+                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
+                console.log(userCookie.get("sesionId"));
+                navigate("/productos/")*/
+                //verificarVendedor(res.data);
+            }
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
 
@@ -67,10 +120,7 @@ export default function LoginVendedor(){
                             Ingresa tu contraseña
                         </Password>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={() => {
-                                           alert("Enviado")
-                                           mandar(form)
-                                       }}>
+                                       onClick={mandar}>
                             Iniciar Sesión
                         </PrimaryButton>
                     </form>
