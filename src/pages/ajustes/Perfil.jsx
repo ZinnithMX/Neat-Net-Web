@@ -2,7 +2,8 @@ import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Input from "../../components/Input/Input.jsx";
 import MetodoP from "../../components/metodoP/MetodoP.jsx";
 import { useEffect, useState } from "react";
-import {useCookies} from "react-cookie";
+import {Cookies, useCookies} from "react-cookie";
+import axios from "axios";
 
 export default function Perfil() {
     const [metodos, setMetodos] = useState(null);
@@ -48,11 +49,20 @@ export default function Perfil() {
         />
     ));
 
-    const handleCerrarSesion = () => {
+    /*const handleCerrarSesion = () => {
         ('idUsuario');
     }
     sessionStorage.clear();
-    history.push('/login/comprador');
+    history.push('/login/comprador');*/
+
+    function handleCerrarSesion(){
+        //axios.post();
+
+        const userCookie = new Cookies();
+        userCookie.remove("sesionId", {path: "/"});
+        userCookie.remove("idUsuario", {path: "/"});
+
+    }
 
     const handleActualizarDireccion = () => {
         const direccion = {
