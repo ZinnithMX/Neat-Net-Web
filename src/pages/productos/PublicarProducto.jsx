@@ -3,6 +3,7 @@ import Input from "../../components/Input/Input.jsx";
 import {useState} from "react";
 import NumerInput from "../../components/Input/NumberInput/NumberInput.jsx";
 import TextArea from "../../components/TextArea/TextArea.jsx";
+import FileInput from "../../components/Input/FileInput/FileInput.jsx";
 
 
 export default function PublicarProducto() {
@@ -37,6 +38,9 @@ export default function PublicarProducto() {
                             <label className={"text-xl text-n-700"}>Imagen del producto</label>
                             <input type={"file"} />
                         </div>
+                        <FileInput label="Hola Gis" required={true} name="holi">
+
+                        </FileInput>
                     </div>
                 </div>
             </div>
