@@ -1,9 +1,10 @@
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Input from "../../components/Input/Input.jsx";
 import MetodoP from "../../components/metodoP/MetodoP.jsx";
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import {Cookies, useCookies} from "react-cookie";
 import axios from "axios";
+import {DomainContext} from "../../App.jsx";
 
 export default function Perfil() {
     const [metodos, setMetodos] = useState(null);
@@ -17,6 +18,8 @@ export default function Perfil() {
     const [codigoPostal, setCodigoPostal] = useState({error: false, value: ""});
     const [colonia, setColonia] = useState({error: false, value: ""});
     const [estado, setEstado] = useState({error: false, value: ""});
+
+    const domain = useContext(DomainContext);
 
 
     useEffect(() => {

@@ -34,7 +34,7 @@ export default function ProtectedRouteComprador({children, redirectTo}){
             }).catch(err => {
                 return <Navigate to={redirectTo}/>
             })
-        }    
+        }
     }, [userCookie]);
 
 
