@@ -44,8 +44,7 @@ FileInput.defaultProps = {
     required: false
 }
 
-
-FileInput.PropTypes = {
+FileInput.propTypes = {
 
     showLabel: PropTypes.bool,
     label: PropTypes.string,
