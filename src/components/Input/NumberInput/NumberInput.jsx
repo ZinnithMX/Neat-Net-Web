@@ -38,12 +38,12 @@ export default function NumerInput(props){
     }, [props.tamano]);
 
     function add(){
-        setValue(value+1);
+        setValue(parseInt(value) + 1);
     }
 
     function less(){
         if(value > 0){
-            setValue(value-1);
+            setValue(value - 1);
         }
     }
 
