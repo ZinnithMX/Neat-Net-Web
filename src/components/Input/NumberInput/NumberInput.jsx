@@ -43,7 +43,7 @@ export default function NumerInput(props){
 
     function less(){
         if(value > 0){
-            setValue(value - 1);
+            setValue(parseInt(value) - 1);
         }
     }
 
@@ -52,7 +52,7 @@ export default function NumerInput(props){
             setValue(0);
         }
         else{
-            setValue(e.target.value);
+            setValue(parseInt(e.target.value));
         }
     }
 
