@@ -17,9 +17,11 @@ export default function FileInput(props){
                 <label className={"w-full text-n-700 text-xl"}>
                     {props.label}
                 </label>
-                <span className={"material-symbols-rounded text-er-700"}>
-                    asterisk
-                </span>
+                { props.required &&
+                    <span className={"material-symbols-rounded text-er-700"}>
+                        asterisk
+                    </span>
+                }
             </div>}
             <div>
                 <div className={"flex px-3 py-4 items-center gap-4 bg-g-300 rounded-lg cursor-pointer"} onClick={handleClick}>
@@ -38,7 +40,8 @@ export default function FileInput(props){
 
 FileInput.defaultProps = {
     showLabel: true,
-    label: "Label"
+    label: "Label",
+    required: false
 }
 
 
@@ -46,5 +49,6 @@ FileInput.PropTypes = {
 
     showLabel: PropTypes.bool,
     label: PropTypes.string,
+    required: PropTypes.bool
 
 }
