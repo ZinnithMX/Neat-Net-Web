@@ -15,44 +15,42 @@ export default function VerProducto() {
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
+    const [downloading, onDownloading] = useState(false);
     const [pregunta, setPregunta] = useState("");
 
-    async function enviarPregunta(){
-
-    }
 
 
-    useEffect(() => {
-        console.log("Ingreso al useEffectt")
-        const fetchImage = async (pathIn) => {
-            if(pathIn === undefined){
-                console.log("Imagen indefinida")
-                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+    const fetchImage = async (pathIn) => {
+        if(pathIn === undefined){
+            console.log("Imagen indefinida")
+            setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+        } else {
+            const headers = new Headers();
+            headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+            headers.append("Content-Type", "application/json");
+
+            const newFormData = {
+                path: pathIn
+            }
+            const requestOptions = {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(newFormData),
+                redirect: "follow"
+            }
+
+            const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+            if(response.ok) {
+                const blob = await response.blob();
+                setImage(URL.createObjectURL(blob));
             } else {
-                const headers = new Headers();
-                headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
-                headers.append("Content-Type", "application/json");
-
-                const newFormData = {
-                    path: pathIn
-                }
-                const requestOptions = {
-                    method: "POST",
-                    headers: headers,
-                    body: JSON.stringify(newFormData),
-                    redirect: "follow"
-                }
-
-                const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
-                if(response.ok) {
-                    const blob = await response.blob();
-                    alert("Imagen exitosaaa")
-                    setImage(URL.createObjectURL(blob));
-                } else {
-                    setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
-                }
+                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
             }
         }
+    }
+    useEffect(() => {
+        console.log("Ingreso al useEffect")
+
 
          try{
              let url = `http://localhost:8080/producto/obtenerPorId?idProducto=${id}`
@@ -62,7 +60,7 @@ export default function VerProducto() {
              }).then(res => res.json()).then(data => {
                  setProducto(data.producto);
                  setDescripcion(data.producto.caracteristicas[0].valor)
-                 fetchImage(producto.caracteristicas[1].valor)
+                 fetchImage(data.producto.caracteristicas[1].valor)
              })
          }
          catch (e) {
@@ -100,8 +98,10 @@ export default function VerProducto() {
                 }
             }
 
-        })
-    }, []);
+        });
+    }, [downloading]);
+
+
 
     return(
         <>
@@ -110,7 +110,7 @@ export default function VerProducto() {
                 <div className={"flex flex-col"}>
                     <div className={"flex py-8 px-6 items-center gap-8"}>
                         <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
-                            <img src={image} className={"rounded-2xl"} />
+                            <img src={image} className={"rounded-2xl h-[30vw] w-[60vw]"} />
                         </div>
                         <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
                             <h3>{producto.titulo}</h3>

@@ -31,7 +31,7 @@ export default function Producto(props) {
                     redirect: "follow"
                 }
 
-                    const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+                    const response = await fetch("http://localhost:8080/producto/getByPath  ", requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     await new Promise((resolve, reject) => setTimeout(resolve, 150));
