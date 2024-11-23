@@ -19,13 +19,18 @@ import Perfil from "./pages/ajustes/Perfil.jsx";
 import Seguridad from "./pages/ajustes/Seguridad.jsx";
 import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
+import {createContext} from "react";
+import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
+import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
 
 
 function App() {
 
     return (
         <>
+
           <Router>
+
             <Routes>
                 <Route index element={<Promo/>}/>
                 <Route path={"*"} element={<NotFound/>}/>
@@ -36,13 +41,14 @@ function App() {
                 <Route path={"/signup/vendedor"} element={<SignupVendedor/>}/>
                 <Route path={"/login/comprador"} element={<LoginComprador/>}/>
                 <Route path={"/login/vendedor"} element={<LoginVendedor/>}/>
-                <Route path='/productos' element={<Productos/>}/>
-                <Route path={"/productos/:id"} element={<VerProducto/>}/>
                 <Route element={<ProtectedRouteComprador redirectTo={"/login/comprador"} />}>
+                    <Route path='/productos' element={<Productos/>}/>
+                    <Route path={"/productos/:id"} element={<VerProducto/>}/>
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                 </Route>
-
+                <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
+                <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
             </Routes>
           </Router>
 
@@ -50,5 +56,5 @@ function App() {
 
     )
 }
-
+export const DomainContext = createContext("http://localhost");
 export default App

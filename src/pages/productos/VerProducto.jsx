@@ -1,11 +1,12 @@
 import {Link, useParams} from "react-router-dom";
 import Header from "../../components/Header/Header.jsx";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Rating from "../../components/Rating/Rating.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Input from "../../components/Input/Input.jsx";
+import {DomainContext} from "../../App.jsx";
 
 
 export default function VerProducto() {
@@ -15,8 +16,9 @@ export default function VerProducto() {
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
-    const [downloading, onDownloading] = useState(false);
-    const [pregunta, setPregunta] = useState("");
+
+
+    const domainContext = useContext(DomainContext)
 
 
 
@@ -45,15 +47,37 @@ export default function VerProducto() {
                 setImage(URL.createObjectURL(blob));
             } else {
                 setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
+                const headers = new Headers();
+                headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                headers.append("Content-Type", "application/json");
+
+                const newFormData = {
+                    path: pathIn
+                }
+                const requestOptions = {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(newFormData),
+                    redirect: "follow"
+                }
+
+                const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions);
+                if(response.ok) {
+                    const blob = await response.blob();
+                    setImage(URL.createObjectURL(blob));
+                } else {
+                    setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
+                }
             }
         }
     }
+
     useEffect(() => {
         console.log("Ingreso al useEffect")
 
 
          try{
-             let url = `http://localhost:8080/producto/obtenerPorId?idProducto=${id}`
+             let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
              fetch(url, {
                  method: "GET",
                  headers: {}
@@ -99,7 +123,7 @@ export default function VerProducto() {
             }
 
         });
-    }, [downloading]);
+    }, []);
 
 
 

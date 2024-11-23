@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
 import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Shopping-pana.svg";
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, redirect, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Cookies} from "react-cookie";
+import {DomainContext} from "../../../App.jsx";
 
 export default function LoginComprador(){
 
@@ -13,7 +14,9 @@ export default function LoginComprador(){
     const [contra, setContra] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
     const [ip, setIP] = useState("");
-
+    const navigate = useNavigate();
+    const userCookie = new Cookies();
+    const Domain = useContext(DomainContext);
 
     const getData = async () => {
         const res = await axios.get("https://api.ipify.org/?format=json");
@@ -30,6 +33,7 @@ export default function LoginComprador(){
         contrasenia: contra.value,
     });
 
+
     useEffect(() => {
 
         if(!contra.error && !correo.error){
@@ -45,7 +49,7 @@ export default function LoginComprador(){
     },[contra, correo])
 
     async function mandar() {
-        const url = "http://localhost:8080/login/iniciarSesion?" + new URLSearchParams({
+        const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
             correo: Form.correo,
             password: Form.contrasenia,
             ip: ip
@@ -57,18 +61,37 @@ export default function LoginComprador(){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                const userCookie = new Cookies();
                 //console.log(res.data.sessionId);
                 userCookie.set("sesionId", res.data.sessionId, {path: "/"});
                 console.log(userCookie.get("sesionId"));
-                return <Navigate to={"/productos/"}/>
+                navigate("/productos/")
             }
         }).catch(err => {
             console.log(err);
         })
     }
 
+    if(userCookie.get("sesionId")){
+        const url = Domain + ":8080/login/sessionId?" + new URLSearchParams({
+            sessionId: userCookie.get("sesionId")
+        });
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+        headers.append("Content-Type", `application/json`);
 
+        axios.get(url, {headers: headers}).then(res => {
+            if(res.status === 200){
+                userCookie.set("idUsuario", res.data.idUsuario, {path: "/"});
+                navigate("/productos/")
+            }
+            else{
+                userCookie.remove("sesionId", {path: "/"});
+            }
+        }).catch(err => {
+
+        })
+    }
 
     return(
         <>
