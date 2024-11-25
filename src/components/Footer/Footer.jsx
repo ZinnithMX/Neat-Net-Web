@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <footer
-            className="bg-n-700 flex flex-col md:flex-row items-center justify-between w-full p-3 m-0 box-border overflow-hidden">
+            className="bg-n-700 flex flex-col md:flex-row items-center justify-between w-full p-3 m-0 box-border overflow-hidden absolute">
             <div className="flex flex-col md:flex-row items-center justify-between w-full">
                 <a href="/terminos" className="text-sm text-g-50 mb-2 md:mb-0 md:mr-4">Términos y Condiciones</a>
                 <a href="/privacidad" className="text-sm text-g-50 mb-2 md:mb-0 md:mr-4">Política de Privacidad</a>

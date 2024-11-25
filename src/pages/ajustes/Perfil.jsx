@@ -52,7 +52,7 @@ export default function Perfil() {
         ('idUsuario');
     }
     sessionStorage.clear();
-    history.push('/login/comprador');
+    // history.push('/login/comprador');
 
     const handleActualizarDireccion = () => {
         const direccion = {
@@ -113,7 +113,7 @@ export default function Perfil() {
                                 <Input required={false} deshabilitado={false} response={setEstado} label={"Estado"}>Estado</Input>
                             </div>
                         </div>
-                        <PrimaryButton onClick={handleActualizarDireccion} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
+                        <PrimaryButton   onClick={handleActualizarDireccion} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Seguridad" ? "block" : "none" }}>

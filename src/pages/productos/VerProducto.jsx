@@ -75,7 +75,6 @@ export default function VerProducto() {
     useEffect(() => {
         console.log("Ingreso al useEffect")
 
-
          try{
              let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
              fetch(url, {
@@ -83,8 +82,17 @@ export default function VerProducto() {
                  headers: {}
              }).then(res => res.json()).then(data => {
                  setProducto(data.producto);
-                 setDescripcion(data.producto.caracteristicas[0].valor)
-                 fetchImage(data.producto.caracteristicas[1].valor)
+                 let imagen, descripcion;
+                 data.producto.caracteristicas.forEach((car) => {
+                     if (car.tipoCaracteristica === "IMAGEN") {
+                         imagen = car.valor;
+                     } else if (car.tipoCaracteristica === "DESCRIPCION") {
+                         descripcion = car.valor
+                     }
+                 });
+                 setDescripcion(descripcion);
+                 fetchImage(imagen);
+                 setEncontrado(true);
              })
          }
          catch (e) {
@@ -92,37 +100,6 @@ export default function VerProducto() {
                  setEncontrado(false);
              }
          }
-        setEncontrado(true);
-        setProducto({
-            titulo: "Productito",
-            precio: 200.30,
-            disponibilidad: true,
-            puntuacion: 0.1,
-            descuento: 0.20,
-            vendedor: {
-                NombreEmpresa: "Vendedorazo",
-                id: "empresita"
-            },
-            caracteristicas: {
-                descripcion: "Lorem ipsum odor amet, consectetuer adipiscing elit. Mus cubilia quam malesuada tortor lacinia cras. Rutrum purus vitae non aenean conubia leo aliquet ante. Habitant ac tristique, molestie varius sollicitudin quam ad interdum. Sociosqu aliquam libero lacus porttitor suspendisse. Suspendisse finibus nunc faucibus, fermentum conubia vestibulum. In ante sodales nulla fermentum, venenatis luctus mi sociosqu. Faucibus pharetra hac ut porttitor suspendisse. Bibendum fames mi congue etiam at porttitor.\n" +
-                    "\n" +
-                    "Erat tincidunt inceptos maximus fusce ut tortor. Natoque potenti ultrices amet; bibendum ac morbi nascetur. Maximus porttitor dignissim taciti ligula rhoncus vestibulum. Diam magnis etiam feugiat efficitur dui facilisi enim netus. Convallis vel hendrerit mi mauris ridiculus. Felis sed consectetur phasellus facilisi dui varius mi. Phasellus rutrum tempus montes imperdiet habitant. Eros duis suspendisse pellentesque sed, donec semper efficitur. Aliquet donec augue facilisis iaculis etiam parturient?\n" +
-                    "\n" +
-                    "Molestie est nibh gravida rutrum nisl. Euismod parturient natoque primis vivamus elit nam ante ad. Aodio mollis porta luctus inceptos etiam. Ante habitant sagittis bibendum quis elit venenatis. Nec sodales inceptos fames volutpat mus efficitur magnis. Dis netus enim efficitur vestibulum pulvinar tincidunt nullam pharetra magna.\n" +
-                    "\n" +
-                    "Odio malesuada cras posuere justo parturient congue scelerisque rutrum netus. Turpis torquent sem per varius; taciti scelerisque fermentum nec. Diam porttitor duis, natoque egestas facilisi mauris gravida maecenas sagittis. Pharetra litora quisque fermentum; efficitur mollis blandit vel libero dolor. Fringilla magnis inceptos ridiculus curabitur porttitor semper; scelerisque congue. Ullamcorper cursus consectetur arcu conubia ornare litora.\n" +
-                    "\n" +
-                    "Senectus mus mauris justo nisl maecenas torquent. Euismod in aliquam placerat cursus ut semper mollis enim. Lacus nec neque vel fames inceptos. Efficitur ut mauris lacus senectus mattis commodo efficitur eget. Rutrum laoreet dapibus lectus malesuada suscipit condimentum feugiat metus. Ultrices sed nostra nisi scelerisque fermentum amet faucibus. Nisi euismod maximus fringilla ante; tellus posuere ultrices. Odio maecenas sed viverra; tempus primis ex scelerisque.",
-                caracteristicas: {
-                    categoria: "",
-                    caracteristicas: {
-                        color: "rojo",
-                        peso: 200
-                    }
-                }
-            }
-
-        });
     }, []);
 
 

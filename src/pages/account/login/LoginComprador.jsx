@@ -62,7 +62,9 @@ export default function LoginComprador(){
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
                 //console.log(res.data.sessionId);
+                console.log(res.data)
                 userCookie.set("sesionId", res.data.sessionId, {path: "/"});
+                userCookie.set("idUsuario", res.data.usuario.idUsuario, {path: "/"});
                 console.log(userCookie.get("sesionId"));
                 navigate("/productos/")
             }
