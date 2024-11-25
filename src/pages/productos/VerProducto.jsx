@@ -16,20 +16,37 @@ export default function VerProducto() {
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
-    const [pregunta, setPregunta] = useState("");
+
+
     const domainContext = useContext(DomainContext)
-    async function enviarPregunta(){
-
-    }
 
 
-    useEffect(() => {
-        console.log("Ingreso al useEffectt")
-        const fetchImage = async (pathIn) => {
-            if(pathIn === undefined){
-                console.log("Imagen indefinida")
-                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+
+    const fetchImage = async (pathIn) => {
+        if(pathIn === undefined){
+            console.log("Imagen indefinida")
+            setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+        } else {
+            const headers = new Headers();
+            headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+            headers.append("Content-Type", "application/json");
+
+            const newFormData = {
+                path: pathIn
+            }
+            const requestOptions = {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(newFormData),
+                redirect: "follow"
+            }
+
+            const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+            if(response.ok) {
+                const blob = await response.blob();
+                setImage(URL.createObjectURL(blob));
             } else {
+                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
                 const headers = new Headers();
                 headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
                 headers.append("Content-Type", "application/json");
@@ -47,13 +64,16 @@ export default function VerProducto() {
                 const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
-                    alert("Imagen exitosaaa")
                     setImage(URL.createObjectURL(blob));
                 } else {
                     setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
                 }
             }
         }
+    }
+
+    useEffect(() => {
+        console.log("Ingreso al useEffect")
 
          try{
              let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
@@ -62,8 +82,17 @@ export default function VerProducto() {
                  headers: {}
              }).then(res => res.json()).then(data => {
                  setProducto(data.producto);
-                 setDescripcion(data.producto.caracteristicas[0].valor)
-                 fetchImage(producto.caracteristicas[1].valor)
+                 let imagen, descripcion;
+                 data.producto.caracteristicas.forEach((car) => {
+                     if (car.tipoCaracteristica === "IMAGEN") {
+                         imagen = car.valor;
+                     } else if (car.tipoCaracteristica === "DESCRIPCION") {
+                         descripcion = car.valor
+                     }
+                 });
+                 setDescripcion(descripcion);
+                 fetchImage(imagen);
+                 setEncontrado(true);
              })
          }
          catch (e) {
@@ -71,38 +100,9 @@ export default function VerProducto() {
                  setEncontrado(false);
              }
          }
-        setEncontrado(true);
-        setProducto({
-            titulo: "Productito",
-            precio: 200.30,
-            disponibilidad: true,
-            puntuacion: 0.1,
-            descuento: 0.20,
-            vendedor: {
-                NombreEmpresa: "Vendedorazo",
-                id: "empresita"
-            },
-            caracteristicas: {
-                descripcion: "Lorem ipsum odor amet, consectetuer adipiscing elit. Mus cubilia quam malesuada tortor lacinia cras. Rutrum purus vitae non aenean conubia leo aliquet ante. Habitant ac tristique, molestie varius sollicitudin quam ad interdum. Sociosqu aliquam libero lacus porttitor suspendisse. Suspendisse finibus nunc faucibus, fermentum conubia vestibulum. In ante sodales nulla fermentum, venenatis luctus mi sociosqu. Faucibus pharetra hac ut porttitor suspendisse. Bibendum fames mi congue etiam at porttitor.\n" +
-                    "\n" +
-                    "Erat tincidunt inceptos maximus fusce ut tortor. Natoque potenti ultrices amet; bibendum ac morbi nascetur. Maximus porttitor dignissim taciti ligula rhoncus vestibulum. Diam magnis etiam feugiat efficitur dui facilisi enim netus. Convallis vel hendrerit mi mauris ridiculus. Felis sed consectetur phasellus facilisi dui varius mi. Phasellus rutrum tempus montes imperdiet habitant. Eros duis suspendisse pellentesque sed, donec semper efficitur. Aliquet donec augue facilisis iaculis etiam parturient?\n" +
-                    "\n" +
-                    "Molestie est nibh gravida rutrum nisl. Euismod parturient natoque primis vivamus elit nam ante ad. Aodio mollis porta luctus inceptos etiam. Ante habitant sagittis bibendum quis elit venenatis. Nec sodales inceptos fames volutpat mus efficitur magnis. Dis netus enim efficitur vestibulum pulvinar tincidunt nullam pharetra magna.\n" +
-                    "\n" +
-                    "Odio malesuada cras posuere justo parturient congue scelerisque rutrum netus. Turpis torquent sem per varius; taciti scelerisque fermentum nec. Diam porttitor duis, natoque egestas facilisi mauris gravida maecenas sagittis. Pharetra litora quisque fermentum; efficitur mollis blandit vel libero dolor. Fringilla magnis inceptos ridiculus curabitur porttitor semper; scelerisque congue. Ullamcorper cursus consectetur arcu conubia ornare litora.\n" +
-                    "\n" +
-                    "Senectus mus mauris justo nisl maecenas torquent. Euismod in aliquam placerat cursus ut semper mollis enim. Lacus nec neque vel fames inceptos. Efficitur ut mauris lacus senectus mattis commodo efficitur eget. Rutrum laoreet dapibus lectus malesuada suscipit condimentum feugiat metus. Ultrices sed nostra nisi scelerisque fermentum amet faucibus. Nisi euismod maximus fringilla ante; tellus posuere ultrices. Odio maecenas sed viverra; tempus primis ex scelerisque.",
-                caracteristicas: {
-                    categoria: "",
-                    caracteristicas: {
-                        color: "rojo",
-                        peso: 200
-                    }
-                }
-            }
-
-        })
     }, []);
+
+
 
     return(
         <>
@@ -111,7 +111,7 @@ export default function VerProducto() {
                 <div className={"flex flex-col"}>
                     <div className={"flex py-8 px-6 items-center gap-8"}>
                         <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
-                            <img src={image} className={"rounded-2xl"} />
+                            <img src={image} className={"rounded-2xl h-[30vw] w-[60vw]"} />
                         </div>
                         <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
                             <h3>{producto.titulo}</h3>

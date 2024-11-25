@@ -18,7 +18,6 @@ export default function Producto(props) {
                 console.log("Imagen indefinida")
                 setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
             } else {
-                console.log(`Camino de : ${props.nombre}` + pathIn)
                 const headers = new Headers();
                 headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
                 headers.append("Content-Type", "application/json");
@@ -32,7 +31,6 @@ export default function Producto(props) {
                     body: JSON.stringify(newFormData),
                     redirect: "follow"
                 }
-
                     const response = await fetch(`${domain}:8080/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
@@ -55,7 +53,6 @@ export default function Producto(props) {
                     src={image}
                     alt="Producto imagen"
                     onClick={() => {
-                        console.log("Navegar");
                     }}
                 />
             </NavLink>

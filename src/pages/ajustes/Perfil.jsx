@@ -56,6 +56,7 @@ export default function Perfil() {
         ('idUsuario');
     }
     sessionStorage.clear();
+<<<<<<< HEAD
     history.push('/login/comprador');*/
 
     function handleCerrarSesion(){
@@ -66,6 +67,7 @@ export default function Perfil() {
         userCookie.remove("idUsuario", {path: "/"});
 
     }
+
 
     const handleActualizarDireccion = () => {
         const direccion = {
@@ -126,7 +128,7 @@ export default function Perfil() {
                                 <Input required={false} deshabilitado={false} response={setEstado} label={"Estado"}>Estado</Input>
                             </div>
                         </div>
-                        <PrimaryButton onClick={handleActualizarDireccion} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
+                        <PrimaryButton   onClick={handleActualizarDireccion} tamano={"mini"} estilo={"secondary"} width={"w-full"}>Actualizar</PrimaryButton>
                     </div>
 
                     <div className={"flex flex-col p-8 w-2/3 gap-6"} style={{ display: activeSection === "Seguridad" ? "block" : "none" }}>

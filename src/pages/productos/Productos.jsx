@@ -24,7 +24,6 @@ export default function Productos(){
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
-                console.log(resultado);
                 setProductos(resultado.producto)
             })
             .catch((error) => console.error(error));
@@ -45,9 +44,7 @@ export default function Productos(){
         .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
-                console.log(resultado);
                 setAgregados(resultado.productos);
-                console.log(agregados)
             })
     }, []);
 
