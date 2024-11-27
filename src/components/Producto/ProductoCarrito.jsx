@@ -19,14 +19,14 @@ export default function ProductoCarrito(props) {
             <div className={"flex gap-4 flex-1"}>
                 <div className={"flex flex-col gap-3 flex-1"}>
                     <div className={"flex flex-col gap-1 flex-1"}>
-                        <h5>Nombre producto</h5>
+                        <h5>{props.nombre}</h5>
                         <div className={"flex gap-1"}>
                             <p>
                                 Vendedor
                             </p>
                             <p>
                                 <Link to={""} className={"link"}>
-                                    Vendedor
+                                    {props.vendedor}
                                 </Link>
                             </p>
                         </div>
@@ -48,7 +48,7 @@ export default function ProductoCarrito(props) {
                     </div>
                 </div>
                 <div className={"w-40 gap-2 flex flex-col"}>
-                    <p className={"text-lg font-bold"}>$XX,XXX.00</p>
+                    <p className={"text-lg font-bold"}>${props.precio}</p>
                     <NumerInput response={setCantidad} tamano={"pequeno"} width={"w-full"}/>
                     <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"error"} width={"w-full"}>
                         <span className={"material-symbols-rounded icon text-sm"}>delete</span>
@@ -63,5 +63,8 @@ export default function ProductoCarrito(props) {
 ProductoCarrito.propTypes = {
 
     image: PropTypes.string,
+    nombre: PropTypes.string,
+    vendedor: PropTypes.string,
+    precio: PropTypes.decimal
 
 }

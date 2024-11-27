@@ -7,6 +7,7 @@ export default function Carrito() {
     return(
         <>
             <Header />
+
             <ProductoCarrito />
         </>
     )
