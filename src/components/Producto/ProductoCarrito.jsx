@@ -3,6 +3,7 @@ import CategorySelector from "../CategorySelector/CategorySelector.jsx";
 import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import {useState} from "react";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
+import PropTypes from "prop-types";
 
 
 export default function ProductoCarrito(props) {
@@ -13,7 +14,7 @@ export default function ProductoCarrito(props) {
     return(
         <div className={"flex items-center gap-6 p-4 rounded-xl bg-g-200"}>
             <img
-                src={"https://r-charts.com/es/miscelanea/procesamiento-imagenes-magick_files/figure-html/color-fondo-imagen-r.png"}
+                src={props.image}
                 className={"size-40 rounded-xl"}/>
             <div className={"flex gap-4 flex-1"}>
                 <div className={"flex flex-col gap-3 flex-1"}>
@@ -59,6 +60,8 @@ export default function ProductoCarrito(props) {
     )
 }
 
-ProductoCarrito.PropTypes = {
+ProductoCarrito.propTypes = {
+
+    image: PropTypes.string,
 
 }

@@ -73,8 +73,9 @@ export default function SignupComprador() {
                 }
             })
         } catch(err) {
-            setMsgError("No se ha podido conectar con el servidor")
-            setShowMsgError(true)
+            console.log(err);
+            setMsgError("No se ha podido conectar con el servidor");
+            setShowMsgError(true);
         }
     }
 
