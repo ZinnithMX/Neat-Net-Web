@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import Rating from "../../components/Rating/Rating.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
+import {Cookies} from "react-cookie";
 import Input from "../../components/Input/Input.jsx";
 import {DomainContext} from "../../App.jsx";
 
@@ -16,6 +17,7 @@ export default function VerProducto() {
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
+    const userCookie = new Cookies();
 
 
     const domainContext = useContext(DomainContext)
@@ -74,9 +76,9 @@ export default function VerProducto() {
 
     useEffect(() => {
         console.log("Ingreso al useEffect")
+        let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
 
-         try{
-             let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
+         try{     
              fetch(url, {
                  method: "GET",
                  headers: {}
@@ -93,12 +95,31 @@ export default function VerProducto() {
                  setDescripcion(descripcion);
                  fetchImage(imagen);
                  setEncontrado(true);
+                 
              })
          }
          catch (e) {
              if(e.response.status === 400){
                  setEncontrado(false);
              }
+         }
+
+         try {
+            const headers = new Headers();
+            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+            headers.append("Authorization", `Basic ${encodedCredentials}`);
+            headers.append("Content-Type", `application/json`);
+
+            const otraUrl = domainContext + ":8080/producto/agregarReciente?" + new URLSearchParams({
+                idProducto: id,
+                idUsuario: userCookie.get("idUsuario")
+            })
+            fetch(otraUrl , {
+                method: "PUT",
+                headers: {}
+            }).then((res) => res.json()).then((data) => console.log(data))
+         } catch (e) {
+            console.log(e);
          }
     }, []);
 

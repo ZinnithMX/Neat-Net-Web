@@ -57,9 +57,8 @@ export default function SignupComprador() {
         try {
             const myHeaders = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-
-            myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", `Basic ${encodedCredentials}`);
+            myHeaders.append("Content-Type", "application/json");
             fetch(url, {
                 method: 'POST',
                 headers: myHeaders,

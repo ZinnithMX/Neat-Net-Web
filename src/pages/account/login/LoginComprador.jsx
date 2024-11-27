@@ -3,7 +3,7 @@ import Input from "../../../components/Input/Input.jsx"
 import PrimaryButton from "../../../components/Button/PrimaryButton.jsx"
 import Password from "../../../components/Input/Password.jsx";
 import ilustracion from "../../../assets/Illustrations/Shopping-pana.svg";
-import {Link, Navigate, redirect, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Cookies} from "react-cookie";
 import {DomainContext} from "../../../App.jsx";
@@ -61,7 +61,6 @@ export default function LoginComprador(){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                //console.log(res.data.sessionId);
                 console.log(res.data)
                 userCookie.set("sesionId", res.data.sessionId, {path: "/"});
                 userCookie.set("idUsuario", res.data.usuario.idUsuario, {path: "/"});
@@ -90,8 +89,6 @@ export default function LoginComprador(){
             else{
                 userCookie.remove("sesionId", {path: "/"});
             }
-        }).catch(err => {
-
         })
     }
 
