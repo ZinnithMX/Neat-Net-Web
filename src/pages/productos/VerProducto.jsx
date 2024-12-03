@@ -95,7 +95,6 @@ export default function VerProducto() {
                  setDescripcion(descripcion);
                  fetchImage(imagen);
                  setEncontrado(true);
-                 
              })
          }
          catch (e) {
@@ -161,7 +160,25 @@ export default function VerProducto() {
                                 <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
                                     Comprar
                                 </PrimaryButton>
-                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
+                                <PrimaryButton onClick={() => {
+                                    const headers = new Headers();
+                                    headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                                    headers.append("Content-Type", "application/json");
+                                    const content = {
+                                        method: "POST",
+                                        headers: headers,
+                                    };
+
+                                    const url = `${domainContext}:8080/producto/anadirProductoCarro?` + new URLSearchParams({
+                                        idProducto: id,
+                                        idUsuario: userCookie.get("idUsuario"),
+                                        cantidad: 1,
+                                    });
+
+                                    fetch(url, content)
+                                        .then(response => {response.json()})
+                                        .then((res) => alert("Producto agregado al carrito"));
+                                }} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
                                     <span className={"material-symbols-rounded icon text-sm"}>shopping_cart</span>
                                 </PrimaryButton>
                                 <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>

@@ -56,5 +56,5 @@ function App() {
 
     )
 }
-export const DomainContext = createContext("http://192.168.20.125");
+export const DomainContext = createContext("http://localhost");
 export default App
