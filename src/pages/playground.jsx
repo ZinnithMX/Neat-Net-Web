@@ -10,6 +10,7 @@ import Producto from "../components/Producto/Producto.jsx";
 import Footer from "../components/Footer/Footer.jsx";
 import MetodoP from "../components/metodoP/MetodoP.jsx";
 import ProductoCarrito from "../components/Producto/ProductoCarrito.jsx";
+import FileInput from "../components/Input/FileInput/FileInput.jsx";
 
 
 export default function Playground(){
@@ -42,6 +43,7 @@ export default function Playground(){
                     <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"} width={""}>
                         Hola
                     </PrimaryButton>
+                    <FileInput label={"Label"} fileExtensions={".pdf"} fileType={"image/jpeg, image/png"} />
                 </div>
             </div>
             <Footer></Footer>

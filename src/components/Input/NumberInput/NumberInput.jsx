@@ -38,12 +38,14 @@ export default function NumerInput(props){
     }, [props.tamano]);
 
     function add(){
-        setValue(value+1);
+        if(value < 2147483647){
+            setValue(parseInt(value) + 1);
+        }
     }
 
     function less(){
         if(value > 0){
-            setValue(value-1);
+            setValue(parseInt(value) - 1);
         }
     }
 
@@ -52,7 +54,11 @@ export default function NumerInput(props){
             setValue(0);
         }
         else{
-            setValue(e.target.value);
+            if(e.target.value > 2147483647){
+                setValue(2147483647);
+                return;
+            }
+            setValue(parseInt(e.target.value));
         }
     }
 
@@ -76,6 +82,8 @@ export default function NumerInput(props){
             <span className={"material-symbols-rounded  cursor-pointer text-n-200 icon " + padding + " " +
                 "hover:text-p-700 hover:bg-g-400"} onClick={less}>arrow_drop_down</span>
             <input type="number"
+                   max={2147483647}
+                   inputMode={"numeric"}
                    className={"w-full apperance-none bg-g-300 text-center " + textSize + " " + tamano}
                    onChange={onChange}
                    onClick={handleClick}
