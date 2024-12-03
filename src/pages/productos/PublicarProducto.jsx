@@ -1,9 +1,12 @@
 import HeaderVendedor from "../../components/Header/HeaderVendedor.jsx";
 import Input from "../../components/Input/Input.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import NumerInput from "../../components/Input/NumberInput/NumberInput.jsx";
 import TextArea from "../../components/TextArea/TextArea.jsx";
 import FileInput from "../../components/Input/FileInput/FileInput.jsx";
+import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
+import {DomainContext} from "../../App.jsx";
+import axios from "axios";
 
 
 export default function PublicarProducto() {
@@ -11,6 +14,29 @@ export default function PublicarProducto() {
     const [nombreProducto, setNombreProducto] = useState(null);
     const [precioProducto, setPrecioProducto] = useState(null);
     const [descripcionProducto, setDescripcionProducto] = useState(null);
+    const [imagenProducto, setImagenProducto] = useState(null);
+    const Domain = useContext(DomainContext);
+
+    async function publicarProducto(){
+        const myHeaders = new Headers();
+        const encodedCredentials = btoa(`${Form.correo}:${Form.contrasenia}`);
+        myHeaders.append("Authorization", `Basic ${encodedCredentials}`);
+        myHeaders.append("Content-Type", `application/json`);
+
+        axios.post(Domain + "/api/vendedor/productos", {
+            "file": imagenProducto,
+            "producto": {
+                "titulo": nombreProducto,
+                "precio": precioProducto,
+                "caracteristicas": [{
+                    "tipoCaracteristica": "DESCRIPCION",
+                    "valor": descripcionProducto
+                }]
+            }
+        }, {headers: myHeaders}).catch((error) => {
+            console.log(error);
+        });
+    }
 
     return (
         <>
@@ -19,7 +45,7 @@ export default function PublicarProducto() {
                 <h3>
                     Publicar un nuevo producto
                 </h3>
-                <div className={"flex flex-col gap-6"}>
+                <form className={"flex flex-col gap-6"}>
                     <h4>
                         Informacion general del producto
                     </h4>
@@ -35,14 +61,15 @@ export default function PublicarProducto() {
                             Descripción del producto en general
                         </TextArea>
                         <div className={"flex flex-col gap-2"}>
-                            <label className={"text-xl text-n-700"}>Imagen del producto</label>
-                            <input type={"file"} />
+                            <FileInput fileExtensions={".png, .jpeg, .jpg"} setImage={setImagenProducto} required={true}
+                                       label={"Imagen del producto"}/>
+                            {imagenProducto && <img src={URL.createObjectURL(imagenProducto)} alt={"Imagen del producto"} className={"w-1/4"}/>}
                         </div>
-                        <FileInput label="Hola Gis" required={true} name="holi">
-
-                        </FileInput>
                     </div>
-                </div>
+                    <PrimaryButton onClick={publicarProducto} tamano={"normal"} estilo={"primary"} width={""}>
+                        Publicar producto
+                    </PrimaryButton>
+                </form>
             </div>
         </>
     )

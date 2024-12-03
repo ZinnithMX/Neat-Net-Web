@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import {Cookies, useCookies} from "react-cookie";
 import axios from "axios";
 import {DomainContext} from "../../App.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Perfil() {
     const [metodos, setMetodos] = useState(null);
@@ -20,7 +21,7 @@ export default function Perfil() {
     const [estado, setEstado] = useState({error: false, value: ""});
 
     const domain = useContext(DomainContext);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
             fetch(`http://localhost:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
@@ -64,6 +65,7 @@ export default function Perfil() {
         const userCookie = new Cookies();
         userCookie.remove("sesionId", {path: "/"});
         userCookie.remove("idUsuario", {path: "/"});
+        navigate("/");
     }
 
 

@@ -61,7 +61,6 @@ FileInput.propTypes = {
     label: PropTypes.string,
     required: PropTypes.bool,
     fileExtensions: PropTypes.string.isRequired,
-    fileType: PropTypes.string.isRequired,
     setImage: PropTypes.func.isRequired
 
 }
