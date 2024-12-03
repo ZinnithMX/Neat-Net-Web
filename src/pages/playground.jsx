@@ -43,7 +43,7 @@ export default function Playground(){
                     <PrimaryButton onClick={funcion} disabled={true} tamano={"pequeno"} estilo={"secondary"} width={""}>
                         Hola
                     </PrimaryButton>
-                    <FileInput label={"Label"} />
+                    <FileInput label={"Label"} fileExtensions={".pdf"} fileType={"image/jpeg, image/png"} />
                 </div>
             </div>
             <Footer></Footer>

@@ -1,15 +1,26 @@
 import PropTypes from "prop-types";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState, ChangeEvent} from "react";
 
 
 export default function FileInput(props){
 
     const fileInput = useRef(null);
-    const text = useState("Adjuntar archivo")
+    const [text, setText] = useState("Adjuntar archivo");
+
+    useEffect(() => {
+        setText("Adjuntar archivo (" + props.fileExtensions + ")");
+    }, [props.fileExtensions]);
 
     const handleClick = () => {
         fileInput.current.click();
     }
+
+    const onChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            props.setImage(file);
+        }
+    };
 
     return(
         <div className={"flex flex-col gap-2"}>
@@ -32,7 +43,8 @@ export default function FileInput(props){
                         {text}
                     </p>
                 </div>
-                <input type={"file"} className={"hidden"} ref={fileInput} />
+                <input type={"file"} className={"hidden"} ref={fileInput} required={props.required} accept={props.fileType}
+                     onChange={onChange}/>
             </div>
         </div>
     )
@@ -40,7 +52,6 @@ export default function FileInput(props){
 
 FileInput.defaultProps = {
     showLabel: true,
-    label: "Label",
     required: false
 }
 
@@ -48,6 +59,9 @@ FileInput.propTypes = {
 
     showLabel: PropTypes.bool,
     label: PropTypes.string,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    fileExtensions: PropTypes.string.isRequired,
+    fileType: PropTypes.string.isRequired,
+    setImage: PropTypes.func.isRequired
 
 }
