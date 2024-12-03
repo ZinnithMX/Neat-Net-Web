@@ -16,12 +16,11 @@ import VerProducto from "./pages/productos/VerProducto.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
 import Perfil from "./pages/ajustes/Perfil.jsx";
-import Seguridad from "./pages/ajustes/Seguridad.jsx";
-import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
 import {createContext} from "react";
 import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
+import Carrito from "./pages/productos/Carrito.jsx";
 
 
 function App() {
@@ -46,6 +45,7 @@ function App() {
                     <Route path={"/productos/:id"} element={<VerProducto/>}/>
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
+                    <Route path={"/carrito"} element={<Carrito/>}/>
                 </Route>
                 <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
                 <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>

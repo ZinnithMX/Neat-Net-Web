@@ -2,11 +2,13 @@ import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
 import {useContext, useEffect, useState} from "react";
+import {Cookies} from "react-cookie";
 import {DomainContext} from "../../App.jsx";
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
     const [agregados, setAgregados] = useState(null);
+    const userCookie = new Cookies();
 
     const Domain = useContext(DomainContext);
 
@@ -20,7 +22,13 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        fetch(`${Domain}:8080/producto/vistosReciente?userId=1`, requestOptions)
+        
+        const url = Domain + ":8080/producto/vistosReciente?" + new URLSearchParams({
+            userId: userCookie.get("idUsuario")
+        });
+
+
+        fetch(url, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);

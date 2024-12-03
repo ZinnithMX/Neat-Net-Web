@@ -56,7 +56,6 @@ export default function Perfil() {
         ('idUsuario');
     }
     sessionStorage.clear();
-<<<<<<< HEAD
     history.push('/login/comprador');*/
 
     function handleCerrarSesion(){
@@ -65,7 +64,6 @@ export default function Perfil() {
         const userCookie = new Cookies();
         userCookie.remove("sesionId", {path: "/"});
         userCookie.remove("idUsuario", {path: "/"});
-
     }
 
 
