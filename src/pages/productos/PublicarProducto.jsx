@@ -20,25 +20,20 @@ export default function PublicarProducto() {
     async function publicarProducto(){
         const myHeaders = new Headers();
 
-
-
         myHeaders.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
-        myHeaders.append("Content-Type", "application/json");
+
         const formdata = new FormData();
-        
-        formdata.append("file", imagenProducto);
 
-
-        /*formdata.append("producto", JSON.stringify({
+        formdata.append("file", imagenProducto, JSON.stringify({
             "titulo": nombreProducto.value,
             "precio": precioProducto.value,
             "caracteristicas": [{
                 "tipoCaracteristica": "DESCRIPCION",
                 "valor": descripcionProducto.value
             }]
-        },{contentType: 'multipart/form-data'}));*/
+        }));
+        
 
-        console.log(formdata)
 
         const requestData = {
             method: "POST",
@@ -46,16 +41,7 @@ export default function PublicarProducto() {
             body: formdata,
             redirect: "follow",
         }
-        fetch(Domain + ":8080/producto/agregar?" + new URLSearchParams({
-            producto: {
-                "titulo": nombreProducto.value,
-                "precio": precioProducto.value,
-                "caracteristicas": [{
-                    "tipoCaracteristica": "DESCRIPCION",
-                    "valor": descripcionProducto.value
-                }]
-            }
-        }), requestData).then((res) => {res.json()}).then(
+        fetch(Domain + ":8080/producto/agregar", requestData).then((res) => {res.json()}).then(
             (data) => console.log(data)
         ).catch((err) => console.log(err));
         //axios.post(Domain + ":8080/producto/agregar", formdata, {headers: myHeaders}).catch((error) => {
