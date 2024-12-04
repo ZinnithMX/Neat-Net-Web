@@ -52,13 +52,24 @@ export default function Carrito() {
             {
                 (productos.length !== 0) && productos.map((producto) => (
 
-                    <ProductoCarrito
-                        idProducto={producto.idProducto}
-                        nombre={producto.titulo}
-                        vendedor={"N/A"}
-                        precio={producto.precio}
-                        imagen={handleImage(producto.caracteristicas)}
-                        importarProducto={importarProductos}/>
+                    <div className={"flex items-start"}>
+                        <div className={"w-[70%]"}>
+
+                        <ProductoCarrito
+                            idProducto={producto.idProducto}
+                            nombre={producto.titulo}
+                            vendedor={"N/A"}
+                            precio={producto.precio}
+                            imagen={handleImage(producto.caracteristicas)}
+                            importarProducto={importarProductos}/>
+
+                        </div>
+
+                        <div className="[pl-">
+                            <p>Hola</p>
+                        </div>
+                    </div>
+
                 ))
 
             }

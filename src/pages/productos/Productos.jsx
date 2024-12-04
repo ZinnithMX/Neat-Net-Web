@@ -22,7 +22,6 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        
         const url = Domain + ":8080/producto/vistosReciente?" + new URLSearchParams({
             userId: userCookie.get("idUsuario")
         });
