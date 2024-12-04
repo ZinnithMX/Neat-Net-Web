@@ -25,7 +25,7 @@ export default function PublicarProducto() {
         myHeaders.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
         myHeaders.append("Content-Type", "application/json");
         const formdata = new FormData();
-        
+
         formdata.append("file", imagenProducto);
 
 
