@@ -115,7 +115,7 @@ export default function VerProducto() {
             })
             fetch(otraUrl , {
                 method: "PUT",
-                headers: {}
+                headers: headers
             }).then((res) => res.json()).then((data) => console.log(data))
          } catch (e) {
             console.log(e);
