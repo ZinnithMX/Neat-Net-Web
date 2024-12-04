@@ -53,12 +53,6 @@ export default function Perfil() {
         />
     ));
 
-    /*const handleCerrarSesion = () => {
-        ('idUsuario');
-    }
-    sessionStorage.clear();
-    history.push('/login/comprador');*/
-
     function handleCerrarSesion(){
         //axios.post();
 

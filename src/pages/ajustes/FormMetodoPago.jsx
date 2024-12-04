@@ -1,14 +1,16 @@
-import { useCookies } from 'react-cookie';
+import {Cookies, useCookies} from 'react-cookie';
 import Input from "../../components/Input/Input.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
-import { useState } from "react";
+import {useContext, useState} from "react";
+import {DomainContext} from "../../App.jsx";
 
 export default function FormMetodoPago() {
-    const [cookies] = useCookies(['idUsuario']);
-    const usuario = cookies.idUsuario;
+    const userCoockies = new Cookies();
+    const usuario = userCoockies.get("userId")
     const [nombre, setNombre] = useState({ error: false, value: "" });
     const [numeroTarjeta, setNumeroTarjeta] = useState({ error: false, value: "" });
     const [titular, setTitular] = useState({ error: false, value: "" });
+    const domain = useContext(DomainContext)
 
     const handleGuardar = () => {
         const metodoPago = {
@@ -20,15 +22,20 @@ export default function FormMetodoPago() {
     };
 
     const handleActualizarMetodo = (metodoPago) => {
-        fetch(`http://localhost:8080/metodo-pago/actualizar?idUsuario=${usuario}`, {
+
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+
+        headers.append("Content-Type", `application/json`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+
+        const url = domain + ":8080/metodo-pago/actualizar?";
+
+        fetch(url, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('Ingreso:visitante')
-            },
+            headers: headers,
             body: JSON.stringify(metodoPago)
-        })
-            .then(response => {
+        }).then(response => {
                 if (!response.ok) {
                     return response.text().then(text => { throw new Error(text) });
                 }

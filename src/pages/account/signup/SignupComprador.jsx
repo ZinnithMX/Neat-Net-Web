@@ -68,6 +68,11 @@ export default function SignupComprador() {
                     navigate("/login/comprador");
                 }
                 else{
+                    if(res.status === 409){
+                        setMsgError("La cuenta ya existe")
+                        setShowMsgError(true)
+                        return;
+                    }
                     setMsgError("Ha ocurrido un error inesperado")
                     setShowMsgError(true)
                 }

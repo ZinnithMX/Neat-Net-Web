@@ -17,6 +17,8 @@ export default function LoginComprador(){
     const navigate = useNavigate();
     const userCookie = new Cookies();
     const Domain = useContext(DomainContext);
+    const [error, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const getData = async () => {
         const res = await axios.get("https://api.ipify.org/?format=json");
@@ -60,12 +62,20 @@ export default function LoginComprador(){
         headers.append("Content-Type", `application/json`);
 
         axios.get(url, {headers: headers}).then(res => {
-            if(res.status === 200){
+            if(res.status === 200) {
+                setError(false);
+                setErrorMsg("")
                 console.log(res.data)
                 userCookie.set("sesionId", res.data.sessionId, {path: "/"});
                 userCookie.set("idUsuario", res.data.usuario.idUsuario, {path: "/"});
                 console.log(userCookie.get("sesionId"));
                 navigate("/productos/")
+                return;
+            }
+            else{
+                setError(true);
+                setErrorMsg("El usuario o contraseniaa no son correctos")
+                return;
             }
         }).catch(err => {
             console.log(err);
@@ -113,6 +123,9 @@ export default function LoginComprador(){
                                        onClick={mandar} width={""}>
                             Iniciar Sesión
                         </PrimaryButton>
+                        {error &&
+                            <p className={"text-lg text-er-700"}>{errorMsg}</p>
+                        }
                     </form>
                     <div className={"flex flex-row gap-2"}>
                         <p className={"text-sm font-bold"}>¿No tienes cuenta? <Link to={"/signup/comprador"} className={"link"}>Crea Una</Link></p>
