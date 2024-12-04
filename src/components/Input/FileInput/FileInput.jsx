@@ -19,6 +19,7 @@ export default function FileInput(props){
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             props.setImage(file);
+            setText(file.name);
         }
     };
 
@@ -43,7 +44,7 @@ export default function FileInput(props){
                         {text}
                     </p>
                 </div>
-                <input type={"file"} className={"hidden"} ref={fileInput} required={props.required} accept={props.fileType}
+                <input type={"file"} className={"hidden"} ref={fileInput} required={props.required} accept={props.fileExtensions}
                      onChange={onChange}/>
             </div>
         </div>

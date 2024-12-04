@@ -7,7 +7,7 @@ import FileInput from "../../components/Input/FileInput/FileInput.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import {DomainContext} from "../../App.jsx";
 import axios from "axios";
-
+import {isAnnotatedFunctionPropsDeclaration} from "eslint-plugin-react/lib/util/annotations.js";
 
 export default function PublicarProducto() {
 
@@ -19,23 +19,48 @@ export default function PublicarProducto() {
 
     async function publicarProducto(){
         const myHeaders = new Headers();
-        const encodedCredentials = btoa(`${Form.correo}:${Form.contrasenia}`);
-        myHeaders.append("Authorization", `Basic ${encodedCredentials}`);
-        myHeaders.append("Content-Type", `application/json`);
 
-        axios.post(Domain + "/api/vendedor/productos", {
-            "file": imagenProducto,
-            "producto": {
-                "titulo": nombreProducto,
-                "precio": precioProducto,
+
+
+        myHeaders.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+        myHeaders.append("Content-Type", "application/json");
+        const formdata = new FormData();
+        
+        formdata.append("file", imagenProducto);
+
+
+        /*formdata.append("producto", JSON.stringify({
+            "titulo": nombreProducto.value,
+            "precio": precioProducto.value,
+            "caracteristicas": [{
+                "tipoCaracteristica": "DESCRIPCION",
+                "valor": descripcionProducto.value
+            }]
+        },{contentType: 'multipart/form-data'}));*/
+
+        console.log(formdata)
+
+        const requestData = {
+            method: "POST",
+            headers: myHeaders,
+            body: formdata,
+            redirect: "follow",
+        }
+        fetch(Domain + ":8080/producto/agregar?" + new URLSearchParams({
+            producto: {
+                "titulo": nombreProducto.value,
+                "precio": precioProducto.value,
                 "caracteristicas": [{
                     "tipoCaracteristica": "DESCRIPCION",
-                    "valor": descripcionProducto
+                    "valor": descripcionProducto.value
                 }]
             }
-        }, {headers: myHeaders}).catch((error) => {
-            console.log(error);
-        });
+        }), requestData).then((res) => {res.json()}).then(
+            (data) => console.log(data)
+        ).catch((err) => console.log(err));
+        //axios.post(Domain + ":8080/producto/agregar", formdata, {headers: myHeaders}).catch((error) => {
+        //    console.log(error);
+        //});
     }
 
     return (
@@ -45,7 +70,7 @@ export default function PublicarProducto() {
                 <h3>
                     Publicar un nuevo producto
                 </h3>
-                <form className={"flex flex-col gap-6"}>
+                <div className={"flex flex-col gap-6"}>
                     <h4>
                         Informacion general del producto
                     </h4>
@@ -57,11 +82,12 @@ export default function PublicarProducto() {
                             <label className={"text-xl text-n-700"}>Precio del producto</label>
                             <NumerInput response={setPrecioProducto} tamano={"normal"} width={""}/>
                         </div>
-                        <TextArea response={descripcionProducto} width={""} label={"Descripción del producto"} showLabel={true} required={true}>
+                        <TextArea response={setDescripcionProducto} width={""} label={"Descripción del producto"}
+                                  showLabel={true} required={true}>
                             Descripción del producto en general
                         </TextArea>
                         <div className={"flex flex-col gap-2"}>
-                            <FileInput fileExtensions={".png, .jpeg, .jpg"} setImage={setImagenProducto} required={true}
+                            <FileInput fileExtensions={".jpg, .png"} setImage={setImagenProducto} required={true}
                                        label={"Imagen del producto"}/>
                             {imagenProducto && <img src={URL.createObjectURL(imagenProducto)} alt={"Imagen del producto"} className={"w-1/4"}/>}
                         </div>
@@ -69,7 +95,7 @@ export default function PublicarProducto() {
                     <PrimaryButton onClick={publicarProducto} tamano={"normal"} estilo={"primary"} width={""}>
                         Publicar producto
                     </PrimaryButton>
-                </form>
+                </div>
             </div>
         </>
     )
