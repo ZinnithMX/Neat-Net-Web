@@ -4,6 +4,7 @@ import Producto from "../../components/Producto/Producto.jsx";
 import {useContext, useEffect, useState} from "react";
 import {Cookies} from "react-cookie";
 import {DomainContext} from "../../App.jsx";
+import banner from "../../assets/banner.png"
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
@@ -58,7 +59,7 @@ export default function Productos(){
 
 
     const handleDetalle = (array) => {
-        let retorno = "No existe una q descripcion para este producto"
+        let retorno = "No existe una descripcion para este producto"
         array.forEach((item) => {
             if(item.tipoCaracteristica === 'DESCRIPCION') {
                 retorno = item.valor;
@@ -78,7 +79,7 @@ export default function Productos(){
         <>
         <Header />
             <div className="w-full h-[480px]">
-                <img src="https://cdn.pixabay.com/photo/2017/08/30/17/26/please-2697951_1280.jpg" alt="Descripción de la imagen" className="object-cover w-full h-full"
+                <img src={banner} alt="Descripción de la imagen" className="object-cover w-full h-full"
                 />
             </div>
 
