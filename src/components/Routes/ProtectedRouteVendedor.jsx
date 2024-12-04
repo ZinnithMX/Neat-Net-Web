@@ -4,7 +4,7 @@ import axios from "axios";
 import {useContext, useEffect} from "react";
 import {DomainContext} from "../../App.jsx";
 
-export default function ProtectedRouteComprador({children, redirectTo}){
+export default function ProtectedRouteVendedor({children, redirectTo}){
 
     const userCookie = new Cookies();
     const domain = useContext(DomainContext);
@@ -25,9 +25,8 @@ export default function ProtectedRouteComprador({children, redirectTo}){
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
                 const usuario = res.data.usuario;
-                const params = JSON.stringify(usuario);
                 const url = domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
-                    params
+
                 })
                 const headers = new Headers();
                 const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);

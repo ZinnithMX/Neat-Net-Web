@@ -21,6 +21,7 @@ import {createContext} from "react";
 import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
 import Carrito from "./pages/productos/Carrito.jsx";
+import ProtectedRouteVendedor from "./components/Routes/ProtectedRouteVendedor.jsx";
 
 
 function App() {
@@ -47,8 +48,10 @@ function App() {
                     <Route path={"/cuenta"} element={<Perfil/>}/>
                     <Route path={"/carrito"} element={<Carrito/>}/>
                 </Route>
-                <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
-                <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
+                <Route element={<ProtectedRouteVendedor redirectTo={"/login/vendedor"} />}>
+                    <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
+                    <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
+                </Route>
             </Routes>
           </Router>
 
