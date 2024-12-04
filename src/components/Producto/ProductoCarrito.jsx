@@ -10,10 +10,12 @@ import {Cookies} from "react-cookie";
 
 export default function ProductoCarrito(props) {
 
-    const [cantidad, setCantidad] = useState({error: true, value: 0});
+    const [cantidad, setCantidad] = useState({error: true, value: 1});
     const [image, setImage] = useState(null);
     const domainContext = useContext(DomainContext);
     const userCookies = new Cookies();
+
+
 
     const fetchImage = async (pathIn) => {
         if(pathIn === undefined){
@@ -34,7 +36,7 @@ export default function ProductoCarrito(props) {
                 redirect: "follow"
             }
 
-            const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+            const response = await fetch(domainContext + ":8080/producto/getByPath", requestOptions);
             if(response.ok) {
                 const blob = await response.blob();
                 setImage(URL.createObjectURL(blob));
@@ -68,6 +70,23 @@ export default function ProductoCarrito(props) {
 
     useEffect(() => {
         fetchImage(props.imagen)
+
+        const headers = new Headers();
+        headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+        headers.append("Content-Type", "application/json");
+
+        alert("IDUsuario: " + props.idUsuario);
+        alert("IDProducto: " + props.idProducto);
+
+        fetch(domainContext + ":8080/producto/obtenerCantidadCarrito?" + new URLSearchParams({
+            idUsuario: props.idUsuario,
+            idProducto: props.idProducto,
+        }, {
+            method: "GET",
+            headers: headers
+        })).then(response => response.json()).then((data) => {
+            setCantidad(data.cantidad);
+        })
     }, []);
     return(
         <div className={"flex items-center gap-6 p-4 rounded-xl bg-g-200"}>
@@ -77,7 +96,7 @@ export default function ProductoCarrito(props) {
             <div className={"flex gap-4 flex-1"}>
                 <div className={"flex flex-col gap-3 flex-1"}>
                     <div className={"flex flex-col gap-1 flex-1"}>
-                        <h5>{props.nombre}</h5>
+                        <h5>{props.producto.titulo}</h5>
                         <div className={"flex gap-1"}>
                             <p>
                                 Vendedor
@@ -106,8 +125,8 @@ export default function ProductoCarrito(props) {
                     </div>
                 </div>
                 <div className={"w-40 gap-2 flex flex-col"}>
-                    <p className={"text-lg font-bold"}>${props.precio}</p>
-                    <NumerInput response={setCantidad} tamano={"pequeno"} width={"w-full"}/>
+                    <p className={"text-lg font-bold"}>${props.producto.precio}</p>
+                    <NumerInput handlePrecio={props.handlePrecio} valor={cantidad} response={setCantidad} tamano={"pequeno"} width={"w-full"}/>
                     <PrimaryButton onClick={() => {
 
                         const headers = new Headers();
@@ -140,10 +159,10 @@ export default function ProductoCarrito(props) {
 ProductoCarrito.propTypes = {
 
     idProducto: PropTypes.number,
+    idUsuario: PropTypes.number,
     imagen: PropTypes.string,
-    nombre: PropTypes.string,
     vendedor: PropTypes.string,
-    precio: PropTypes.decimal,
     importarProducto: PropTypes.func,
-
+    handlePrecio: PropTypes.func,
+    producto: PropTypes.object,
 }

@@ -7,6 +7,12 @@ import {DomainContext} from "../../App.jsx";
 
 export default function Carrito() {
 
+    const[subtotal, setSubtotal] = useState(0);
+    const[enviado, setEnviado] = useState(0);
+    const[productosChanged, setProductosChanged] = useState(true);
+    const userCookies = new Cookies();
+
+
     const handleImage= (caracteristicas) => {
         let valor = null;
         caracteristicas.forEach((item) => {
@@ -43,34 +49,75 @@ export default function Carrito() {
     const [productos, setProductos] = useState([]);
     useEffect(() => {
         importarProductos();
-    }, []);
+        let sumaSubtotal = 0;
+        productos.forEach(producto => {
+            producto.sub = producto.precio;
+            sumaSubtotal += producto.precio;
+        })
+        setSubtotal(sumaSubtotal);
+    }, [productos.length]);
+
 
     return(
         <>
             <Header/>
             <h3 className={"m-6"}> Tu carrito de compras</h3>
             {
-                (productos.length !== 0) && productos.map((producto) => (
+                (productos.length !== 0) && (
 
-                    <div className={"flex items-start"}>
-                        <div className={"w-[70%]"}>
+                    <div className={"flex"}>
+                        <div className={"w-[70vw]"}>
 
-                        <ProductoCarrito
-                            idProducto={producto.idProducto}
-                            nombre={producto.titulo}
-                            vendedor={"N/A"}
-                            precio={producto.precio}
-                            imagen={handleImage(producto.caracteristicas)}
-                            importarProducto={importarProductos}/>
+                            {productos.map((producto) => (
+                                <div className={"mb-5"} key={producto.id}>
+
+                                <ProductoCarrito
+                                    producto={producto}
+                                    idProducto={producto.idProducto}
+                                    idUsuario={userCookie.get("idUsuario")}
+                                    vendedor={"N/A"}
+                                    imagen={handleImage(producto.caracteristicas)}
+                                    importarProducto={importarProductos}/>
+                                </div>
+                            ))}
+
 
                         </div>
 
-                        <div className="[pl-">
-                            <p>Hola</p>
+                        <div className="ml-[3vw] w-[25vw] h-fit bg-g-200 p-8 rounded-xl">
+                            <h4>Resumen de importe</h4>
+                            <h5 className={"my-5"}>Productos: </h5>
+                            {
+                                productos.map((producto) => (
+                                    <>
+                                        <div className={"grid grid-cols-2 gap-4"}>
+                                            <span className={"text-lg"}>{producto.titulo}</span>
+                                            <span
+                                                className={"text-lg justify-end text-right"}>$ {producto.precio}</span>
+                                        </div>
+                                    </>
+                                ))
+                            }
+
+                            <h5 className={"mt-8"}> Subtotal: $ {subtotal}</h5>
+
+                            <h5 className={"mt-8"}> Adicionales: </h5>
+
+                            <div className={"grid grid-cols-2 mt-3"}>
+                                <span className={"text-lg"}>IVA:</span>
+                                <span className={"text-lg justify-end text-right"}>$ {subtotal*0.16} </span>
+                                <span className={"text-lg"}>Costo de envio: </span>
+                                <span className={"text-lg justify-end text-right"}>$ {enviado}</span>
+                            </div>
+
+
+                            <h4 className={"mt-5"}>Total: $ {subtotal + subtotal*0.16 + enviado}</h4>
                         </div>
+
+
                     </div>
 
-                ))
+                )
 
             }
 

@@ -11,6 +11,7 @@ export default function NumerInput(props){
     const [marginIcon, setMarginIcon] = useState("36px");
 
     useEffect(() => {
+        
         switch (props.tamano) {
             case "normal": {
                 setPadding("py-3 px-2");
@@ -64,6 +65,7 @@ export default function NumerInput(props){
 
     function handleClick(e) {
         e.target.select();
+        props.handlePrecio;
     }
 
     useEffect(() => {
@@ -98,5 +100,7 @@ export default function NumerInput(props){
 NumerInput.propTypes = {
     response: PropTypes.func.isRequired,
     tamano: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired
+    width: PropTypes.string.isRequired,
+    valor: PropTypes.number,
+    handlePrecio: PropTypes.func,
 }
