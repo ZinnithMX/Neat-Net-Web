@@ -75,9 +75,6 @@ export default function ProductoCarrito(props) {
         headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
         headers.append("Content-Type", "application/json");
 
-        alert("IDUsuario: " + props.idUsuario);
-        alert("IDProducto: " + props.idProducto);
-
         fetch(domainContext + ":8080/producto/obtenerCantidadCarrito?" + new URLSearchParams({
             idUsuario: props.idUsuario,
             idProducto: props.idProducto,
