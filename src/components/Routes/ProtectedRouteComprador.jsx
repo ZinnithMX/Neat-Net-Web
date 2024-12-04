@@ -1,7 +1,7 @@
 import {Cookies} from "react-cookie";
 import {Navigate, Outlet} from "react-router-dom";
 import axios from "axios";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {DomainContext} from "../../App.jsx";
 
 export default function ProtectedRouteComprador({children, redirectTo}){
@@ -14,6 +14,7 @@ export default function ProtectedRouteComprador({children, redirectTo}){
         return <Navigate to={redirectTo}/>
     }
     else{
+        console.log(userCookie.get("sesionId"))
         const url = domain + ":8080/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
@@ -28,6 +29,7 @@ export default function ProtectedRouteComprador({children, redirectTo}){
             }
             else{
                 userCookie.remove("sesionId", {path: "/"});
+                userCookie.remove("idUsuario", {path: "/"});
                 return <Navigate to={redirectTo}/>
             }
         }).catch(err => {
