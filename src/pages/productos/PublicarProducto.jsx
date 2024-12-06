@@ -6,9 +6,6 @@ import TextArea from "../../components/TextArea/TextArea.jsx";
 import FileInput from "../../components/Input/FileInput/FileInput.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import {DomainContext} from "../../App.jsx";
-import axios from "axios";
-import {isAnnotatedFunctionPropsDeclaration} from "eslint-plugin-react/lib/util/annotations.js";
-
 export default function PublicarProducto() {
 
     const [nombreProducto, setNombreProducto] = useState(null);
@@ -43,11 +40,10 @@ export default function PublicarProducto() {
             redirect: "follow",
         }
         fetch(Domain + ":8080/producto/agregar", requestData).then((res) => {res.json()}).then(
-            (data) => console.log(data)
-        ).catch((err) => console.log(err));
-        //axios.post(Domain + ":8080/producto/agregar", formdata, {headers: myHeaders}).catch((error) => {
-        //    console.log(error);
-        //});
+            (data) =>{ 
+                console.log(data)
+                window.alert("Producto publicado")
+            }).catch((err) => console.log(err));
     }
 
     return (
