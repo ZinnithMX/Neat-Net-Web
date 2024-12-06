@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 
 export default function NumerInput(props){
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState((props.valor !== undefined ? props.valor : 0));
     const [padding, setPadding] = useState("py-3 px-2");
     const [textSize, setTextSize] = useState("text-lg");
     const [tamano, setTamano] = useState("h-12");
     const [marginIcon, setMarginIcon] = useState("36px");
 
     useEffect(() => {
-        
+
         switch (props.tamano) {
             case "normal": {
                 setPadding("py-3 px-2");
@@ -65,19 +65,13 @@ export default function NumerInput(props){
 
     function handleClick(e) {
         e.target.select();
-        props.handlePrecio;
     }
 
     useEffect(() => {
-        returnValue();
+        props.response(value);
     }, [value]);
 
-    function returnValue(){
-        props.response({
-            value: value,
-            error: false
-        })
-    }
+
 
     return (
         <div className={"w-full bg-g-300 flex flex-row rounded-lg overflow-clip " + tamano + " " + props.width}>
@@ -102,5 +96,4 @@ NumerInput.propTypes = {
     tamano: PropTypes.string.isRequired,
     width: PropTypes.string.isRequired,
     valor: PropTypes.number,
-    handlePrecio: PropTypes.func,
 }

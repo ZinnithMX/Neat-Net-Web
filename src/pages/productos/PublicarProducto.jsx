@@ -15,6 +15,7 @@ export default function PublicarProducto() {
     const [precioProducto, setPrecioProducto] = useState(null);
     const [descripcionProducto, setDescripcionProducto] = useState(null);
     const [imagenProducto, setImagenProducto] = useState(null);
+
     const Domain = useContext(DomainContext);
 
     async function publicarProducto(){
@@ -26,7 +27,7 @@ export default function PublicarProducto() {
 
         formdata.append("file", imagenProducto, JSON.stringify({
             "titulo": nombreProducto.value,
-            "precio": precioProducto.value,
+            "precio": precioProducto,
             "caracteristicas": [{
                 "tipoCaracteristica": "DESCRIPCION",
                 "valor": descripcionProducto.value
