@@ -9,6 +9,7 @@ import {Cookies} from "react-cookie";
 import Input from "../../components/Input/Input.jsx";
 import {DomainContext} from "../../App.jsx";
 import HeaderVendedor from "../../components/Header/HeaderVendedor.jsx";
+import {data} from "autoprefixer";
 
 
 export default function EditarProducto() {
@@ -17,6 +18,7 @@ export default function EditarProducto() {
     const [encontrado, setEncontrado] = useState(false);
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
+    const [titulo, setTitulo] = useState("");
     const [image, setImage] = useState(null);
     const [idVendedor, setIdVendedor] = useState("");
     const [nombreVendedor, setNombreVendedor] = useState("");
@@ -79,6 +81,7 @@ export default function EditarProducto() {
 
     useEffect(() => {
         console.log("Ingreso al useEffect")
+
         let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
 
         try{
@@ -100,6 +103,7 @@ export default function EditarProducto() {
                 setEncontrado(true);
                 setIdVendedor(data.producto.vendedor.idVendedor);
                 setNombreVendedor(data.producto.vendedor.nombreEmpresa);
+                setTitulo(data.producto.titulo);
             })
         }
         catch (e) {
@@ -121,7 +125,9 @@ export default function EditarProducto() {
                             <img src={image} className={"rounded-2xl h-[30vw] w-[60vw]"} />
                         </div>
                         <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
-                            <h3 className={"w-full"} contentEditable={true}>{producto.titulo}</h3>
+                            <h3 className={"w-full"} contentEditable={true} onInput={(e) => {
+                                setTitulo(e.target.innerText)
+                            }}>{producto.titulo}</h3>
                             <div className={"flex justify-between items-center w-full"}>
                                 {producto.puntuacion == 0 ? <></> : <Rating rating={producto.puntuacion}/>}
                                 <p>Vendido por: <Link className={"link-secondary"}
@@ -140,11 +146,21 @@ export default function EditarProducto() {
                             </div>
                             <div className={"flex flex-col gap-2"}>
                                 <h5>Descripcion</h5>
-                                <p contentEditable={true}>{descripcion}</p>
+                                <p contentEditable={true} onInput={(e) => {setDescripcion(e.target.innerText)}}>{descripcion}</p>
                                 <p className={"line-clamp-6 text-sm text-justify"}>{}</p>
                             </div>
                             <div className={"flex gap-4 "}>
-                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
+                                <PrimaryButton onClick={() => {
+                                    const res = axios.put(`${domainContext}:8080/producto/editarProducto?` + new URLSearchParams({
+                                        idProducto: id,
+                                        titulo: titulo,
+                                        descripcion: descripcion,
+                                    }, {
+                                        headers: {
+                                            Authorization: `Basic SW5ncmVzbzp2aXNpdGFudGU=`,
+                                        }
+                                    })).then(res => {console.log(res)});
+                                }} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
                                     Editar
                                 </PrimaryButton>
                             </div>
