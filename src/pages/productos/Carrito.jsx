@@ -86,7 +86,7 @@ export default function Carrito() {
                                 changed={setProductosChanged}
                                 idProducto={producto.idProducto}
                                 idUsuario={userCookie.get("idUsuario")}
-                                vendedor={"N/A"}
+                                vendedor={producto.vendedor.nombreEmpresa}
                                 imagen={handleImage(producto.caracteristicas)}
                                 importarProducto={importarProductos}/>
                             </div>)}

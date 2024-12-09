@@ -24,7 +24,7 @@ export default function Perfil() {
     const navigate = useNavigate();
 
     useEffect(() => {
-            fetch(`http://localhost:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
+            fetch(domain + `:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
