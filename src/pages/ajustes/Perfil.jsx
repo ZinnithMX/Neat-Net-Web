@@ -24,7 +24,7 @@ export default function Perfil() {
     const navigate = useNavigate();
 
     useEffect(() => {
-            fetch(domain + `:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
+            fetch(domain + `/metodo-pago/obtener?idUsuario=${usuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export default function Perfil() {
             codigoPostal: codigoPostal.value
         };
 
-        fetch(`http://localhost:8080/user/actualizarDir?correo=${correo.value}`, {
+        fetch(domain + `/user/actualizarDir?correo=${correo.value}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

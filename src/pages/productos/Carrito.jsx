@@ -36,7 +36,7 @@ export default function Carrito() {
             method: "GET",
             headers: headers
         }
-        const finalDomain = `${domain}:8080/producto/obtenerCarrito?` + new URLSearchParams({
+        const finalDomain = `${domain}/producto/obtenerCarrito?` + new URLSearchParams({
             idUsuario: userCookie.get("idUsuario")
         })
 

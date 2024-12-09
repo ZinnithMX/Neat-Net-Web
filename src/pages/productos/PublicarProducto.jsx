@@ -41,7 +41,7 @@ export default function PublicarProducto() {
             body: formdata,
             redirect: "follow",
         }
-        fetch(Domain + ":8080/producto/agregar?" + new URLSearchParams({
+        fetch(Domain + "/producto/agregar?" + new URLSearchParams({
             idVendedor: userCookies.get("idVendedor"),
         }), requestData).then((res) => {res.json()}).then(
             (data) =>{ 

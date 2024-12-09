@@ -43,7 +43,7 @@ export default function GestionarProducto(){
             headers: headers,
             redirect: "follow"
         }
-        const url = Domain + ":8080/producto/obtenerProductosVendedor?" + new URLSearchParams({
+        const url = Domain + "/producto/obtenerProductosVendedor?" + new URLSearchParams({
             idVendedor: userCookie.get("idVendedor")
         });
 

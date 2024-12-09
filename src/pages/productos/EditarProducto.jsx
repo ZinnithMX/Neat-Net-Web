@@ -48,7 +48,7 @@ export default function EditarProducto() {
                 redirect: "follow"
             }
 
-            const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+            const response = await fetch(domainContext + "/producto/getByPath", requestOptions);
             if(response.ok) {
                 const blob = await response.blob();
                 setImage(URL.createObjectURL(blob));
@@ -68,7 +68,7 @@ export default function EditarProducto() {
                     redirect: "follow"
                 }
 
-                const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions);
+                const response = await fetch(`${domainContext}/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     setImage(URL.createObjectURL(blob));
@@ -82,7 +82,7 @@ export default function EditarProducto() {
     useEffect(() => {
         console.log("Ingreso al useEffect")
 
-        let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
+        let url = `${domainContext}/producto/obtenerPorId?idProducto=${id}`
 
         try{
             fetch(url, {
@@ -151,7 +151,7 @@ export default function EditarProducto() {
                             </div>
                             <div className={"flex gap-4 "}>
                                 <PrimaryButton onClick={() => {
-                                    const res = axios.put(`${domainContext}:8080/producto/editarProducto?` + new URLSearchParams({
+                                    const res = axios.put(`${domainContext}/producto/editarProducto?` + new URLSearchParams({
                                         idProducto: id,
                                         titulo: titulo,
                                         descripcion: descripcion,

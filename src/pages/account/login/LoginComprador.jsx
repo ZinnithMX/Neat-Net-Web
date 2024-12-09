@@ -51,7 +51,7 @@ export default function LoginComprador(){
     },[contra, correo])
 
     async function mandar() {
-        const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
+        const url = Domain + "/login/iniciarSesion?" + new URLSearchParams({
             correo: Form.correo,
             password: Form.contrasenia,
             ip: ip
@@ -83,7 +83,7 @@ export default function LoginComprador(){
     }
 
     if(userCookie.get("sesionId")){
-        const url = Domain + ":8080/login/sessionId?" + new URLSearchParams({
+        const url = Domain + "/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
         const headers = new Headers();

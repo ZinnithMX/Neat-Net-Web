@@ -12,7 +12,7 @@ export default function ProtectedRouteVendedor({children, redirectTo}){
 
     function verificarVendedor(data){
 
-        const url2 = domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
+        const url2 = domain + "/login/verificarVendedor?" + new URLSearchParams({
             "idUsuario": data.usuario.idUsuario,
         })
         const headers = new Headers();
@@ -36,7 +36,7 @@ export default function ProtectedRouteVendedor({children, redirectTo}){
         return <Navigate to={redirectTo}/>
     }
     else{
-        const url = domain + ":8080/login/sessionId?" + new URLSearchParams({
+        const url = domain + "/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
         const headers = new Headers();

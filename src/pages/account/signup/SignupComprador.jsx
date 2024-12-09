@@ -53,7 +53,7 @@ export default function SignupComprador() {
     },[contra, correo, nombre, telPer])
 
     async function mandar() {
-        const url = domain + ":8080/login/registrarComprador";
+        const url = domain + "/login/registrarComprador";
         try {
             const myHeaders = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);

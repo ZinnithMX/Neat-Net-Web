@@ -23,7 +23,7 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        const url = Domain + ":8080/producto/vistosReciente?" + new URLSearchParams({
+        const url = Domain + "/producto/vistosReciente?" + new URLSearchParams({
             userId: userCookie.get("idUsuario")
         });
 
@@ -48,7 +48,7 @@ export default function Productos(){
             redirect: "follow"
         }
 
-        fetch(Domain + ":8080/producto/obtenerProductos", requestOptions)
+        fetch(Domain + "/producto/obtenerProductos", requestOptions)
         .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);

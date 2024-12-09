@@ -15,7 +15,7 @@ export default function ProtectedRouteComprador({children, redirectTo}){
     }
     else{
         console.log(userCookie.get("sesionId"))
-        const url = domain + ":8080/login/sessionId?" + new URLSearchParams({
+        const url = domain + "/login/sessionId?" + new URLSearchParams({
             sessionId: userCookie.get("sesionId")
         });
         const headers = new Headers();

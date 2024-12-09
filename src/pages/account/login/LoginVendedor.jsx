@@ -17,7 +17,6 @@ export default function LoginVendedor(){
     const userCookie = new Cookies();
     const navigate = useNavigate();
     const [ip, setIp] = useState("");
-    const domain = useContext(DomainContext);
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -53,7 +52,7 @@ export default function LoginVendedor(){
     },[contra, correo])
 
     function mandar() {
-        const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
+        const url = Domain + "/login/iniciarSesion?" + new URLSearchParams({
             correo: Form.correo,
             password: Form.contrasenia,
             ip: ip
@@ -74,7 +73,7 @@ export default function LoginVendedor(){
 
     function verificarVendedor(data){
 
-        const url2 = Domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
+        const url2 = Domain + "/login/verificarVendedor?" + new URLSearchParams({
                 "idUsuario": data.usuario.idUsuario,
         })
         const headers = new Headers();

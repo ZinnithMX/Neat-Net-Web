@@ -1,14 +1,15 @@
 import Input from "../Input/Input.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
-import { useState } from "react";
+import {useContext, useState} from "react";
+import {DomainContext} from "../../App.jsx";
 
 export default function AddMetodoP() {
     const [nombre, setNombre] = useState({ error: false, value: "" });
     const [numeroTarjeta, setNumeroTarjeta] = useState({ error: false, value: "" });
     const [titular, setTitular] = useState({ error: false, value: "" });
-
+    const Domain = useContext(DomainContext);
     const handleActualizarMetodo = (metodoPago) => {
-        fetch(`http://localhost:8080/metodo-pago/actualizar?usuario=Ingreso`, {
+        fetch(Domain + `/metodo-pago/actualizar?usuario=Ingreso`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

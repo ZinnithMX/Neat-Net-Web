@@ -45,7 +45,7 @@ export default function VerProducto() {
                 redirect: "follow"
             }
 
-            const response = await fetch("http://localhost:8080/producto/getByPath", requestOptions);
+            const response = await fetch(domainContext + "/producto/getByPath", requestOptions);
             if(response.ok) {
                 const blob = await response.blob();
                 setImage(URL.createObjectURL(blob));
@@ -65,7 +65,7 @@ export default function VerProducto() {
                     redirect: "follow"
                 }
 
-                const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions);
+                const response = await fetch(`${domainContext}/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     setImage(URL.createObjectURL(blob));
@@ -78,7 +78,7 @@ export default function VerProducto() {
 
     useEffect(() => {
         console.log("Ingreso al useEffect")
-        let url = `${domainContext}:8080/producto/obtenerPorId?idProducto=${id}`
+        let url = `${domainContext}/producto/obtenerPorId?idProducto=${id}`
 
          try{     
              fetch(url, {
@@ -113,7 +113,7 @@ export default function VerProducto() {
             headers.append("Authorization", `Basic ${encodedCredentials}`);
             headers.append("Content-Type", `application/json`);
 
-            const otraUrl = domainContext + ":8080/producto/agregarReciente?" + new URLSearchParams({
+            const otraUrl = domainContext + "/producto/agregarReciente?" + new URLSearchParams({
                 idProducto: id,
                 idUsuario: userCookie.get("idUsuario")
             })
@@ -173,7 +173,7 @@ export default function VerProducto() {
                                         headers: headers,
                                     };
 
-                                    const url = `${domainContext}:8080/producto/anadirProductoCarro?` + new URLSearchParams({
+                                    const url = `${domainContext}/producto/anadirProductoCarro?` + new URLSearchParams({
                                         idProducto: id,
                                         idUsuario: userCookie.get("idUsuario"),
                                         cantidad: 1,

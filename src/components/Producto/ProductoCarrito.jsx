@@ -36,7 +36,7 @@ export default function ProductoCarrito(props) {
                 redirect: "follow"
             }
 
-            const response = await fetch(domainContext + ":8080/producto/getByPath", requestOptions).catch(console.error("Imagen no encontrada"));
+            const response = await fetch(domainContext + "/producto/getByPath", requestOptions).catch(console.error("Imagen no encontrada"));
             if(response.ok) {
                 const blob = await response.blob();
                 setImage(URL.createObjectURL(blob));
@@ -56,7 +56,7 @@ export default function ProductoCarrito(props) {
                     redirect: "follow"
                 }
 
-                const response = await fetch(`${domainContext}:8080/producto/getByPath`, requestOptions).catch(console.error("Imagen no encontrada"));
+                const response = await fetch(`${domainContext}/producto/getByPath`, requestOptions).catch(console.error("Imagen no encontrada"));
                 if(response.ok) {
                     const blob = await response.blob();
                     setImage(URL.createObjectURL(blob));
@@ -84,7 +84,7 @@ export default function ProductoCarrito(props) {
         headers.append("Content-Type", "application/json");
 
 
-        fetch(domainContext + ":8080/producto/anadirProductoCarro?" + new URLSearchParams({
+        fetch(domainContext + "/producto/anadirProductoCarro?" + new URLSearchParams({
             idProducto: props.producto.idProducto,
             idUsuario: props.idUsuario,
             cantidad: cantidad
@@ -145,7 +145,7 @@ export default function ProductoCarrito(props) {
                             headers: headers,
                         }
 
-                        const url = `${domainContext}:8080/producto/eliminarProductoCarro?` + new URLSearchParams({
+                        const url = `${domainContext}/producto/eliminarProductoCarro?` + new URLSearchParams({
                             idProducto: props.producto.idProducto,
                             idUsuario: userCookies.get("idUsuario"),
                         })

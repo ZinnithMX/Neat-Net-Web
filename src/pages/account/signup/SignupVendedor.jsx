@@ -59,7 +59,7 @@ export default function SignupVendedor(){
     },[confContra.error, contra, correo, mat, nombre, pat, telEmp.error, telEmp.value, telPer])
 
     async function mandar() {
-        const url = domain + ":8080/login/registrarVendedor?" + new URLSearchParams({
+        const url = domain + "/login/registrarVendedor?" + new URLSearchParams({
             nombreEmpresa: nombreEmpresa.value,
         });
         try {

@@ -32,7 +32,7 @@ export default function FormMetodoPago() {
         headers.append("Content-Type", `application/json`);
         headers.append("Authorization", `Basic ${encodedCredentials}`);
 
-        const url = domain + ":8080/metodo-pago/actualizar?";
+        const url = domain + "/metodo-pago/actualizar?";
 
         fetch(url, {
             method: 'PUT',

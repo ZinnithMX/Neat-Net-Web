@@ -34,7 +34,7 @@ export default function ProductoVen(props){
                     body: JSON.stringify(newFormData),
                     redirect: "follow"
                 }
-                const response = await fetch(`${domain}:8080/producto/getByPath`, requestOptions);
+                const response = await fetch(`${domain}/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     await new Promise((resolve, reject) => setTimeout(resolve, 150));
@@ -58,7 +58,7 @@ export default function ProductoVen(props){
             headers: headers,
         }
 
-        const url = `${domain}:8080/producto/eliminarProducto?` + new URLSearchParams({
+        const url = `${domain}/producto/eliminarProducto?` + new URLSearchParams({
             idProducto: props.id
         })
 
