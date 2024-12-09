@@ -2,19 +2,54 @@ import Rating from "../Rating/Rating.jsx";
 import NumerInput from "../Input/NumberInput/NumberInput.jsx";
 import PrimaryButton from "../Button/PrimaryButton.jsx";
 import PropTypes from "prop-types";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Producto from "./Producto.jsx";
+import {DomainContext} from "../../App.jsx";
 
 export default function ProductoVen(props){
     const funcion = () => {};
     const isGrid = props.layout === "Cuadricula";
+    const [image, setImage] = useState(null);
+    const [inPath, setInPath] = useState(props.imagen);
+    const domain = useContext(DomainContext);
 
+    useEffect(() => {
+        const fetchImage = async (pathIn) => {
+            if(pathIn === undefined){
+                console.log("Imagen indefinida")
+                setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s");
+            } else {
+                const headers = new Headers();
+                headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                headers.append("Content-Type", "application/json");
+
+                const newFormData = {
+                    path: pathIn
+                }
+                const requestOptions = {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(newFormData),
+                    redirect: "follow"
+                }
+                const response = await fetch(`${domain}:8080/producto/getByPath`, requestOptions);
+                if(response.ok) {
+                    const blob = await response.blob();
+                    await new Promise((resolve, reject) => setTimeout(resolve, 150));
+                    setImage(URL.createObjectURL(blob));
+                } else {
+                    setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s")
+                }
+            }
+        }
+        fetchImage(inPath)
+    },[inPath])
     
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
                 className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08JbeYZ8ccPOp4Su1QuQ6xJueP1D-0XFYgA&s"
+                src={image}
                 alt="Producto imagen"
             />
             <div className="flex flex-col py-4 px-6 flex-1 gap-4 justify-center bg-g-100">
@@ -51,14 +86,14 @@ export default function ProductoVen(props){
     );
 }
 
-ProductoVen.defaultProps = {
-    nombre: "Producto",
-    detalles: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis ex lorem. Nunc molestie, urna sed euismod dapibus, magna sapien fringilla nisi, ornare egestas justo mi non quam. Aenean vehicula purus vitae varius facilisis.",
-    precio: 999.99,
-    descuento: 20,
-    layout: "Lista",
-    rating: 3,
-};
+// ProductoVen.defaultProps = {
+//     nombre: "Producto",
+//     detalles: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis ex lorem. Nunc molestie, urna sed euismod dapibus, magna sapien fringilla nisi, ornare egestas justo mi non quam. Aenean vehicula purus vitae varius facilisis.",
+//     precio: 999.99,
+//     descuento: 20,
+//     layout: "Lista",
+//     rating: 3,
+// };
 
 ProductoVen.propTypes = {
     nombre: PropTypes.string.isRequired,
@@ -66,5 +101,6 @@ ProductoVen.propTypes = {
     precio: PropTypes.number.isRequired,
     descuento: PropTypes.number.isRequired,
     layout: PropTypes.oneOf(["Lista", "Cuadricula"]),
-    rating: PropTypes.number
+    rating: PropTypes.number,
+    imagen: PropTypes.string.isRequired
 };

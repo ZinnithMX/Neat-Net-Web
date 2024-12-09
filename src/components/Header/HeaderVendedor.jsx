@@ -15,7 +15,7 @@ export default function HeaderVendedor() {
                         <span className={"material-symbols-rounded icon"}>search</span>
                     </NavLink>
                     <NavLink
-                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/carrito/"}>
+                        className={({isActive}) => isActive ? "link" : "text-n-200 hover:text-p-600"} to={"/estadisticas/"}>
                         <span className={"material-symbols-rounded icon"}>bar_chart</span>
                     </NavLink>
                     <NavLink
