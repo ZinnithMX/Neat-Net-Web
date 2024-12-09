@@ -6,6 +6,7 @@ import TextArea from "../../components/TextArea/TextArea.jsx";
 import FileInput from "../../components/Input/FileInput/FileInput.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import {DomainContext} from "../../App.jsx";
+import {Cookies} from "react-cookie";
 export default function PublicarProducto() {
 
     const [nombreProducto, setNombreProducto] = useState(null);
@@ -14,8 +15,9 @@ export default function PublicarProducto() {
     const [imagenProducto, setImagenProducto] = useState(null);
 
     const Domain = useContext(DomainContext);
+    const userCookies = new Cookies();
 
-    async function publicarProducto(){
+        async function publicarProducto(){
         const myHeaders = new Headers();
 
         myHeaders.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
@@ -39,7 +41,9 @@ export default function PublicarProducto() {
             body: formdata,
             redirect: "follow",
         }
-        fetch(Domain + ":8080/producto/agregar", requestData).then((res) => {res.json()}).then(
+        fetch(Domain + ":8080/producto/agregar?" + new URLSearchParams({
+            idVendedor: userCookies.get("idVendedor"),
+        }), requestData).then((res) => {res.json()}).then(
             (data) =>{ 
                 console.log(data)
                 window.alert("Producto publicado")

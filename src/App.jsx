@@ -7,7 +7,7 @@ import Playground from "./pages/playground.jsx";
 
 import TOS from "./pages/TOS.jsx";
 import Privacy from "./pages/Privacy.jsx";
-import SignupVendedor from "./pages/account/signup/SingupVendedor.jsx";
+import SignupVendedor from "./pages/account/signup/SignupVendedor.jsx";
 import Promo from "./pages/Promo.jsx";
 import LoginComprador from "./pages/account/login/LoginComprador.jsx";
 import LoginVendedor from "./pages/account/login/LoginVendedor.jsx";

@@ -17,6 +17,7 @@ export default function SignupVendedor(){
     const [contra, setContra] = useState({error: true, value:""});
     const [telPer, setTelPer] = useState({error: true, value:""});
     const [telEmp, setTelEmp] = useState({error: true, value:""});
+    const [nombreEmpresa, setNombreEmpresa] = useState({error: true, value:""});
     const [sendForm, setSendForm] = useState(true);
     const [confContra, setConfContra] = useState({error: true, value:""});
     const domain = useContext(DomainContext);
@@ -58,7 +59,9 @@ export default function SignupVendedor(){
     },[confContra.error, contra, correo, mat, nombre, pat, telEmp.error, telEmp.value, telPer])
 
     async function mandar() {
-        const url = domain + ":8080/login/registrarVendedor";
+        const url = domain + ":8080/login/registrarVendedor?" + new URLSearchParams({
+            nombreEmpresa: nombreEmpresa.value,
+        });
         try {
             const headers = new Headers();
             const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
@@ -108,6 +111,10 @@ export default function SignupVendedor(){
                         <Input label="Apellido Materno" required={true} response={setMat} deshabilitado={false}
                                validate={false}>
                             ¿Cuál es tu apellido materno?
+                        </Input>
+                        <Input label={"Nombre empresa"} required={true} response={setNombreEmpresa} deshabilitado={false}
+                               validate={false}>
+                            ¿Cuál es el nombre de tu empresa?
                         </Input>
                         <Input label="Correo" required={true} response={setCorreo} deshabilitado={false} validate={true}
                                regex={new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)}>

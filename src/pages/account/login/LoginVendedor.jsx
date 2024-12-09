@@ -17,6 +17,8 @@ export default function LoginVendedor(){
     const userCookie = new Cookies();
     const navigate = useNavigate();
     const [ip, setIp] = useState("");
+    const domain = useContext(DomainContext);
+
 
     const [Form, setForm] = useState({
         correo: correo.value,
@@ -24,9 +26,10 @@ export default function LoginVendedor(){
     });
 
     const getData = async () => {
-        const res = await axios.get("https://api.ipify.org/?format=json");
-        console.log(res.data);
-        setIP(res.data.ip);
+        const resIP = await axios.get("https://api.ipify.org/?format=json");
+        console.log(resIP.data);
+        setIp(resIP.data.ip);
+
     };
 
     useEffect(() => {
@@ -47,7 +50,7 @@ export default function LoginVendedor(){
         }
     },[contra, correo])
 
-    async function mandar() {
+    function mandar() {
         const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
             correo: Form.correo,
             password: Form.contrasenia,
@@ -60,27 +63,21 @@ export default function LoginVendedor(){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                //console.log(res.data.sessionId);
-                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
+                console.log(res.data.sessionId);
+                userCookie.set("sesionId", res.data.sessionId, {path: "/"});
                 console.log(userCookie.get("sesionId"));
-                navigate("/productos/")*/
                 verificarVendedor(res.data);
+                navigate("/productos/");
             }
         }).catch(err => {
             console.log(err);
         })
     }
 
-    async function verificarVendedor(data){
+    function verificarVendedor(data){
 
         const url2 = Domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
                 "idUsuario": data.usuario.idUsuario,
-                "nombre": data.usuario.nombre,
-                "fechaNac": data.usuario.fechaNac,
-                "correo": data.usuario.correo,
-                "contrasenia": data.usuario.contrasenia,
-                "habilitado": data.usuario.habilitado,
-                "bloqueado": data.usuario.bloqueado
         })
         const headers = new Headers();
         const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
@@ -89,11 +86,8 @@ export default function LoginVendedor(){
 
         axios.get(url2, {headers: headers}).then(res => {
             if(res.status === 200){
-                //console.log(res.data.sessionId);
-                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
-                console.log(userCookie.get("sesionId"));
-                navigate("/productos/")*/
-                //verificarVendedor(res.data);
+                userCookie.set("idVendedor", res.data, {path: "/"});
+                console.log(res.data);
             }
         }).catch(err => {
             console.log(err);
