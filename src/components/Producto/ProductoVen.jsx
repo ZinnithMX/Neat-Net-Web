@@ -69,7 +69,7 @@ export default function ProductoVen(props){
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
-                className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
+                className={`object-cover ${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid`}
                 src={image}
                 alt="Producto imagen"
             />

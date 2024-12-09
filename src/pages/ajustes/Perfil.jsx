@@ -59,6 +59,7 @@ export default function Perfil() {
         const userCookie = new Cookies();
         userCookie.remove("sesionId", {path: "/"});
         userCookie.remove("idUsuario", {path: "/"});
+        userCookie.remove("idVendedor", {path: "/"});
         navigate("/");
     }
 

@@ -65,9 +65,6 @@ export default function LoginVendedor(){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                console.log(res.data.sessionId);
-                userCookie.set("sesionId", res.data.sessionId, {path: "/"});
-                console.log(userCookie.get("sesionId"));
                 verificarVendedor(res.data);
             }
         }).catch(err => {

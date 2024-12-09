@@ -52,7 +52,7 @@ export default function Producto(props) {
             <NavLink to={`/productos/${props.id}/`}>
                 <img
 
-                    className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid hover:cursor-pointer`}
+                    className={`object-cover ${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid hover:cursor-pointer`}
                     src={image}
                     alt="Producto imagen"
                     onClick={() => {

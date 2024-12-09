@@ -50,10 +50,9 @@ function App() {
                     <Route path={"/cuenta/metodo"} element={<FormMetodoPago/>}/>
                     <Route path={"/carrito"} element={<Carrito/>}/>
                 </Route>
-                <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
-                <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
                 <Route element={<ProtectedRouteVendedor redirectTo={"/login/vendedor"} />}>
-                    
+                    <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
+                    <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
                 </Route>
             </Routes>
           </Router>

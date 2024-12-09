@@ -10,6 +10,28 @@ export default function ProtectedRouteVendedor({children, redirectTo}){
     const domain = useContext(DomainContext);
 
 
+    function verificarVendedor(data){
+
+        const url2 = domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
+            "idUsuario": data.usuario.idUsuario,
+        })
+        const headers = new Headers();
+        const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
+        headers.append("Authorization", `Basic ${encodedCredentials}`);
+        headers.append("Content-Type", `application/json`);
+
+        axios.get(url2, {headers: headers}).then(res => {
+            if(res.status === 200){
+                userCookie.set("idVendedor", res.data, {path: "/"});
+                userCookie.set("sesionId", data.sessionId, {path: "/"});
+                userCookie.set("idUsuario", data.usuario.idUsuario, {path: "/"});
+                console.log(res.data);
+            }
+        }).catch(err => {
+            return <Navigate to={redirectTo}/>
+        })
+    }
+
     if(!userCookie.get("sesionId")){
         return <Navigate to={redirectTo}/>
     }
@@ -24,22 +46,7 @@ export default function ProtectedRouteVendedor({children, redirectTo}){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                const usuario = res.data.usuario;
-                const url = domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
-
-                })
-                const headers = new Headers();
-                const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-                headers.append("Authorization", `Basic ${encodedCredentials}`);
-                headers.append("Content-Type", `application/json`);
-
-                axios.get(url, {headers: headers}).then(res =>{
-                    if(res.status === 200){
-                        userCookie.set("idUsuario", res.data.idUsuario, {path: "/"});
-                    }else{
-                        return <Navigate to={"/productos/"}/>
-                    }
-                })
+                verificarVendedor(res.data);
             }
             else{
                 userCookie.remove("sesionId", {path: "/"});
@@ -49,8 +56,6 @@ export default function ProtectedRouteVendedor({children, redirectTo}){
             return <Navigate to={redirectTo}/>
         })
     }
-
-
 
     return <Outlet/>
 
