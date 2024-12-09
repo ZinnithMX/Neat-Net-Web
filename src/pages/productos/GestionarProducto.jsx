@@ -7,11 +7,13 @@ import {useContext, useEffect, useState} from "react";
 import HeaderVendedor from "../../components/Header/HeaderVendedor.jsx";
 import {DomainContext} from "../../App.jsx";
 import {Cookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
 
 export default function GestionarProducto(){
     const [productos, setProductos] = useState(null);
     const Domain = useContext(DomainContext);
     const userCookie = new Cookies();
+    const navigate = useNavigate();
 
     const handleDetalle = (array) => {
         let retorno = "No existe una descripcion para este producto"
@@ -73,9 +75,8 @@ export default function GestionarProducto(){
                                 alert("Filtar");
                             }} tamano={""} estilo={"primary"} width={"w-min"}><span
                                 className={"material-symbols-rounded icon"}>filter_alt</span></PrimaryButton>
-                            <PrimaryButton onClick={() => {
-                                alert("Guardado");
-                            }} tamano={""} estilo={"primary"} width={"w-min"}><span
+                            <PrimaryButton onClick={() => { navigate("/vendedor/publicar") }}
+                                tamano={""} estilo={"primary"} width={"w-min"}><span
                                 className={"material-symbols-rounded icon"}>add_circle</span></PrimaryButton>
                         </div>
 

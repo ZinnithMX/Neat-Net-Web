@@ -84,7 +84,8 @@ export default function ProductoCarrito(props) {
         headers.append("Content-Type", "application/json");
 
 
-        fetch(domainContext + ":8080/producto/obtenerCantidadCarrito?" + new URLSearchParams({
+        fetch(domainContext + ":8080/producto/anadirProductoCarro?" + new URLSearchParams({
+            idProducto: props.producto.idProducto,
             idUsuario: props.idUsuario,
             cantidad: cantidad
         }), {
