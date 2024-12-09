@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {useContext, useEffect, useState} from "react";
 import Producto from "./Producto.jsx";
 import {DomainContext} from "../../App.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function ProductoVen(props){
     const funcion = () => {};
@@ -12,6 +13,7 @@ export default function ProductoVen(props){
     const [image, setImage] = useState(null);
     const [inPath, setInPath] = useState(props.imagen);
     const domain = useContext(DomainContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchImage = async (pathIn) => {
@@ -66,6 +68,10 @@ export default function ProductoVen(props){
 
     }
 
+    function editarProducto(){
+        navigate(`/vendedor/editar/${props.id}`);
+    }
+
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
@@ -88,7 +94,7 @@ export default function ProductoVen(props){
                     <Rating rating={props.rating} />
                 </div>
                 <div className="flex gap-2 w-full">
-                    <PrimaryButton width={"flex-1"} tamano="pequeno" estilo="primary" onClick={() => alert("Editado")}>
+                    <PrimaryButton width={"flex-1"} tamano="pequeno" estilo="primary" onClick={editarProducto}>
                         Editar
                     </PrimaryButton>
                     <PrimaryButton width={"w-min"} tamano="pequeno" estilo="secondary" onClick={() => alert("Feedback")}>

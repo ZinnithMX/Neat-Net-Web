@@ -23,6 +23,7 @@ import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
 import Carrito from "./pages/productos/Carrito.jsx";
 import ProtectedRouteVendedor from "./components/Routes/ProtectedRouteVendedor.jsx";
 import FormMetodoPago from "./pages/ajustes/FormMetodoPago.jsx";
+import EditarProducto from "./pages/productos/EditarProducto.jsx";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
                 <Route element={<ProtectedRouteVendedor redirectTo={"/login/vendedor"} />}>
                     <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
                     <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
+                    <Route path={"/vendedor/editar/:id"} element={<EditarProducto/>}/>
                 </Route>
             </Routes>
           </Router>

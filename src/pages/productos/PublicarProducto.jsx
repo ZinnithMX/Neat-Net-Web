@@ -7,6 +7,7 @@ import FileInput from "../../components/Input/FileInput/FileInput.jsx";
 import PrimaryButton from "../../components/Button/PrimaryButton.jsx";
 import {DomainContext} from "../../App.jsx";
 import {Cookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
 export default function PublicarProducto() {
 
     const [nombreProducto, setNombreProducto] = useState(null);
@@ -16,9 +17,10 @@ export default function PublicarProducto() {
 
     const Domain = useContext(DomainContext);
     const userCookies = new Cookies();
+    const navigate = useNavigate();
 
-        async function publicarProducto(){
-        const myHeaders = new Headers();
+    async function publicarProducto(){
+            const myHeaders = new Headers();
 
         myHeaders.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
 
@@ -45,6 +47,7 @@ export default function PublicarProducto() {
             (data) =>{ 
                 console.log(data)
                 window.alert("Producto publicado")
+                navigate("/vendedor/gestionar/");
             }).catch((err) => console.log(err));
     }
 
