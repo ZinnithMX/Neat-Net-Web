@@ -18,6 +18,8 @@ export default function LoginVendedor(){
     const navigate = useNavigate();
     const [ip, setIp] = useState("");
     const domain = useContext(DomainContext);
+    const [error, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
 
     const [Form, setForm] = useState({
@@ -67,7 +69,6 @@ export default function LoginVendedor(){
                 userCookie.set("sesionId", res.data.sessionId, {path: "/"});
                 console.log(userCookie.get("sesionId"));
                 verificarVendedor(res.data);
-                navigate("/productos/");
             }
         }).catch(err => {
             console.log(err);
@@ -87,10 +88,17 @@ export default function LoginVendedor(){
         axios.get(url2, {headers: headers}).then(res => {
             if(res.status === 200){
                 userCookie.set("idVendedor", res.data, {path: "/"});
+                userCookie.set("sesionId", data.sessionId, {path: "/"});
+                userCookie.set("idUsuario", data.usuario.idUsuario, {path: "/"});
                 console.log(res.data);
+                setError(false);
+                setErrorMsg("");
+                navigate("/vendedor/gestionar/");
             }
         }).catch(err => {
             console.log(err);
+            setError(true);
+            setErrorMsg("Ingrese con una cuenta de vendedor!");
         })
     }
 
@@ -114,9 +122,10 @@ export default function LoginVendedor(){
                             Ingresa tu contraseña
                         </Password>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={mandar}>
+                                       onClick={mandar} width={""}>
                             Iniciar Sesión
                         </PrimaryButton>
+                        {error ? <p className={"text-er-500"}>{errorMsg}</p> : ""}
                     </form>
                     <div className={"flex flex-row gap-2"}>
                         <p className={"text-sm font-bold"}>¿No tienes cuenta? <Link to={"/signup/vendedor"} className={"link"}>Crea Una</Link></p>

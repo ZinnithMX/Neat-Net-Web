@@ -17,6 +17,8 @@ export default function VerProducto() {
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
     const [image, setImage] = useState(null);
+    const [idVendedor, setIdVendedor] = useState("");
+    const [nombreVendedor, setNombreVendedor] = useState("");
     const userCookie = new Cookies();
 
 
@@ -95,6 +97,8 @@ export default function VerProducto() {
                  setDescripcion(descripcion);
                  fetchImage(imagen);
                  setEncontrado(true);
+                 setIdVendedor(data.producto.vendedor.idVendedor);
+                 setNombreVendedor(data.producto.vendedor.nombreEmpresa);
              })
          }
          catch (e) {
@@ -137,10 +141,9 @@ export default function VerProducto() {
                             <h3>{producto.titulo}</h3>
                             <div className={"flex justify-between items-center w-full"}>
                                 <Rating rating={producto.puntuacion}/>
-                                {
-                                //    <p>Vendido por: <Link className={"link-secondary"}
-                                //                       to={""}>{producto.vendedor.NombreEmpresa}</Link></p>
-                                }
+                                <p>Vendido por: <Link className={"link-secondary"}
+                                                      to={`/vendedor/${idVendedor}/`}>{nombreVendedor}</Link></p>
+
                             </div>
                             <div className={"flex flex-col justify-center gap-1"}>
                                 {<div className={"flex items-center gap-4"}>

@@ -32,8 +32,6 @@ export default function PublicarProducto() {
                 "valor": descripcionProducto.value
             }]
         }));
-        
-
 
         const requestData = {
             method: "POST",
