@@ -139,7 +139,7 @@ export default function Perfil() {
                             {listaMet}
                         </div>
                         <PrimaryButton onClick={() => {
-                            alert("Agregar");
+                            navigate("/cuenta/metodo/");
                         }} tamano={"mini"} estilo={"primary"} width={"w-full"}>Agregar</PrimaryButton>
                     </div>
                 </div>

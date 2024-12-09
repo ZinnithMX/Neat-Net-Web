@@ -44,7 +44,28 @@ export default function ProductoVen(props){
         }
         fetchImage(inPath)
     },[inPath])
-    
+
+    function eliminarProducto(){
+
+        const headers = new Headers();
+        headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+        headers.append("Content-Type", "application/json");
+
+        const contentTypes = {
+            method: "DELETE",
+            headers: headers,
+        }
+
+        const url = `${domain}:8080/producto/eliminarProducto?` + new URLSearchParams({
+            idProducto: props.id
+        })
+
+        fetch(url, contentTypes).then(response => {response.json()}).then((res) => {
+            console.log(res);
+        });
+
+    }
+
     return (
         <div className={`flex ${isGrid ? "flex-col h-[434px] w-[380px]" : "flex-row h-60 w-[700px]"} rounded-[8px] overflow-hidden flex-none`}>
             <img
@@ -76,7 +97,7 @@ export default function ProductoVen(props){
                     <PrimaryButton width={"w-min"} tamano="pequeno" estilo="neutro" onClick={() => alert("Estadísticas")}>
                         <span className={"material-symbols-rounded icon text-lg"}>bar_chart</span>
                     </PrimaryButton>
-                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="error" onClick={() => alert("Eliminado")}>
+                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="error" onClick={eliminarProducto}>
                         <span className={"material-symbols-rounded icon text-lg"}>delete</span>
                     </PrimaryButton>
 
@@ -96,6 +117,7 @@ export default function ProductoVen(props){
 // };
 
 ProductoVen.propTypes = {
+    id: PropTypes.string.isRequired,
     nombre: PropTypes.string.isRequired,
     detalles: PropTypes.string.isRequired,
     precio: PropTypes.number.isRequired,

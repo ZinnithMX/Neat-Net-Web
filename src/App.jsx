@@ -22,6 +22,7 @@ import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
 import Carrito from "./pages/productos/Carrito.jsx";
 import ProtectedRouteVendedor from "./components/Routes/ProtectedRouteVendedor.jsx";
+import FormMetodoPago from "./pages/ajustes/FormMetodoPago.jsx";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                     <Route path={"/productos/:id"} element={<VerProducto/>}/>
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
+                    <Route path={"/cuenta/metodo"} element={<FormMetodoPago/>}/>
                     <Route path={"/carrito"} element={<Carrito/>}/>
                 </Route>
                 <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
