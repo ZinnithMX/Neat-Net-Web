@@ -17,6 +17,9 @@ export default function LoginVendedor(){
     const userCookie = new Cookies();
     const navigate = useNavigate();
     const [ip, setIp] = useState("");
+    const [error, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+
 
     const [Form, setForm] = useState({
         correo: correo.value,
@@ -24,9 +27,10 @@ export default function LoginVendedor(){
     });
 
     const getData = async () => {
-        const res = await axios.get("https://api.ipify.org/?format=json");
-        console.log(res.data);
-        setIP(res.data.ip);
+        const resIP = await axios.get("https://api.ipify.org/?format=json");
+        console.log(resIP.data);
+        setIp(resIP.data.ip);
+
     };
 
     useEffect(() => {
@@ -47,8 +51,8 @@ export default function LoginVendedor(){
         }
     },[contra, correo])
 
-    async function mandar() {
-        const url = Domain + ":8080/login/iniciarSesion?" + new URLSearchParams({
+    function mandar() {
+        const url = Domain + "/login/iniciarSesion?" + new URLSearchParams({
             correo: Form.correo,
             password: Form.contrasenia,
             ip: ip
@@ -60,10 +64,6 @@ export default function LoginVendedor(){
 
         axios.get(url, {headers: headers}).then(res => {
             if(res.status === 200){
-                //console.log(res.data.sessionId);
-                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
-                console.log(userCookie.get("sesionId"));
-                navigate("/productos/")*/
                 verificarVendedor(res.data);
             }
         }).catch(err => {
@@ -71,16 +71,10 @@ export default function LoginVendedor(){
         })
     }
 
-    async function verificarVendedor(data){
+    function verificarVendedor(data){
 
-        const url2 = Domain + ":8080/login/verificarVendedor?" + new URLSearchParams({
+        const url2 = Domain + "/login/verificarVendedor?" + new URLSearchParams({
                 "idUsuario": data.usuario.idUsuario,
-                "nombre": data.usuario.nombre,
-                "fechaNac": data.usuario.fechaNac,
-                "correo": data.usuario.correo,
-                "contrasenia": data.usuario.contrasenia,
-                "habilitado": data.usuario.habilitado,
-                "bloqueado": data.usuario.bloqueado
         })
         const headers = new Headers();
         const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
@@ -89,14 +83,18 @@ export default function LoginVendedor(){
 
         axios.get(url2, {headers: headers}).then(res => {
             if(res.status === 200){
-                //console.log(res.data.sessionId);
-                /*userCookie.set("sesionId", res.data.sessionId, {path: "/"});
-                console.log(userCookie.get("sesionId"));
-                navigate("/productos/")*/
-                //verificarVendedor(res.data);
+                userCookie.set("idVendedor", res.data, {path: "/"});
+                userCookie.set("sesionId", data.sessionId, {path: "/"});
+                userCookie.set("idUsuario", data.usuario.idUsuario, {path: "/"});
+                console.log(res.data);
+                setError(false);
+                setErrorMsg("");
+                navigate("/vendedor/gestionar/");
             }
         }).catch(err => {
             console.log(err);
+            setError(true);
+            setErrorMsg("Ingrese con una cuenta de vendedor!");
         })
     }
 
@@ -120,9 +118,10 @@ export default function LoginVendedor(){
                             Ingresa tu contraseña
                         </Password>
                         <PrimaryButton size="[2rem]" estilo={"primary"} tamano={"normal"} disabled={!sendForm}
-                                       onClick={mandar}>
+                                       onClick={mandar} width={""}>
                             Iniciar Sesión
                         </PrimaryButton>
+                        {error ? <p className={"text-er-500"}>{errorMsg}</p> : ""}
                     </form>
                     <div className={"flex flex-row gap-2"}>
                         <p className={"text-sm font-bold"}>¿No tienes cuenta? <Link to={"/signup/vendedor"} className={"link"}>Crea Una</Link></p>

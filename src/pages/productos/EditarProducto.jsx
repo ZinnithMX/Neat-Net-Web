@@ -8,14 +8,17 @@ import Footer from "../../components/Footer/Footer.jsx";
 import {Cookies} from "react-cookie";
 import Input from "../../components/Input/Input.jsx";
 import {DomainContext} from "../../App.jsx";
+import HeaderVendedor from "../../components/Header/HeaderVendedor.jsx";
+import {data} from "autoprefixer";
 
 
-export default function VerProducto() {
+export default function EditarProducto() {
 
     const {id} = useParams();
     const [encontrado, setEncontrado] = useState(false);
     const [producto, setProducto] = useState({});
     const [descripcion, setDescripcion] = useState("");
+    const [titulo, setTitulo] = useState("");
     const [image, setImage] = useState(null);
     const [idVendedor, setIdVendedor] = useState("");
     const [nombreVendedor, setNombreVendedor] = useState("");
@@ -78,67 +81,53 @@ export default function VerProducto() {
 
     useEffect(() => {
         console.log("Ingreso al useEffect")
+
         let url = `${domainContext}/producto/obtenerPorId?idProducto=${id}`
 
-         try{     
-             fetch(url, {
-                 method: "GET",
-                 headers: {}
-             }).then(res => res.json()).then(data => {
-                 setProducto(data.producto);
-                 let imagen, descripcion;
-                 data.producto.caracteristicas.forEach((car) => {
-                     if (car.tipoCaracteristica === "IMAGEN") {
-                         imagen = car.valor;
-                     } else if (car.tipoCaracteristica === "DESCRIPCION") {
-                         descripcion = car.valor
-                     }
-                 });
-                 setDescripcion(descripcion);
-                 fetchImage(imagen);
-                 setEncontrado(true);
-                 setIdVendedor(data.producto.vendedor.idVendedor);
-                 setNombreVendedor(data.producto.vendedor.nombreEmpresa);
-             })
-         }
-         catch (e) {
-             if(e.response.status === 400){
-                 setEncontrado(false);
-             }
-         }
-
-         try {
-            const headers = new Headers();
-            const encodedCredentials = btoa(`${"Ingreso"}:${"visitante"}`);
-            headers.append("Authorization", `Basic ${encodedCredentials}`);
-            headers.append("Content-Type", `application/json`);
-
-            const otraUrl = domainContext + "/producto/agregarReciente?" + new URLSearchParams({
-                idProducto: id,
-                idUsuario: userCookie.get("idUsuario")
+        try{
+            fetch(url, {
+                method: "GET",
+                headers: {}
+            }).then(res => res.json()).then(data => {
+                setProducto(data.producto);
+                let imagen, descripcion;
+                data.producto.caracteristicas.forEach((car) => {
+                    if (car.tipoCaracteristica === "IMAGEN") {
+                        imagen = car.valor;
+                    } else if (car.tipoCaracteristica === "DESCRIPCION") {
+                        descripcion = car.valor
+                    }
+                });
+                setDescripcion(descripcion);
+                fetchImage(imagen);
+                setEncontrado(true);
+                setIdVendedor(data.producto.vendedor.idVendedor);
+                setNombreVendedor(data.producto.vendedor.nombreEmpresa);
+                setTitulo(data.producto.titulo);
             })
-            fetch(otraUrl , {
-                method: "PUT",
-                headers: headers
-            }).then((res) => res.json()).then((data) => console.log(data))
-         } catch (e) {
-            console.log(e);
-         }
+        }
+        catch (e) {
+            if(e.response.status === 400){
+                setEncontrado(false);
+            }
+        }
     }, []);
 
 
 
     return(
         <>
-            <Header/>
+            <HeaderVendedor/>
             {encontrado ?
-                <div className={"flex flex-col h-dvh justify-center"}>
+                <div className={"flex flex-col min-h-lvh justify-center"}>
                     <div className={"flex py-8 px-6 items-center gap-8"}>
                         <div className={"w-full flex flex-col py-8 px-6 gap-16"}>
                             <img src={image} className={"rounded-2xl h-[30vw] w-[60vw]"} />
                         </div>
                         <div className={"w-full flex py-2 px-4 flex-col gap-4"}>
-                            <h3>{producto.titulo}</h3>
+                            <h3 className={"w-full"} contentEditable={true} onInput={(e) => {
+                                setTitulo(e.target.innerText)
+                            }}>{producto.titulo}</h3>
                             <div className={"flex justify-between items-center w-full"}>
                                 {producto.puntuacion == 0 ? <></> : <Rating rating={producto.puntuacion}/>}
                                 <p>Vendido por: <Link className={"link-secondary"}
@@ -157,36 +146,22 @@ export default function VerProducto() {
                             </div>
                             <div className={"flex flex-col gap-2"}>
                                 <h5>Descripcion</h5>
-                                <p>{descripcion}</p>
+                                <p contentEditable={true} onInput={(e) => {setDescripcion(e.target.innerText)}}>{descripcion}</p>
                                 <p className={"line-clamp-6 text-sm text-justify"}>{}</p>
                             </div>
                             <div className={"flex gap-4 "}>
-                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
-                                    Comprar
-                                </PrimaryButton>
                                 <PrimaryButton onClick={() => {
-                                    const headers = new Headers();
-                                    headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
-                                    headers.append("Content-Type", "application/json");
-                                    const content = {
-                                        method: "POST",
-                                        headers: headers,
-                                    };
-
-                                    const url = `${domainContext}/producto/anadirProductoCarro?` + new URLSearchParams({
+                                    const res = axios.put(`${domainContext}/producto/editarProducto?` + new URLSearchParams({
                                         idProducto: id,
-                                        idUsuario: userCookie.get("idUsuario"),
-                                        cantidad: 1,
-                                    });
-
-                                    fetch(url, content)
-                                        .then(response => {response.json()})
-                                        .then((res) => alert("Producto agregado al carrito"));
-                                }} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
-                                    <span className={"material-symbols-rounded icon text-sm"}>shopping_cart</span>
-                                </PrimaryButton>
-                                <PrimaryButton onClick={null} tamano={"pequeno"} estilo={"neutro"} width={"w-min"}>
-                                    <span className={"material-symbols-rounded icon text-sm"}>playlist_add</span>
+                                        titulo: titulo,
+                                        descripcion: descripcion,
+                                    }, {
+                                        headers: {
+                                            Authorization: `Basic SW5ncmVzbzp2aXNpdGFudGU=`,
+                                        }
+                                    })).then(res => {console.log(res)});
+                                }} tamano={"pequeno"} estilo={"primary"} width={"w-full"}>
+                                    Editar
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -220,7 +195,7 @@ export default function VerProducto() {
                                 </div>
                             </div>
                         </div>
-                    </div>*/}
+                    </div> &/}
                     {/*<div className={"flex flex-col px-8 py-4 gap-4 w-full"}>
                         <h4>
                             Preguntas
@@ -252,8 +227,8 @@ export default function VerProducto() {
                     <p className={"text-xl font-semibold"}>Parece que no encontramos tu producto...</p>
                     <p className={"text-xl"}>Intenta <Link to={""} className={"link"}>buscar otro producto</Link></p>
                 </div>
-        }
-    <Footer/>
+            }
+            <Footer/>
         </>
     );
 }

@@ -20,6 +20,8 @@ export default function TextArea(props){
                     value: value
                 });
             }else{
+                setShowMsg(false);
+                setMsg("");
                 props.response({
                     error: false,
                     value: value
@@ -32,7 +34,7 @@ export default function TextArea(props){
             });
         }
 
-    },[props]);
+    },[props.required]);
 
     return (
         <div className={"flex flex-col gap-2 " + props.width}>

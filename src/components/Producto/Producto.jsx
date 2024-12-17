@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import Rating from "../Rating/Rating.jsx";
 import {Navigate, NavLink} from "react-router-dom";
 import {DomainContext} from "../../App.jsx";
+import {Cookies} from "react-cookie";
 
 export default function Producto(props) {
     const funcion = () => {};
@@ -12,6 +13,8 @@ export default function Producto(props) {
     const [image, setImage] = useState(null);
     const [inPath, setInPath] = useState(props.imagen);
     const domain = useContext(DomainContext);
+    const userCookies = new Cookies();
+
     useEffect(() => {
         const fetchImage = async (pathIn) => {
             if(pathIn === undefined){
@@ -31,7 +34,7 @@ export default function Producto(props) {
                     body: JSON.stringify(newFormData),
                     redirect: "follow"
                 }
-                    const response = await fetch(`${domain}:8080/producto/getByPath`, requestOptions);
+                    const response = await fetch(`${domain}/producto/getByPath`, requestOptions);
                 if(response.ok) {
                     const blob = await response.blob();
                     await new Promise((resolve, reject) => setTimeout(resolve, 150));
@@ -49,7 +52,7 @@ export default function Producto(props) {
             <NavLink to={`/productos/${props.id}/`}>
                 <img
 
-                    className={`${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid hover:cursor-pointer`}
+                    className={`object-cover ${isGrid ? "w-[380px] h-[214px]" : "size-60"} img-fluid hover:cursor-pointer`}
                     src={image}
                     alt="Producto imagen"
                     onClick={() => {
@@ -78,7 +81,25 @@ export default function Producto(props) {
                     <PrimaryButton width={"flex-1"} tamano="pequeno" estilo="primary" onClick={() => alert("Comprado")}>
                         Comprar
                     </PrimaryButton>
-                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="primary" onClick={() => alert("Carrito")}>
+                    <PrimaryButton width={"w-min"} tamano="pequeno" estilo="primary" onClick={() => {
+                        const headers = new Headers();
+                        headers.append("Authorization", "Basic SW5ncmVzbzp2aXNpdGFudGU=");
+                        headers.append("Content-Type", "application/json");
+                        const content = {
+                            method: "POST",
+                            headers: headers,
+                        };
+
+                        const url = `${domain}/producto/anadirProductoCarro?` + new URLSearchParams({
+                            idProducto: props.id,
+                            idUsuario: userCookies.get("idUsuario"),
+                            cantidad: 1,
+                        });
+
+                        fetch(url, content)
+                            .then(response => {response.json()})
+                            .then((res) => alert("Producto agregado al carrito"));
+                    }}>
                         <span className={"material-symbols-rounded icon text-lg"}>shopping_cart</span>
                     </PrimaryButton>
                     <PrimaryButton width={"w-min"} tamano="pequeno" estilo="primary" onClick={() => alert("WishList")}>

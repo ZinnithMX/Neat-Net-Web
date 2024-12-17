@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import {Cookies, useCookies} from "react-cookie";
 import axios from "axios";
 import {DomainContext} from "../../App.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Perfil() {
     const [metodos, setMetodos] = useState(null);
@@ -20,10 +21,10 @@ export default function Perfil() {
     const [estado, setEstado] = useState({error: false, value: ""});
 
     const domain = useContext(DomainContext);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
-            fetch(`http://localhost:8080/metodo-pago/obtener?idUsuario=${usuario}`, {
+            fetch(domain + `/metodo-pago/obtener?idUsuario=${usuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,20 +53,14 @@ export default function Perfil() {
         />
     ));
 
-    /*const handleCerrarSesion = () => {
-        ('idUsuario');
-    }
-    sessionStorage.clear();
-<<<<<<< HEAD
-    history.push('/login/comprador');*/
-
     function handleCerrarSesion(){
         //axios.post();
 
         const userCookie = new Cookies();
         userCookie.remove("sesionId", {path: "/"});
         userCookie.remove("idUsuario", {path: "/"});
-
+        userCookie.remove("idVendedor", {path: "/"});
+        navigate("/");
     }
 
 
@@ -80,7 +75,7 @@ export default function Perfil() {
             codigoPostal: codigoPostal.value
         };
 
-        fetch(`http://localhost:8080/user/actualizarDir?correo=${correo.value}`, {
+        fetch(domain + `/user/actualizarDir?correo=${correo.value}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -145,7 +140,7 @@ export default function Perfil() {
                             {listaMet}
                         </div>
                         <PrimaryButton onClick={() => {
-                            alert("Agregar");
+                            navigate("/cuenta/metodo/");
                         }} tamano={"mini"} estilo={"primary"} width={"w-full"}>Agregar</PrimaryButton>
                     </div>
                 </div>

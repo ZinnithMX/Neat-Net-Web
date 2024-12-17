@@ -2,11 +2,14 @@ import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Producto from "../../components/Producto/Producto.jsx";
 import {useContext, useEffect, useState} from "react";
+import {Cookies} from "react-cookie";
 import {DomainContext} from "../../App.jsx";
+import banner from "../../assets/banner.png"
 
 export default function Productos(){
     const [productos, setProductos] = useState(null);
     const [agregados, setAgregados] = useState(null);
+    const userCookie = new Cookies();
 
     const Domain = useContext(DomainContext);
 
@@ -20,7 +23,12 @@ export default function Productos(){
             headers: headers,
             redirect: "follow"
         }
-        fetch(`${Domain}:8080/producto/vistosReciente?userId=1`, requestOptions)
+        const url = Domain + "/producto/vistosReciente?" + new URLSearchParams({
+            userId: userCookie.get("idUsuario")
+        });
+
+
+        fetch(url, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
@@ -40,7 +48,7 @@ export default function Productos(){
             redirect: "follow"
         }
 
-        fetch(Domain + ":8080/producto/obtenerProductos", requestOptions)
+        fetch(Domain + "/producto/obtenerProductos", requestOptions)
         .then((response) => response.text())
             .then((result) => {
                 const resultado = JSON.parse(result);
@@ -51,7 +59,7 @@ export default function Productos(){
 
 
     const handleDetalle = (array) => {
-        let retorno = "No existe una q descripcion para este producto"
+        let retorno = "No existe una descripcion para este producto"
         array.forEach((item) => {
             if(item.tipoCaracteristica === 'DESCRIPCION') {
                 retorno = item.valor;
@@ -71,7 +79,7 @@ export default function Productos(){
         <>
         <Header />
             <div className="w-full h-[480px]">
-                <img src="https://cdn.pixabay.com/photo/2017/08/30/17/26/please-2697951_1280.jpg" alt="Descripción de la imagen" className="object-cover w-full h-full"
+                <img src={banner} alt="Descripción de la imagen" className="object-cover w-full h-full"
                 />
             </div>
 

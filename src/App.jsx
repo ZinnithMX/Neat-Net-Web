@@ -7,7 +7,7 @@ import Playground from "./pages/playground.jsx";
 
 import TOS from "./pages/TOS.jsx";
 import Privacy from "./pages/Privacy.jsx";
-import SignupVendedor from "./pages/account/signup/SingupVendedor.jsx";
+import SignupVendedor from "./pages/account/signup/SignupVendedor.jsx";
 import Promo from "./pages/Promo.jsx";
 import LoginComprador from "./pages/account/login/LoginComprador.jsx";
 import LoginVendedor from "./pages/account/login/LoginVendedor.jsx";
@@ -16,12 +16,14 @@ import VerProducto from "./pages/productos/VerProducto.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import BuscarProducto from "./pages/productos/BuscarProducto.jsx";
 import Perfil from "./pages/ajustes/Perfil.jsx";
-import Seguridad from "./pages/ajustes/Seguridad.jsx";
-import MetodosPago from "./pages/ajustes/MetodosPago.jsx";
 import ProtectedRouteComprador from "./components/Routes/ProtectedRouteComprador.jsx";
 import {createContext} from "react";
 import GestionarProducto from "./pages/productos/GestionarProducto.jsx";
 import PublicarProducto from "./pages/productos/PublicarProducto.jsx";
+import Carrito from "./pages/productos/Carrito.jsx";
+import ProtectedRouteVendedor from "./components/Routes/ProtectedRouteVendedor.jsx";
+import FormMetodoPago from "./pages/ajustes/FormMetodoPago.jsx";
+import EditarProducto from "./pages/productos/EditarProducto.jsx";
 
 
 function App() {
@@ -46,9 +48,14 @@ function App() {
                     <Route path={"/productos/:id"} element={<VerProducto/>}/>
                     <Route path={"/buscar/producto/"} element={<BuscarProducto/>}/>
                     <Route path={"/cuenta"} element={<Perfil/>}/>
+                    <Route path={"/cuenta/metodo"} element={<FormMetodoPago/>}/>
+                    <Route path={"/carrito"} element={<Carrito/>}/>
                 </Route>
-                <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
-                <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
+                <Route element={<ProtectedRouteVendedor redirectTo={"/login/vendedor"} />}>
+                    <Route path={"/vendedor/gestionar"} element={<GestionarProducto/>}/>
+                    <Route path={"/vendedor/publicar/"} element={<PublicarProducto/>}/>
+                    <Route path={"/vendedor/editar/:id"} element={<EditarProducto/>}/>
+                </Route>
             </Routes>
           </Router>
 
@@ -56,5 +63,5 @@ function App() {
 
     )
 }
-export const DomainContext = createContext("http://localhost");
+export const DomainContext = createContext("http://localhost:8080");
 export default App
